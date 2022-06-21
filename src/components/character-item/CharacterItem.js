@@ -4,11 +4,11 @@ function CharacterItem(props) {
   var { character } = props;
   return (
     <div className="col mb-3">
-      <div class="card" style={{ width: "15rem" }}>
-        <img src={character.image} class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title">{character.name}</h5>
-          <button type="button" class="btn btn-primary">
+      <div className="card" style={{ width: "15rem" }}>
+        <img src={character.image} className="card-img-top" alt="..." />
+        <div className="card-body">
+          <h5 className="card-title">{character.name}</h5>
+          <button type="button" className="btn btn-primary">
             Edit character
           </button>
         </div>

@@ -7,18 +7,14 @@ function ProductItem(props) {
       <td>{index + 1}</td>
       <td>{product.categoryName}</td>
       <td>{product.productID}</td>
+      <td>{product.name}</td>
       <td>
         <a
           href={`/product/${product.productID}`}
           style={{ textDecoration: "none" }}
         >
-          {product.name}
-        </a>
-      </td>
-      <td>
-        <button type="button" className="btn btn-primary">
           See detail
-        </button>
+        </a>
       </td>
     </tr>
   );
