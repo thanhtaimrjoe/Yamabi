@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actFetchProductsRequest } from "../../actions/product";
-import Menu from "../../components/menu/Menu";
+import MenuBar from "../../components/menu/MenuBar";
 import ProductItem from "../../components/product-item/ProductItem";
 import ProductList from "../../components/product-list/ProductList";
 
@@ -26,7 +26,7 @@ function ProductPage(props) {
   };
   return (
     <div>
-      <Menu />
+      <MenuBar />
       <div className="d-flex flex-column align-items-center mt-5">
         <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9">
           <button type="button" className="btn btn-primary mb-3">

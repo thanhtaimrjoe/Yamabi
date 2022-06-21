@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Menu from "../../components/menu/Menu";
+import MenuBar from "../../components/menu/MenuBar";
 import { actFetchProductInforByIDRequest } from "../../actions/product";
 import { actFetchEpisodesRequest } from "../../actions/episode";
 import { actFetchCharactersRequest } from "../../actions/character";
@@ -53,7 +53,7 @@ function ProductDetailPage(props) {
 
   return (
     <div>
-      <Menu />
+      <MenuBar />
       <div className="d-flex flex-column align-items-center mt-5">
         {/* Card */}
         <div className="card mb-5" style={{ width: "1000px" }}>
