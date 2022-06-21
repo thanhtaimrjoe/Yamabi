@@ -1,0 +1,2 @@
+# Yamabi
+Manga List Application
