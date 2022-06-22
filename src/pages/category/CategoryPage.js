@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CategoryItem from "../../components/category-item/CategoryItem";
 import CategoryList from "../../components/category-list/CategoryList";
 import CategoryModal from "../../components/modal/CategoryModal";
-import { Layout, Breadcrumb, Typography } from "antd";
+import { Layout, Breadcrumb, Typography, Modal } from "antd";
 import "./Category.css";
 import MenuBar from "../../components/menu/MenuBar";
 import CategoryTable from "../../components/category-table/CategoryTable";
@@ -19,7 +19,7 @@ const { Title } = Typography;
 
 function CategoryPage(props) {
   //state
-  const [showModal, setShowModal] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [categoryInfo, setCategoryInfo] = useState();
 
   //redux
@@ -43,16 +43,16 @@ function CategoryPage(props) {
 
   const onShowCategoryInfo = (category) => {
     setCategoryInfo(category);
-    setShowModal(true);
+    setIsModalVisible(true);
   };
 
   const onShowCategoryDialog = () => {
     setCategoryInfo(null);
-    setShowModal(true);
+    setIsModalVisible(true);
   };
 
   const onCloseForm = () => {
-    setShowModal(false);
+    setIsModalVisible(false);
   };
 
   const onSave = (category, file) => {
@@ -61,7 +61,7 @@ function CategoryPage(props) {
     } else {
       addNewCategory(category, file);
     }
-    setShowModal(false);
+    setIsModalVisible(false);
   };
 
   //delete category from table
@@ -111,6 +111,13 @@ function CategoryPage(props) {
             onShowCategoryInfo={onShowCategoryInfo}
             onDeleteCategory={onDeleteCategory}
           />
+          {isModalVisible && (
+            <CategoryModal
+              categoryInfo={categoryInfo}
+              isModalVisible={isModalVisible}
+              onCloseForm={onCloseForm}
+            />
+          )}
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
@@ -131,7 +138,7 @@ function CategoryPage(props) {
     //       <CategoryList>{showCategories()}</CategoryList>
     //     </div>
     //   </div>
-    //   {showModal ? (
+    //   {isModalVisible ? (
     //     <CategoryModal
     //       categoryInfo={categoryInfo}
     //       onCloseForm={onCloseForm}

@@ -1,11 +1,28 @@
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  Modal,
+  Input,
+  Space,
+  Row,
+  Col,
+  Typography,
+  Upload,
+  message,
+  Image,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+const { Text } = Typography;
+
 function CategoryModal(props) {
+  //state
   const [id, setID] = useState("");
   const [name, setName] = useState("");
-  const [image, setImage] = useState();
-  var { categoryInfo } = props;
+  const [file, setFile] = useState();
+  const [fileList, setFileList] = useState([]);
+  //props
+  var { categoryInfo, isModalVisible } = props;
 
   useEffect(() => {
     if (categoryInfo) {
@@ -18,20 +35,20 @@ function CategoryModal(props) {
     props.onCloseForm();
   };
 
-  const onChange = (event) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.type === "file" ? target.files[0] : target.value;
-    if (name === "id") {
-      setID(value);
-    }
-    if (name === "name") {
-      setName(value);
-    }
-    if (name === "image") {
-      setImage(value);
-    }
-  };
+  // const onChange = (event) => {
+  //   const target = event.target;
+  //   const name = target.name;
+  //   const value = target.type === "file" ? target.files[0] : target.value;
+  //   if (name === "id") {
+  //     setID(value);
+  //   }
+  //   if (name === "name") {
+  //     setName(value);
+  //   }
+  //   if (name === "image") {
+  //     setImage(value);
+  //   }
+  // };
 
   const onGenerateID = () => {
     setID(uuidv4());
@@ -40,107 +57,177 @@ function CategoryModal(props) {
   const onSave = (event) => {
     event.preventDefault();
     if (categoryInfo) {
-      categoryInfo.name = name;
-      props.onSave(categoryInfo, image);
+      console.log("update");
+      // categoryInfo.name = name;
+      // props.onSave(categoryInfo, image);
     } else {
-      var category = {
-        id: id,
-        name: name,
-      };
-      props.onSave(category, image);
+      console.log("add");
+      // var category = {
+      //   id: id,
+      //   name: name,
+      // };
+      // props.onSave(category, image);
     }
   };
 
+  //ant-design
+  const beforeUpload = (file) => {
+    const isPNG = file.type === "image/png";
+    if (!isPNG) {
+      message.error(`${file.name} is not a png file`);
+      return Upload.LIST_IGNORE;
+    } else {
+      return false;
+    }
+  };
+  const onChange = (info) => {
+    console.log(info);
+    setFile(info.file);
+  };
+
   return (
-    <div
-      className="modal show fade"
-      style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+    <Modal
+      title="Category Information"
+      visible={isModalVisible}
+      onOk={onSave}
+      onCancel={onCloseForm}
     >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Category information</h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={onCloseForm}
-            ></button>
-          </div>
-          <form onSubmit={onSave}>
-            <div className="modal-body">
-              <div className="mb-3">
-                <label className="col-form-label">ID:</label>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="id"
-                    value={id}
-                    disabled
-                  />
-                  {!categoryInfo && (
-                    <button
-                      className="btn btn-outline-secondary"
-                      type="button"
-                      onClick={onGenerateID}
-                    >
-                      Generate
-                    </button>
-                  )}
-                </div>
-              </div>
-              <div className="mb-3">
-                <label className="col-form-label">Name:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={name}
-                  onChange={onChange}
+      <Space direction="vertical" style={{ display: "flex" }}>
+        <Row>
+          <Col flex="50px">
+            <Text>ID:</Text>
+          </Col>
+          <Col flex="auto">
+            <Input value={id} disabled />
+          </Col>
+        </Row>
+        <Row>
+          <Col flex="50px">
+            <Text>Name:</Text>
+          </Col>
+          <Col flex="auto">
+            <Input value={name} disabled />
+          </Col>
+        </Row>
+        <Row>
+          <Col flex="50px"></Col>
+          <Col flex="auto">
+            <Space>
+              {categoryInfo && !file && (
+                <Image
+                  height={110}
+                  src="https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/categories%2Feb762ef0-e307-11ec-8a7c-57956d2a10bd?alt=media&token=9458e3f1-53dc-4c6a-bc97-2a7745f62a7e"
                 />
-              </div>
-              <div className="mb-3 d-flex flex-column">
-                <label className="col-form-label">Image:</label>
-                <input
-                  className="form-control mb-3"
-                  type="file"
-                  name="image"
-                  onChange={onChange}
-                ></input>
-                {categoryInfo && !image && (
-                  <img
-                    src={categoryInfo.image}
-                    className="img-thumbnail"
-                    alt="..."
-                    style={{ width: "200px" }}
-                  />
-                )}
-                {image && (
-                  <img
-                    src={URL.createObjectURL(image)}
-                    className="img-thumbnail"
-                    alt="..."
-                    style={{ width: "200px" }}
-                  />
-                )}
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={onCloseForm}
+              )}
+              <Upload
+                multiple={false}
+                action="http://localhost:3000/"
+                listType="picture-card"
+                accept=".png,.jpeg"
+                beforeUpload={beforeUpload}
+                onChange={onChange}
               >
-                Close
-              </button>
-              <button type="submit" className="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+                {!file && (
+                  <Space direction="vertical">
+                    <PlusOutlined />
+                    Upload
+                  </Space>
+                )}
+              </Upload>
+            </Space>
+          </Col>
+        </Row>
+      </Space>
+    </Modal>
+    // <div
+    //   className="modal show fade"
+    //   style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+    // >
+    //   <div className="modal-dialog modal-dialog-centered">
+    //     <div className="modal-content">
+    //       <div className="modal-header">
+    //         <h5 className="modal-title">Category information</h5>
+    //         <button
+    //           type="button"
+    //           className="btn-close"
+    //           onClick={onCloseForm}
+    //         ></button>
+    //       </div>
+    //       <form onSubmit={onSave}>
+    //         <div className="modal-body">
+    //           <div className="mb-3">
+    //             <label className="col-form-label">ID:</label>
+    //             <div className="input-group">
+    //               <input
+    //                 type="text"
+    //                 className="form-control"
+    //                 name="id"
+    //                 value={id}
+    //                 disabled
+    //               />
+    //               {!categoryInfo && (
+    //                 <button
+    //                   className="btn btn-outline-secondary"
+    //                   type="button"
+    //                   onClick={onGenerateID}
+    //                 >
+    //                   Generate
+    //                 </button>
+    //               )}
+    //             </div>
+    //           </div>
+    //           <div className="mb-3">
+    //             <label className="col-form-label">Name:</label>
+    //             <input
+    //               type="text"
+    //               className="form-control"
+    //               name="name"
+    //               value={name}
+    //               onChange={onChange}
+    //             />
+    //           </div>
+    //           <div className="mb-3 d-flex flex-column">
+    //             <label className="col-form-label">Image:</label>
+    //             <input
+    //               className="form-control mb-3"
+    //               type="file"
+    //               name="image"
+    //               onChange={onChange}
+    //             ></input>
+    //             {categoryInfo && !image && (
+    //               <img
+    //                 src={categoryInfo.image}
+    //                 className="img-thumbnail"
+    //                 alt="..."
+    //                 style={{ width: "200px" }}
+    //               />
+    //             )}
+    //             {image && (
+    //               <img
+    //                 src={URL.createObjectURL(image)}
+    //                 className="img-thumbnail"
+    //                 alt="..."
+    //                 style={{ width: "200px" }}
+    //               />
+    //             )}
+    //           </div>
+    //         </div>
+    //         <div className="modal-footer">
+    //           <button
+    //             type="button"
+    //             className="btn btn-secondary"
+    //             onClick={onCloseForm}
+    //           >
+    //             Close
+    //           </button>
+    //           <button type="submit" className="btn btn-primary">
+    //             Save changes
+    //           </button>
+    //         </div>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 

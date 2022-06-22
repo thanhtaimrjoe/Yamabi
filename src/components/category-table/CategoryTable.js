@@ -62,7 +62,7 @@ function CategoryTable(props) {
     },
   ];
 
-  return <Table dataSource={dataSource} columns={columns} />;
+  return <Table dataSource={dataSource} columns={columns} rowKey="id" />;
 }
 
 export default CategoryTable;
