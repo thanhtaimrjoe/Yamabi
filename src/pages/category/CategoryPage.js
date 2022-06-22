@@ -13,9 +13,11 @@ import { Layout, Breadcrumb, Typography, Modal } from "antd";
 import "./Category.css";
 import MenuBar from "../../components/menu/MenuBar";
 import CategoryTable from "../../components/category-table/CategoryTable";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
+const { confirm } = Modal;
 
 function CategoryPage(props) {
   //state
@@ -66,9 +68,17 @@ function CategoryPage(props) {
 
   //delete category from table
   const onDeleteCategory = (category) => {
-    if (window.confirm("Are you sure you want delete?")) {
-      deleteCategory(category);
-    }
+    confirm({
+      title: "Do you want to delete this item?",
+      icon: <ExclamationCircleOutlined />,
+      content: "This action can not undo",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: () => {
+        deleteCategory(category);
+      },
+    });
   };
 
   //ant-design
@@ -116,6 +126,7 @@ function CategoryPage(props) {
               categoryInfo={categoryInfo}
               isModalVisible={isModalVisible}
               onCloseForm={onCloseForm}
+              onSave={onSave}
             />
           )}
         </div>

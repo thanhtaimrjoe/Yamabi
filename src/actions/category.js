@@ -27,14 +27,15 @@ export const actFetchCategories = (categories) => {
 
 export const actUpdateCategoryRequest = (category, file) => {
   return async (dispatch) => {
-    await updateCategory("category", category, file);
-    dispatch(actUpdateCategory());
+    var updatedCategory = await updateCategory("category", category, file);
+    dispatch(actUpdateCategory(updatedCategory));
   };
 };
 
-export const actUpdateCategory = () => {
+export const actUpdateCategory = (updatedCategory) => {
   return {
     type: UPDATE_CATEGORY,
+    updatedCategory,
   };
 };
 

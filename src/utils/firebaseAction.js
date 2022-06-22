@@ -136,6 +136,7 @@ export async function updateCategory(collectionName, category, file) {
   }
   const ref = doc(db, collectionName, category.docID);
   await updateDoc(ref, category);
+  return category;
 }
 
 export async function addNewCategory(collectionName, category, file) {

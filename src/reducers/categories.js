@@ -16,18 +16,24 @@ const findIndex = (categories, categoryID) => {
   return result;
 };
 
+var index = -1;
 const myReducers = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_CATEGORIES:
       return action.categories;
     case UPDATE_CATEGORY:
+      var { updatedCategory } = action;
+      index = findIndex(state, updatedCategory.id);
+      if (index !== -1) {
+        state[index] = updatedCategory;
+      }
       return [...state];
     case ADD_NEW_CATEGORY:
       state.push(action.newCategory);
       return [...state];
     case DELETE_CATEGORY:
       var { deletedCategory } = action;
-      var index = findIndex(state, deletedCategory.id);
+      index = findIndex(state, deletedCategory.id);
       if (index !== -1) {
         state.splice(index, 1);
       }

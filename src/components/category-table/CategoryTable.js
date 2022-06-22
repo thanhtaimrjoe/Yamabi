@@ -15,9 +15,11 @@ function CategoryTable(props) {
 
   const dataSource = categories.map((category, index) => {
     return {
-      no: index,
+      no: index + 1,
       id: category.id,
       name: category.name,
+      image: category.image,
+      docID: category.docID,
     };
   });
 

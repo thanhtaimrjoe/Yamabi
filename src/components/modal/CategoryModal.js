@@ -28,6 +28,13 @@ function CategoryModal(props) {
     if (categoryInfo) {
       setID(categoryInfo.id);
       setName(categoryInfo.name);
+      var imgFile = {
+        uid: "-1",
+        name: "image.png",
+        status: "done",
+        url: categoryInfo.image,
+      };
+      setFileList([...fileList, imgFile]);
     }
   }, []);
 
@@ -57,9 +64,8 @@ function CategoryModal(props) {
   const onSave = (event) => {
     event.preventDefault();
     if (categoryInfo) {
-      console.log("update");
-      // categoryInfo.name = name;
-      // props.onSave(categoryInfo, image);
+      categoryInfo.name = name;
+      props.onSave(categoryInfo, file);
     } else {
       console.log("add");
       // var category = {
@@ -81,8 +87,15 @@ function CategoryModal(props) {
     }
   };
   const onChange = (info) => {
-    console.log(info);
+    let newFileList = [...info.fileList];
     setFile(info.file);
+    setFileList(newFileList.slice(-1));
+  };
+
+  const onNameChange = (event) => {
+    var target = event.target;
+    var value = target.value;
+    setName(value);
   };
 
   return (
@@ -106,33 +119,29 @@ function CategoryModal(props) {
             <Text>Name:</Text>
           </Col>
           <Col flex="auto">
-            <Input value={name} disabled />
+            <Input name="name" value={name} onChange={onNameChange} />
           </Col>
         </Row>
         <Row>
           <Col flex="50px"></Col>
           <Col flex="auto">
             <Space>
-              {categoryInfo && !file && (
-                <Image
-                  height={110}
-                  src="https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/categories%2Feb762ef0-e307-11ec-8a7c-57956d2a10bd?alt=media&token=9458e3f1-53dc-4c6a-bc97-2a7745f62a7e"
-                />
-              )}
+              {/* {categoryInfo && !file && (
+                <Image height={110} src={categoryInfo.image} />
+              )} */}
               <Upload
-                multiple={false}
+                fileList={fileList}
+                multiple={true}
                 action="http://localhost:3000/"
                 listType="picture-card"
                 accept=".png,.jpeg"
                 beforeUpload={beforeUpload}
                 onChange={onChange}
               >
-                {!file && (
-                  <Space direction="vertical">
-                    <PlusOutlined />
-                    Upload
-                  </Space>
-                )}
+                <Space direction="vertical">
+                  <PlusOutlined />
+                  Upload
+                </Space>
               </Upload>
             </Space>
           </Col>
