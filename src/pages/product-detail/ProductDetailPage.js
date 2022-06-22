@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import MenuBar from "../../components/menu/MenuBar";
+import MenuBar from "../../components/menu-bar/MenuBar";
 import { actFetchProductInforByIDRequest } from "../../actions/product";
 import { actFetchEpisodesRequest } from "../../actions/episode";
 import { actFetchCharactersRequest } from "../../actions/character";

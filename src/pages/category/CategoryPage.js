@@ -6,16 +6,13 @@ import {
   actUpdateCategoryRequest,
 } from "../../actions/category";
 import { useDispatch, useSelector } from "react-redux";
-import CategoryItem from "../../components/category-item/CategoryItem";
-import CategoryList from "../../components/category-list/CategoryList";
 import CategoryModal from "../../components/modal/CategoryModal";
-import { Layout, Breadcrumb, Typography, Modal, Button, Space } from "antd";
-import "./Category.css";
-import MenuBar from "../../components/menu/MenuBar";
+import { Layout, Typography, Modal, Button, Space } from "antd";
 import CategoryTable from "../../components/category-table/CategoryTable";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import MenuBar from "../../components/menu-bar/MenuBar";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 const { Title } = Typography;
 const { confirm } = Modal;
 
@@ -81,34 +78,9 @@ function CategoryPage(props) {
     });
   };
 
-  //ant-design
-
-  const showCategories = () => {
-    var result = null;
-    if (categories.length > 0) {
-      result = categories.map((category, index) => {
-        return (
-          <CategoryItem
-            key={index}
-            index={index}
-            category={category}
-            onShowCategoryInfo={onShowCategoryInfo}
-            onDeleteCategory={onDeleteCategory}
-          />
-        );
-      });
-    }
-    return result;
-  };
-
   return (
     <Layout>
-      <Header>
-        <Title className="logo" style={{ color: "white" }}>
-          Yamabi
-        </Title>
-        <MenuBar />
-      </Header>
+      <MenuBar />
       <Content style={{ padding: "0 50px" }}>
         <Space style={{ margin: "15px 0 15px 0" }}>
           <Button type="primary" onClick={onShowCategoryDialog}>
@@ -135,30 +107,6 @@ function CategoryPage(props) {
         Ant Design ©2018 Created by Ant UED
       </Footer>
     </Layout>
-    // <div>
-    //   <Menu />
-    //   <div className="d-flex flex-column align-items-center mt-5">
-    //     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-    //       <button
-    //         type="button"
-    //         className="btn btn-primary mb-3"
-    //         onClick={onShowCategoryDialog}
-    //       >
-    //         Add new category
-    //       </button>
-    //       <CategoryList>{showCategories()}</CategoryList>
-    //     </div>
-    //   </div>
-    //   {isModalVisible ? (
-    //     <CategoryModal
-    //       categoryInfo={categoryInfo}
-    //       onCloseForm={onCloseForm}
-    //       onSave={onSave}
-    //     />
-    //   ) : (
-    //     ""
-    //   )}
-    // </div>
   );
 }
 

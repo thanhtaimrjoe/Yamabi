@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actFetchProductsRequest } from "../../actions/product";
-import MenuBar from "../../components/menu/MenuBar";
+import MenuBar from "../../components/menu-bar/MenuBar";
 import ProductItem from "../../components/product-item/ProductItem";
 import ProductList from "../../components/product-list/ProductList";
 
