@@ -9,6 +9,7 @@ import {
   Upload,
   message,
   Image,
+  Button,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -67,12 +68,11 @@ function CategoryModal(props) {
       categoryInfo.name = name;
       props.onSave(categoryInfo, file);
     } else {
-      console.log("add");
-      // var category = {
-      //   id: id,
-      //   name: name,
-      // };
-      // props.onSave(category, image);
+      var category = {
+        id: id,
+        name: name,
+      };
+      props.onSave(category, file);
     }
   };
 
@@ -113,6 +113,13 @@ function CategoryModal(props) {
           <Col flex="auto">
             <Input value={id} disabled />
           </Col>
+          {!categoryInfo && (
+            <Col>
+              <Button type="primary" onClick={onGenerateID}>
+                Generate
+              </Button>
+            </Col>
+          )}
         </Row>
         <Row>
           <Col flex="50px">
@@ -126,9 +133,6 @@ function CategoryModal(props) {
           <Col flex="50px"></Col>
           <Col flex="auto">
             <Space>
-              {/* {categoryInfo && !file && (
-                <Image height={110} src={categoryInfo.image} />
-              )} */}
               <Upload
                 fileList={fileList}
                 multiple={true}

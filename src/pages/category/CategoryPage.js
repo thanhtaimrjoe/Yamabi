@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CategoryItem from "../../components/category-item/CategoryItem";
 import CategoryList from "../../components/category-list/CategoryList";
 import CategoryModal from "../../components/modal/CategoryModal";
-import { Layout, Breadcrumb, Typography, Modal } from "antd";
+import { Layout, Breadcrumb, Typography, Modal, Button, Space } from "antd";
 import "./Category.css";
 import MenuBar from "../../components/menu/MenuBar";
 import CategoryTable from "../../components/category-table/CategoryTable";
@@ -110,11 +110,11 @@ function CategoryPage(props) {
         <MenuBar />
       </Header>
       <Content style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
+        <Space style={{ margin: "15px 0 15px 0" }}>
+          <Button type="primary" onClick={onShowCategoryDialog}>
+            Create new category
+          </Button>
+        </Space>
         <div className="site-layout-content">
           <CategoryTable
             categories={categories}
