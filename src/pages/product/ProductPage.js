@@ -1,9 +1,11 @@
+import { Button, Layout, Space } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actFetchProductsRequest } from "../../actions/product";
 import MenuBar from "../../components/menu-bar/MenuBar";
-import ProductItem from "../../components/product-item/ProductItem";
-import ProductList from "../../components/product-list/ProductList";
+import ProductTable from "../../components/product-table/ProductTable";
+
+const { Content, Footer } = Layout;
 
 function ProductPage(props) {
   //redux
@@ -13,29 +15,18 @@ function ProductPage(props) {
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const showProducts = () => {
-    var result = null;
-    if (products.length > 0) {
-      result = products.map((product, index) => {
-        return <ProductItem key={index} index={index} product={product} />;
-      });
-    }
-    return result;
-  };
   return (
-    <div>
+    <Layout>
       <MenuBar />
-      <div className="d-flex flex-column align-items-center mt-5">
-        <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-          <button type="button" className="btn btn-primary mb-3">
-            Add new product
-          </button>
-          <ProductList>{showProducts()}</ProductList>
-        </div>
-      </div>
-    </div>
+      <Content style={{ padding: "0 50px", height: "93vh" }}>
+        <Space style={{ margin: "15px 0 15px 0" }}>
+          <Button type="primary">Create new product</Button>
+        </Space>
+        <ProductTable products={products} />
+      </Content>
+    </Layout>
   );
 }
 

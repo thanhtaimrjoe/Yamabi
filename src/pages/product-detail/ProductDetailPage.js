@@ -9,6 +9,9 @@ import EpisodeList from "../../components/episode-list/EpisodeList";
 import EpisodeItem from "../../components/episode-item/EpisodeItem";
 import CharacterItem from "../../components/character-item/CharacterItem";
 import CharacterList from "../../components/character-list/CharacterList";
+import { Card, Col, Image, Row, Space, Typography } from "antd";
+
+const { Title, Paragraph, Text } = Typography;
 
 function ProductDetailPage(props) {
   //router
@@ -29,6 +32,7 @@ function ProductDetailPage(props) {
     fetchProductInfo(params.id);
     fetchEpisodes(params.id);
     fetchCharacters(params.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showEpisodes = () => {
@@ -52,10 +56,29 @@ function ProductDetailPage(props) {
   };
 
   return (
-    <div>
+    <>
       <MenuBar />
-      <div className="d-flex flex-column align-items-center mt-5">
-        {/* Card */}
+      <Row justify="center" style={{ backgroundColor: "yellow" }}>
+        <Col span={15} style={{ backgroundColor: "white" }}>
+          <Space>
+            <Image src={product.image} width={200} height={350} />
+            <Space direction="vertical" style={{ padding: "12px" }}>
+              <Title>{product.name}</Title>
+              <Text>
+                <Text strong>Genres:</Text> Comedy
+              </Text>
+              <Paragraph>
+                <Text strong>Overview:</Text> {product.overview}
+              </Paragraph>
+            </Space>
+          </Space>
+        </Col>
+      </Row>
+      <Space>
+        <Title level={3}>List of episode</Title>
+      </Space>
+      <Row gutter={[16, 16]}>{showEpisodes()}</Row>
+      {/* <div className="d-flex flex-column align-items-center mt-5">
         <div className="card mb-5" style={{ width: "1000px" }}>
           <div className="row g-0">
             <div className="col-md-3">
@@ -75,8 +98,8 @@ function ProductDetailPage(props) {
         </div>
         <EpisodeList>{showEpisodes()}</EpisodeList>
         <CharacterList>{showCharacters()}</CharacterList>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 }
 

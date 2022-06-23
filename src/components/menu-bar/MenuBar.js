@@ -16,7 +16,10 @@ const menus = [
 ];
 
 function MenuBar(props) {
+  //location
   var location = useLocation();
+
+  //menu items
   const showMenus = () => {
     var result = null;
     if (menus.length > 0) {

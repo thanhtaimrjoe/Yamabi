@@ -3,12 +3,15 @@ import { Table, Button, Space } from "antd";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
 
 function CategoryTable(props) {
+  //props
   const { categories } = props;
 
+  //show dialog
   const onShowCategoryInfo = (category) => {
     props.onShowCategoryInfo(category);
   };
 
+  //delete
   const onDeleteCategory = (category) => {
     props.onDeleteCategory(category);
   };

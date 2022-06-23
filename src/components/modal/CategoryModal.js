@@ -21,6 +21,7 @@ function CategoryModal(props) {
   const [name, setName] = useState("");
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
+
   //props
   var { categoryInfo, isModalVisible } = props;
 
@@ -36,16 +37,20 @@ function CategoryModal(props) {
       };
       setFileList([...fileList, imgFile]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onCloseForm = () => {
-    props.onCloseForm();
+  //close dialog
+  const onCloseDialog = () => {
+    props.onCloseDialog();
   };
 
+  //generate id
   const onGenerateID = () => {
     setID(uuidv4());
   };
 
+  //update or add
   const onSave = (event) => {
     event.preventDefault();
     if (categoryInfo) {
@@ -60,7 +65,7 @@ function CategoryModal(props) {
     }
   };
 
-  //ant-design
+  //upload props
   const beforeUpload = (file) => {
     const isPNG = file.type === "image/png";
     if (!isPNG) {
@@ -70,12 +75,15 @@ function CategoryModal(props) {
       return false;
     }
   };
+
+  //upload props
   const onChange = (info) => {
     let newFileList = [...info.fileList];
     setFile(info.file);
     setFileList(newFileList.slice(-1));
   };
 
+  //name input
   const onNameChange = (event) => {
     var target = event.target;
     var value = target.value;
@@ -87,7 +95,7 @@ function CategoryModal(props) {
       title="Category Information"
       visible={isModalVisible}
       onOk={onSave}
-      onCancel={onCloseForm}
+      onCancel={onCloseDialog}
     >
       <Space direction="vertical" style={{ display: "flex" }}>
         <Row>
