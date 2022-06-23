@@ -7,21 +7,23 @@ import {
 } from "../../actions/category";
 import { useDispatch, useSelector } from "react-redux";
 import CategoryModal from "../../components/modal/CategoryModal";
-import { Layout, Modal, Button, Space } from "antd";
+import { Layout, Modal, Button, Space, Input } from "antd";
 import CategoryTable from "../../components/category-table/CategoryTable";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import MenuBar from "../../components/menu-bar/MenuBar";
 
 const { Content } = Layout;
 const { confirm } = Modal;
+const { Search } = Input;
 
 function CategoryPage(props) {
   //state
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [categoryInfo, setCategoryInfo] = useState();
+  const [searchParam, setSearchParam] = useState();
 
   //redux - state
-  const categories = useSelector((state) => state.categories);
+  var categories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
   //redux - fetch
   const fetchCategories = () => dispatch(actFetchCategoriesRequest());
@@ -50,6 +52,11 @@ function CategoryPage(props) {
   const onShowCategoryDialog = () => {
     setCategoryInfo(null);
     setIsModalVisible(true);
+  };
+
+  //search
+  const onSearch = (value) => {
+    setSearchParam(value);
   };
 
   //close dialog
@@ -82,30 +89,47 @@ function CategoryPage(props) {
     });
   };
 
+  if (searchParam) {
+    categories = categories.filter((category) => {
+      return category.name.indexOf(searchParam) !== -1;
+    });
+  }
+
   return (
     <Layout>
       <MenuBar />
       <Content style={{ padding: "0 150px", minHeight: "93vh" }}>
-        <Space style={{ margin: "15px 0 15px 0" }}>
-          <Button type="primary" onClick={onShowCategoryDialog}>
-            Create new category
+        <Space style={{ margin: "25px 0 25px 0" }}>
+          <Search
+            placeholder="Search category..."
+            enterButton="Search"
+            size="large"
+            style={{ width: 500 }}
+            onSearch={onSearch}
+          />
+          <Button
+            type="primary"
+            danger
+            size="large"
+            icon={<PlusOutlined />}
+            onClick={onShowCategoryDialog}
+          >
+            Create
           </Button>
         </Space>
-        <div className="site-layout-content">
-          <CategoryTable
-            categories={categories}
-            onShowCategoryInfo={onShowCategoryInfo}
-            onDeleteCategory={onDeleteCategory}
+        <CategoryTable
+          categories={categories}
+          onShowCategoryInfo={onShowCategoryInfo}
+          onDeleteCategory={onDeleteCategory}
+        />
+        {isModalVisible && (
+          <CategoryModal
+            categoryInfo={categoryInfo}
+            isModalVisible={isModalVisible}
+            onCloseDialog={onCloseDialog}
+            onSave={onSave}
           />
-          {isModalVisible && (
-            <CategoryModal
-              categoryInfo={categoryInfo}
-              isModalVisible={isModalVisible}
-              onCloseDialog={onCloseDialog}
-              onSave={onSave}
-            />
-          )}
-        </div>
+        )}
       </Content>
     </Layout>
   );

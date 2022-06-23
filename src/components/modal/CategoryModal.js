@@ -122,7 +122,7 @@ function CategoryModal(props) {
           </Col>
         </Row>
         <Row>
-          <Col flex="50px"></Col>
+          <Col flex="50px">Image</Col>
           <Col flex="auto">
             <Space>
               <Upload
