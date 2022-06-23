@@ -5,12 +5,12 @@ import { actFetchProductInforByIDRequest } from "../../actions/product";
 import { actFetchEpisodesRequest } from "../../actions/episode";
 import { actFetchCharactersRequest } from "../../actions/character";
 import { useDispatch, useSelector } from "react-redux";
-import EpisodeList from "../../components/episode-list/EpisodeList";
 import EpisodeItem from "../../components/episode-item/EpisodeItem";
 import CharacterItem from "../../components/character-item/CharacterItem";
-import CharacterList from "../../components/character-list/CharacterList";
-import { Card, Col, Image, Row, Space, Typography } from "antd";
+import { Col, Image, Layout, Row, Space, Typography } from "antd";
+import { blue } from "@ant-design/colors";
 
+const { Content, Footer } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
 function ProductDetailPage(props) {
@@ -58,47 +58,38 @@ function ProductDetailPage(props) {
   return (
     <>
       <MenuBar />
-      <Row justify="center" style={{ backgroundColor: "yellow" }}>
-        <Col span={15} style={{ backgroundColor: "white" }}>
-          <Space>
-            <Image src={product.image} width={200} height={350} />
-            <Space direction="vertical" style={{ padding: "12px" }}>
-              <Title>{product.name}</Title>
-              <Text>
-                <Text strong>Genres:</Text> Comedy
-              </Text>
-              <Paragraph>
-                <Text strong>Overview:</Text> {product.overview}
-              </Paragraph>
+      <Content>
+        <Row justify="center" style={{ margin: "32px" }}>
+          <Col span={15} style={{ backgroundColor: blue[1] }}>
+            <Space>
+              <Image src={product.image} width={200} />
+              <Space direction="vertical" style={{ padding: "12px" }}>
+                <Title>{product.name}</Title>
+                <Text>
+                  <Text strong>Genres:</Text> Comedy
+                </Text>
+                <Paragraph>
+                  <Text strong>Overview:</Text> {product.overview}
+                </Paragraph>
+              </Space>
             </Space>
-          </Space>
-        </Col>
-      </Row>
-      <Space>
-        <Title level={3}>List of episode</Title>
-      </Space>
-      <Row gutter={[16, 16]}>{showEpisodes()}</Row>
-      {/* <div className="d-flex flex-column align-items-center mt-5">
-        <div className="card mb-5" style={{ width: "1000px" }}>
-          <div className="row g-0">
-            <div className="col-md-3">
-              <img
-                src={product.image}
-                className="img-fluid rounded-start"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-9">
-              <div className="card-body">
-                <h5 className="card-title fw-bold">{product.name}</h5>
-                <p className="card-text">{product.overview}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <EpisodeList>{showEpisodes()}</EpisodeList>
-        <CharacterList>{showCharacters()}</CharacterList>
-      </div> */}
+          </Col>
+        </Row>
+        <Space style={{ marginLeft: "100px" }}>
+          <Title level={3}>List of episode</Title>
+        </Space>
+        <Row gutter={[16, 16]} style={{ margin: "0px 80px" }}>
+          {showEpisodes()}
+        </Row>
+        <br />
+        <Space style={{ marginLeft: "100px" }}>
+          <Title level={3}>List of character</Title>
+        </Space>
+        <Row gutter={[16, 16]} style={{ margin: "0px 80px" }}>
+          {showCharacters()}
+        </Row>
+      </Content>
+      <Footer style={{ backgroundColor: "white" }}></Footer>
     </>
   );
 }

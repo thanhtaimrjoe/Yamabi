@@ -8,6 +8,7 @@ var initialState = [];
 
 const findIndex = (categories, categoryID) => {
   var result = -1;
+  // eslint-disable-next-line
   categories.map((category, index) => {
     if (category.id === categoryID) {
       result = index;

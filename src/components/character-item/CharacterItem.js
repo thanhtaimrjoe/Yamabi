@@ -1,19 +1,23 @@
+import { Card, Col, Tag, Typography } from "antd";
 import React from "react";
+
+const { Title } = Typography;
 
 function CharacterItem(props) {
   var { character } = props;
   return (
-    <div className="col mb-3">
-      <div className="card" style={{ width: "15rem" }}>
-        <img src={character.image} className="card-img-top" alt="..." />
-        <div className="card-body">
-          <h5 className="card-title">{character.name}</h5>
-          <button type="button" className="btn btn-primary">
-            Edit character
-          </button>
-        </div>
-      </div>
-    </div>
+    <Col span={4} style={{ margin: "0 20px" }}>
+      <Card
+        hoverable
+        style={{ width: "auto" }}
+        cover={<img alt="example" src={character.image} />}
+      >
+        <Title level={5} ellipsis={true}>
+          {character.name}
+        </Title>
+        <Tag color={"magenta"}>Main</Tag>
+      </Card>
+    </Col>
   );
 }
 

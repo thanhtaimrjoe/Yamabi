@@ -49,6 +49,7 @@ export async function fetchAllCategory(collectionName) {
   const col = collection(db, collectionName);
   const snapshot = await getDocs(col);
   var result = [];
+  // eslint-disable-next-line
   snapshot.docs.map((doc, index) => {
     result[index] = doc.data();
     result[index].docID = doc.id;

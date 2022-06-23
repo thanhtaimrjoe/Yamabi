@@ -12,7 +12,7 @@ import CategoryTable from "../../components/category-table/CategoryTable";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import MenuBar from "../../components/menu-bar/MenuBar";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 const { confirm } = Modal;
 
 function CategoryPage(props) {
@@ -85,7 +85,7 @@ function CategoryPage(props) {
   return (
     <Layout>
       <MenuBar />
-      <Content style={{ padding: "0 50px", height: "93vh" }}>
+      <Content style={{ padding: "0 50px", minHeight: "93vh" }}>
         <Space style={{ margin: "15px 0 15px 0" }}>
           <Button type="primary" onClick={onShowCategoryDialog}>
             Create new category

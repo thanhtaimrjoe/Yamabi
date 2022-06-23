@@ -10,7 +10,6 @@ import {
   Input,
   message,
   Row,
-  Space,
   Typography,
 } from "antd";
 import { blue } from "@ant-design/colors";
@@ -40,6 +39,7 @@ function SignInPage(props) {
       message.error("Your username or password was incorrect");
       clearUser();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   //ant-design

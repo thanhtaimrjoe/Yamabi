@@ -5,7 +5,7 @@ import { actFetchProductsRequest } from "../../actions/product";
 import MenuBar from "../../components/menu-bar/MenuBar";
 import ProductTable from "../../components/product-table/ProductTable";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 function ProductPage(props) {
   //redux
@@ -20,7 +20,7 @@ function ProductPage(props) {
   return (
     <Layout>
       <MenuBar />
-      <Content style={{ padding: "0 50px", height: "93vh" }}>
+      <Content style={{ padding: "0 50px", minHeight: "93vh" }}>
         <Space style={{ margin: "15px 0 15px 0" }}>
           <Button type="primary">Create new product</Button>
         </Space>
