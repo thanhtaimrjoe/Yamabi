@@ -6,10 +6,10 @@ const { Title, Text } = Typography;
 function EpisodeItem(props) {
   var { episode } = props;
   return (
-    <Col span={4} style={{ margin: "0 20px" }}>
+    <Col span={4}>
       <Card
         hoverable
-        style={{ width: 220 }}
+        style={{ width: "auto" }}
         cover={<img alt="example" src={episode.image} />}
       >
         <Title level={4}>{episode.name}</Title>

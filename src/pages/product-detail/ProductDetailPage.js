@@ -59,9 +59,14 @@ function ProductDetailPage(props) {
     <>
       <MenuBar />
       <Content>
-        <Row justify="center" style={{ margin: "32px" }}>
-          <Col span={15} style={{ backgroundColor: blue[1] }}>
-            <Space>
+        <Row justify="center">
+          <Col span={15}>
+            <Space
+              style={{
+                marginTop: "20px",
+                backgroundColor: blue[1],
+              }}
+            >
               <Image src={product.image} width={200} />
               <Space direction="vertical" style={{ padding: "12px" }}>
                 <Title>{product.name}</Title>
@@ -73,20 +78,15 @@ function ProductDetailPage(props) {
                 </Paragraph>
               </Space>
             </Space>
+            <Space style={{ marginTop: "20px" }}>
+              <Title level={3}>List of episode</Title>
+            </Space>
+            <Row gutter={[16, 16]}>{showEpisodes()}</Row>
+            <Space style={{ marginTop: "20px" }}>
+              <Title level={3}>List of character</Title>
+            </Space>
+            <Row gutter={[16, 16]}>{showCharacters()}</Row>
           </Col>
-        </Row>
-        <Space style={{ marginLeft: "100px" }}>
-          <Title level={3}>List of episode</Title>
-        </Space>
-        <Row gutter={[16, 16]} style={{ margin: "0px 80px" }}>
-          {showEpisodes()}
-        </Row>
-        <br />
-        <Space style={{ marginLeft: "100px" }}>
-          <Title level={3}>List of character</Title>
-        </Space>
-        <Row gutter={[16, 16]} style={{ margin: "0px 80px" }}>
-          {showCharacters()}
         </Row>
       </Content>
       <Footer style={{ backgroundColor: "white" }}></Footer>

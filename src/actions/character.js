@@ -1,5 +1,5 @@
 import { FETCH_CHARACTERS } from "../constants/ActionTypes";
-import { fetchCharactersByID } from "../utils/firebaseAction";
+import { fetchCharactersByID } from "../utils/character";
 
 export const actFetchCharactersRequest = (productID) => {
   return async (dispatch) => {

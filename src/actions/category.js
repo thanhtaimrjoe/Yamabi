@@ -9,7 +9,7 @@ import {
   deleteCategory,
   fetchAllCategory,
   updateCategory,
-} from "../utils/firebaseAction";
+} from "../utils/category";
 
 export const actFetchCategoriesRequest = () => {
   return async (dispatch) => {

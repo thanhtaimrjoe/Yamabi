@@ -6,7 +6,7 @@ const { Title } = Typography;
 function CharacterItem(props) {
   var { character } = props;
   return (
-    <Col span={4} style={{ margin: "0 20px" }}>
+    <Col span={4}>
       <Card
         hoverable
         style={{ width: "auto" }}

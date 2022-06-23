@@ -1,5 +1,5 @@
 import { CLEAR_USER, GET_USER } from "../constants/ActionTypes";
-import { checkUser } from "../utils/firebaseAction";
+import { checkUser } from "../utils/user";
 
 export const actCheckUserRequest = (user) => {
   return async (dispatch) => {

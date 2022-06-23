@@ -20,7 +20,7 @@ function ProductPage(props) {
   return (
     <Layout>
       <MenuBar />
-      <Content style={{ padding: "0 50px", minHeight: "93vh" }}>
+      <Content style={{ padding: "0 150px", minHeight: "93vh" }}>
         <Space style={{ margin: "15px 0 15px 0" }}>
           <Button type="primary">Create new product</Button>
         </Space>

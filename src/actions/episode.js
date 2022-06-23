@@ -1,5 +1,5 @@
 import { FETCH_EPISODES } from "../constants/ActionTypes";
-import { fetchEpisodesByID } from "../utils/firebaseAction";
+import { fetchEpisodesByID } from "../utils/episode";
 
 export const actFetchEpisodesRequest = (productID) => {
   return async (dispatch) => {

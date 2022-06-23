@@ -1,5 +1,5 @@
 import { FETCH_PRODUCTS, FETCH_PRODUCT_INFO } from "../constants/ActionTypes";
-import { fetchAllProduct, fetchProductInfoByID } from "../utils/firebaseAction";
+import { fetchAllProduct, fetchProductInfoByID } from "../utils/product";
 
 export const actFetchProductsRequest = () => {
   return async (dispatch) => {

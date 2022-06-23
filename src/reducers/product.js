@@ -1,5 +1,5 @@
 import { FETCH_PRODUCT_INFO } from "../constants/ActionTypes";
-var initialState = [];
+var initialState = {};
 
 const myReducers = (state = initialState, action) => {
   switch (action.type) {
