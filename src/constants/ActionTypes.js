@@ -8,6 +8,7 @@ export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 //product
 export const FETCH_PRODUCT_INFO = "FETCH_PRODUCT_INFO";
 export const ADD_NEW_PRODUCT = "ADD_NEW_PRODUCT";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
 //episodes
 export const FETCH_EPISODES = "FETCH_EPISODES";
 //characters

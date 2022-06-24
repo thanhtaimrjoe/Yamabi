@@ -1,10 +1,12 @@
 import {
   ADD_NEW_PRODUCT,
+  DELETE_PRODUCT,
   FETCH_PRODUCTS,
   FETCH_PRODUCT_INFO,
 } from "../constants/ActionTypes";
 import {
   addNewProduct,
+  deleteProduct,
   fetchAllProduct,
   fetchProductInfoByID,
 } from "../utils/product";
@@ -48,5 +50,18 @@ export const actAddNewProduct = (newProduct) => {
   return {
     type: ADD_NEW_PRODUCT,
     newProduct,
+  };
+};
+
+export const actDeleteProductRequest = (product) => {
+  return async (dispatch) => {
+    await deleteProduct("product", product);
+    dispatch(actDeleteProduct());
+  };
+};
+
+export const actDeleteProduct = () => {
+  return {
+    type: DELETE_PRODUCT,
   };
 };

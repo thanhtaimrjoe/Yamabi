@@ -1,4 +1,3 @@
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { Button, Space, Table } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ function ProductTable(props) {
   //navigate
   const navigate = useNavigate();
 
+  //navigate product detail page
   const onShowProductInfo = (product) => {
     navigate(`/product/${product.productID}`);
   };
@@ -52,15 +52,8 @@ function ProductTable(props) {
       key: "action",
       render: (_, record) => (
         <Space>
-          <Button
-            type="primary"
-            icon={<EditFilled />}
-            onClick={() => onShowProductInfo(record)}
-          >
-            Edit
-          </Button>
-          <Button type="danger" icon={<DeleteFilled />}>
-            Remove
+          <Button type="primary" onClick={() => onShowProductInfo(record)}>
+            See detail
           </Button>
         </Space>
       ),

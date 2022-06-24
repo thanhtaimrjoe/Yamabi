@@ -35,18 +35,21 @@ function ProductModal(props) {
   const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
-    setCategoryID(categories[0].id);
-    // if (productInfo) {
-    //   setID(productInfo.productID);
-    //   setName(productInfo.name);
-    //   var imgFile = {
-    //     uid: "-1",
-    //     name: "image.png",
-    //     status: "done",
-    //     url: productInfo.image,
-    //   };
-    //   setFileList([...fileList, imgFile]);
-    // }
+    if (productInfo) {
+      setProductID(productInfo.productID);
+      setName(productInfo.name);
+      setOverview(productInfo.overview);
+      setCategoryID(productInfo.categoryID);
+      var imgFile = {
+        uid: "-1",
+        name: "image.png",
+        status: "done",
+        url: productInfo.image,
+      };
+      setFileList([...fileList, imgFile]);
+    } else {
+      setCategoryID(categories[0].id);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -141,7 +144,9 @@ function ProductModal(props) {
           </Col>
           <Col flex="auto">
             <Select
-              defaultValue={categories[0].id}
+              defaultValue={
+                productInfo ? productInfo.categoryID : categories[0].id
+              }
               onChange={onSelectChange}
               style={{ width: 120 }}
             >

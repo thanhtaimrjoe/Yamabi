@@ -2,12 +2,14 @@ import { app } from "./firebase";
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   getFirestore,
   query,
   where,
 } from "firebase/firestore";
-import { uploadImageToStorage } from "./storage";
+import { deleteImageFromStorage, uploadImageToStorage } from "./storage";
 
 export async function fetchAllProduct(collectionName) {
   const db = getFirestore(app);
@@ -17,7 +19,6 @@ export async function fetchAllProduct(collectionName) {
   const result = await Promise.all(
     snapshot.docs.map(async (doc) => {
       var data = doc.data();
-      data.docID = doc.id;
       var categoryName = await findCategoryNameByID(
         "category",
         data.categoryID
@@ -44,6 +45,9 @@ export async function fetchProductInfoByID(collectionName, productID) {
   const queryCol = query(col, where("productID", "==", productID));
   const snapshot = await getDocs(queryCol);
   var data = snapshot.docs[0].data();
+  data.docID = snapshot.docs[0].id;
+  var categoryName = await findCategoryNameByID("category", data.categoryID);
+  data.categoryName = categoryName;
   return data;
 }
 
@@ -60,4 +64,14 @@ export async function addNewProduct(collectionName, product, file) {
   var categoryName = await findCategoryNameByID("category", product.categoryID);
   product.categoryName = categoryName;
   return product;
+}
+
+export async function deleteProduct(collectionName, product) {
+  const db = getFirestore(app);
+  //delete old image from storage
+  deleteImageFromStorage(product.image);
+
+  //delete doc from firestore
+  const ref = doc(db, collectionName, product.docID);
+  await deleteDoc(ref, product);
 }

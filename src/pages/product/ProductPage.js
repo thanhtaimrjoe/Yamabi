@@ -1,5 +1,13 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Input, Layout, Menu, Space } from "antd";
+import {
+  Button,
+  Dropdown,
+  Input,
+  Layout,
+  Menu,
+  Space,
+  notification,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,7 +30,7 @@ function ProductPage(props) {
   //redux - state
   const categories = useSelector((state) => state.categories);
   var products = useSelector((state) => state.products);
-  //redux - action
+  //redux - actions
   const dispatch = useDispatch();
   const fetchCategories = () => dispatch(actFetchCategoriesRequest());
   const fetchProducts = () => dispatch(actFetchProductsRequest());
@@ -52,10 +60,14 @@ function ProductPage(props) {
     setIsModalVisible(false);
   };
 
-  //update or add
+  //add
   const onSave = (product, file) => {
     addNewProduct(product, file);
     setIsModalVisible(false);
+    notification["success"]({
+      message: "Success",
+      description: `Add ${product.name} product successfully`,
+    });
   };
 
   //filter array
