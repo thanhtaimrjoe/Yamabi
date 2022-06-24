@@ -9,11 +9,18 @@ import ProductInfo from "../../components/product-info/ProductInfo";
 import ProductModal from "../../components/modal/ProductModal";
 //actions
 import {
+  actCleanProduct,
   actDeleteProductRequest,
   actFetchProductInforByIDRequest,
 } from "../../actions/product";
-import { actFetchEpisodesRequest } from "../../actions/episode";
-import { actFetchCharactersRequest } from "../../actions/character";
+import {
+  actCleanEpisodes,
+  actFetchEpisodesRequest,
+} from "../../actions/episode";
+import {
+  actCleanCharacters,
+  actFetchCharactersRequest,
+} from "../../actions/character";
 //ant design
 import {
   Button,
@@ -24,6 +31,7 @@ import {
   Typography,
   Modal,
   notification,
+  Skeleton,
 } from "antd";
 import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { actFetchCategoriesRequest } from "../../actions/category";
@@ -35,6 +43,7 @@ const { confirm } = Modal;
 function ProductDetailPage(props) {
   //state
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   //router
   const params = useParams();
   const navigate = useNavigate();
@@ -53,14 +62,27 @@ function ProductDetailPage(props) {
   const fetchCharacters = (productID) =>
     dispatch(actFetchCharactersRequest(productID));
   const deleteProduct = (product) => dispatch(actDeleteProductRequest(product));
+  const cleanProduct = () => dispatch(actCleanProduct());
+  const cleanEpisodes = () => dispatch(actCleanEpisodes());
+  const cleanCharacters = () => dispatch(actCleanCharacters());
 
   useEffect(() => {
-    if (categories) {
-      fetchCategories();
-    }
-    fetchProductInfo(params.id);
-    fetchEpisodes(params.id);
-    fetchCharacters(params.id);
+    setLoading(true);
+    setTimeout(function () {
+      if (!categories) {
+        fetchCategories();
+      }
+      fetchProductInfo(params.id);
+      fetchEpisodes(params.id);
+      fetchCharacters(params.id);
+      setLoading(false);
+    }, 2000);
+
+    return function cleanUp() {
+      cleanProduct();
+      cleanEpisodes();
+      cleanCharacters();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -130,41 +152,68 @@ function ProductDetailPage(props) {
       <Content style={{ minHeight: "87.5vh" }}>
         <Row justify="center">
           <Col span={15}>
-            <ProductInfo
-              product={product}
-              onShowUpdateDialog={onShowUpdateDialog}
-              onDeleteProduct={onDeleteProduct}
-            />
-            <Row justify="space-between" style={{ marginTop: "40px" }}>
-              <Col>
-                <Title level={3}>List of episode</Title>
-              </Col>
-              <Col>
-                <Button type="primary" icon={<PlusOutlined />}>
-                  Create episode
-                </Button>
-              </Col>
-            </Row>
-            {episodes.length > 0 ? (
-              <Row gutter={[16, 16]}>{showEpisodes()}</Row>
-            ) : (
-              <Empty />
-            )}
-            <Row justify="space-between" style={{ marginTop: "40px" }}>
-              <Col>
-                <Title level={3}>List of character</Title>
-              </Col>
-              <Col>
-                <Button type="primary" icon={<PlusOutlined />}>
-                  Create character
-                </Button>
-              </Col>
-            </Row>
-            {characters.length > 0 ? (
-              <Row gutter={[16, 16]}>{showCharacters()}</Row>
-            ) : (
-              <Empty />
-            )}
+            <Skeleton
+              loading={loading}
+              style={{
+                marginTop: "20px",
+                padding: "20px",
+                backgroundColor: "white",
+              }}
+            >
+              <ProductInfo
+                product={product}
+                onShowUpdateDialog={onShowUpdateDialog}
+                onDeleteProduct={onDeleteProduct}
+              />
+            </Skeleton>
+            <Skeleton
+              loading={loading}
+              style={{
+                marginTop: "20px",
+                padding: "20px",
+                backgroundColor: "white",
+              }}
+            >
+              <Row justify="space-between" style={{ marginTop: "40px" }}>
+                <Col>
+                  <Title level={3}>List of episode</Title>
+                </Col>
+                <Col>
+                  <Button type="primary" icon={<PlusOutlined />}>
+                    Create episode
+                  </Button>
+                </Col>
+              </Row>
+              {episodes.length > 0 ? (
+                <Row gutter={[16, 16]}>{showEpisodes()}</Row>
+              ) : (
+                <Empty />
+              )}
+            </Skeleton>
+            <Skeleton
+              loading={loading}
+              style={{
+                marginTop: "20px",
+                padding: "20px",
+                backgroundColor: "white",
+              }}
+            >
+              <Row justify="space-between" style={{ marginTop: "40px" }}>
+                <Col>
+                  <Title level={3}>List of character</Title>
+                </Col>
+                <Col>
+                  <Button type="primary" icon={<PlusOutlined />}>
+                    Create character
+                  </Button>
+                </Col>
+              </Row>
+              {characters.length > 0 ? (
+                <Row gutter={[16, 16]}>{showCharacters()}</Row>
+              ) : (
+                <Empty />
+              )}
+            </Skeleton>
           </Col>
         </Row>
         {/* Modal */}

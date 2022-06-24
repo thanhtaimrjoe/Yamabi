@@ -1,4 +1,8 @@
-import { DELETE_PRODUCT, FETCH_PRODUCT_INFO } from "../constants/ActionTypes";
+import {
+  CLEAN_PRODUCT,
+  DELETE_PRODUCT,
+  FETCH_PRODUCT_INFO,
+} from "../constants/ActionTypes";
 var initialState = {};
 
 const myReducers = (state = initialState, action) => {
@@ -6,6 +10,9 @@ const myReducers = (state = initialState, action) => {
     case FETCH_PRODUCT_INFO:
       return action.product;
     case DELETE_PRODUCT:
+      state = initialState;
+      return state;
+    case CLEAN_PRODUCT:
       state = initialState;
       return state;
     default:

@@ -1,10 +1,13 @@
-import { FETCH_CHARACTERS } from "../constants/ActionTypes";
+import { CLEAN_CHARACTERS, FETCH_CHARACTERS } from "../constants/ActionTypes";
 var initialState = [];
 
 const myReducers = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_CHARACTERS:
       return action.characters;
+    case CLEAN_CHARACTERS:
+      state = initialState;
+      return state;
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { FETCH_CHARACTERS } from "../constants/ActionTypes";
+import { CLEAN_CHARACTERS, FETCH_CHARACTERS } from "../constants/ActionTypes";
 import { fetchCharactersByID } from "../utils/character";
 
 export const actFetchCharactersRequest = (productID) => {
@@ -12,5 +12,11 @@ export const actFetchCharacters = (characters) => {
   return {
     type: FETCH_CHARACTERS,
     characters,
+  };
+};
+
+export const actCleanCharacters = () => {
+  return {
+    type: CLEAN_CHARACTERS,
   };
 };

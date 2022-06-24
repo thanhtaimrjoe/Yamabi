@@ -1,5 +1,6 @@
 import {
   ADD_NEW_PRODUCT,
+  CLEAN_PRODUCT,
   DELETE_PRODUCT,
   FETCH_PRODUCTS,
   FETCH_PRODUCT_INFO,
@@ -63,5 +64,11 @@ export const actDeleteProductRequest = (product) => {
 export const actDeleteProduct = () => {
   return {
     type: DELETE_PRODUCT,
+  };
+};
+
+export const actCleanProduct = () => {
+  return {
+    type: CLEAN_PRODUCT,
   };
 };

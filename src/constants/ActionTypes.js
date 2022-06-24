@@ -9,10 +9,13 @@ export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const FETCH_PRODUCT_INFO = "FETCH_PRODUCT_INFO";
 export const ADD_NEW_PRODUCT = "ADD_NEW_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const CLEAN_PRODUCT = "CLEAN_PRODUCT";
 //episodes
 export const FETCH_EPISODES = "FETCH_EPISODES";
+export const CLEAN_EPISODES = "CLAN_EPISODES";
 //characters
 export const FETCH_CHARACTERS = "FETCH_CHARACTERS";
+export const CLEAN_CHARACTERS = "CLEAN_CHARACTERS";
 //category
 export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 export const ADD_NEW_CATEGORY = "ADD_NEW_CATEGORY";
