@@ -18,13 +18,7 @@ function ProductInfo(props) {
   };
 
   return (
-    <Space
-      style={{
-        marginTop: "20px",
-        display: "flex",
-        backgroundColor: "white",
-      }}
-    >
+    <Space style={{ display: "flex" }}>
       <Image src={product.image} width={200} />
       <Space direction="vertical" style={{ padding: "12px" }}>
         <Title>{product.name}</Title>

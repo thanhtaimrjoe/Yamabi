@@ -7,6 +7,7 @@ import {
   getDocs,
   getFirestore,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { deleteImageFromStorage, uploadImageToStorage } from "./storage";
@@ -74,4 +75,21 @@ export async function deleteProduct(collectionName, product) {
   //delete doc from firestore
   const ref = doc(db, collectionName, product.docID);
   await deleteDoc(ref, product);
+}
+
+export async function updateProduct(collectionName, product, file) {
+  const db = getFirestore(app);
+  //get category name
+  // var categoryName = await findCategoryNameByID("category", product.categoryID);
+  // product.categoryName = categoryName;
+  if (file) {
+    //delete old image from storage
+    deleteImageFromStorage(product.image);
+    //upload to storage
+    const imageURL = await uploadImageToStorage(file, "products");
+    product.image = imageURL;
+  }
+  const ref = doc(db, collectionName, product.docID);
+  await updateDoc(ref, product);
+  return product;
 }

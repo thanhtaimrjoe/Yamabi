@@ -6,7 +6,7 @@ const { Title, Text } = Typography;
 function EpisodeItem(props) {
   var { episode } = props;
   return (
-    <Col span={4}>
+    <Col span={6}>
       <Card
         hoverable
         style={{ width: "auto" }}

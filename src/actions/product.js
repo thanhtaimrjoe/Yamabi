@@ -4,12 +4,14 @@ import {
   DELETE_PRODUCT,
   FETCH_PRODUCTS,
   FETCH_PRODUCT_INFO,
+  UPDATE_PRODUCT,
 } from "../constants/ActionTypes";
 import {
   addNewProduct,
   deleteProduct,
   fetchAllProduct,
   fetchProductInfoByID,
+  updateProduct,
 } from "../utils/product";
 
 export const actFetchProductsRequest = () => {
@@ -70,5 +72,19 @@ export const actDeleteProduct = () => {
 export const actCleanProduct = () => {
   return {
     type: CLEAN_PRODUCT,
+  };
+};
+
+export const actUpdateProductRequest = (product, file) => {
+  return async (dispatch) => {
+    const updatedProduct = await updateProduct("product", product, file);
+    dispatch(actUpdateProduct(updatedProduct));
+  };
+};
+
+export const actUpdateProduct = (updatedProduct) => {
+  return {
+    type: UPDATE_PRODUCT,
+    updatedProduct,
   };
 };

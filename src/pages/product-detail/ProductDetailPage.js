@@ -12,6 +12,7 @@ import {
   actCleanProduct,
   actDeleteProductRequest,
   actFetchProductInforByIDRequest,
+  actUpdateProductRequest,
 } from "../../actions/product";
 import {
   actCleanEpisodes,
@@ -44,6 +45,7 @@ function ProductDetailPage(props) {
   //state
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
   //router
   const params = useParams();
   const navigate = useNavigate();
@@ -65,11 +67,13 @@ function ProductDetailPage(props) {
   const cleanProduct = () => dispatch(actCleanProduct());
   const cleanEpisodes = () => dispatch(actCleanEpisodes());
   const cleanCharacters = () => dispatch(actCleanCharacters());
+  const updateProduct = (product, file) =>
+    dispatch(actUpdateProductRequest(product, file));
 
   useEffect(() => {
     setLoading(true);
     setTimeout(function () {
-      if (!categories) {
+      if (categories.length === 0) {
         fetchCategories();
       }
       fetchProductInfo(params.id);
@@ -116,6 +120,17 @@ function ProductDetailPage(props) {
     setIsModalVisible(false);
   };
 
+  //update product
+  const onSave = (productInfo, file) => {
+    setModalLoading(true);
+    updateProduct(productInfo, file);
+    setTimeout(function () {
+      fetchProductInfo(params.id);
+      setModalLoading(false);
+      setIsModalVisible(false);
+    }, 3000);
+  };
+
   //delete product
   const onDeleteProduct = () => {
     if (episodes.length > 0) {
@@ -151,11 +166,17 @@ function ProductDetailPage(props) {
       <MenuBar />
       <Content style={{ minHeight: "87.5vh" }}>
         <Row justify="center">
-          <Col span={15}>
+          <Col
+            span={15}
+            style={{
+              marginTop: "20px",
+              padding: "20px",
+              backgroundColor: "white",
+            }}
+          >
             <Skeleton
               loading={loading}
               style={{
-                marginTop: "20px",
                 padding: "20px",
                 backgroundColor: "white",
               }}
@@ -171,7 +192,6 @@ function ProductDetailPage(props) {
               style={{
                 marginTop: "20px",
                 padding: "20px",
-                backgroundColor: "white",
               }}
             >
               <Row justify="space-between" style={{ marginTop: "40px" }}>
@@ -220,8 +240,10 @@ function ProductDetailPage(props) {
         {isModalVisible && (
           <ProductModal
             productInfo={product}
+            modalLoading={modalLoading}
             isModalVisible={isModalVisible}
             onCloseDialog={onCloseDialog}
+            onSave={onSave}
           />
         )}
       </Content>

@@ -29,7 +29,7 @@ function ProductModal(props) {
   const [fileList, setFileList] = useState([]);
 
   //props
-  var { productInfo, isModalVisible } = props;
+  var { productInfo, isModalVisible, modalLoading } = props;
 
   //redux - state
   const categories = useSelector((state) => state.categories);
@@ -67,9 +67,10 @@ function ProductModal(props) {
   const onSave = (event) => {
     event.preventDefault();
     if (productInfo) {
-      console.log("update ne");
-      //   productInfo.name = name;
-      //   props.onSave(productInfo, file);
+      productInfo.categoryID = categoryID;
+      productInfo.name = name;
+      productInfo.overview = overview;
+      props.onSave(productInfo, file);
     } else {
       var product = {
         productID: productID,
@@ -136,6 +137,7 @@ function ProductModal(props) {
       visible={isModalVisible}
       onOk={onSave}
       onCancel={onCloseDialog}
+      confirmLoading={modalLoading}
     >
       <Space direction="vertical" style={{ display: "flex" }}>
         <Row>

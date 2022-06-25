@@ -2,6 +2,7 @@ import {
   CLEAN_PRODUCT,
   DELETE_PRODUCT,
   FETCH_PRODUCT_INFO,
+  UPDATE_PRODUCT,
 } from "../constants/ActionTypes";
 var initialState = {};
 
@@ -14,6 +15,9 @@ const myReducers = (state = initialState, action) => {
       return state;
     case CLEAN_PRODUCT:
       state = initialState;
+      return state;
+    case UPDATE_PRODUCT:
+      state = action.updatedProduct;
       return state;
     default:
       return state;
