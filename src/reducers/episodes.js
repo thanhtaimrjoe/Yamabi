@@ -1,4 +1,4 @@
-import { CLEAN_EPISODES, FETCH_EPISODES } from "../constants/ActionTypes";
+import { ADD_NEW_EPISODE, CLEAN_EPISODES, FETCH_EPISODES } from "../constants/ActionTypes";
 var initialState = [];
 
 const myReducers = (state = initialState, action) => {
@@ -8,6 +8,9 @@ const myReducers = (state = initialState, action) => {
     case CLEAN_EPISODES:
       state = initialState;
       return state;
+    case ADD_NEW_EPISODE:
+      state.push(action.newEpisode);
+      return [...state];
     default:
       return state;
   }

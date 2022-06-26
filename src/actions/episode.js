@@ -1,5 +1,5 @@
-import { CLEAN_EPISODES, FETCH_EPISODES } from "../constants/ActionTypes";
-import { fetchEpisodesByID } from "../utils/episode";
+import { ADD_NEW_EPISODE, CLEAN_EPISODES, FETCH_EPISODES } from "../constants/ActionTypes";
+import { addNewEpisode, fetchEpisodesByID } from "../utils/episode";
 
 export const actFetchEpisodesRequest = (productID) => {
   return async (dispatch) => {
@@ -18,5 +18,19 @@ export const actFetchEpisodes = (episodes) => {
 export const actCleanEpisodes = () => {
   return {
     type: CLEAN_EPISODES,
+  };
+};
+
+export const actAddNewEpisodeRequest = (episode, file) => {
+  return async (dispatch) => {
+    const newEpisode = await addNewEpisode("episode", episode, file);
+    dispatch(actAddNewEpisode(newEpisode));
+  };
+};
+
+export const actAddNewEpisode = (newEpisode) => {
+  return {
+    type: ADD_NEW_EPISODE,
+    newEpisode
   };
 };

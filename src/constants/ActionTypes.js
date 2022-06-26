@@ -14,6 +14,7 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 //episodes
 export const FETCH_EPISODES = "FETCH_EPISODES";
 export const CLEAN_EPISODES = "CLAN_EPISODES";
+export const ADD_NEW_EPISODE = "ADD_NEW_EPISODE";
 //characters
 export const FETCH_CHARACTERS = "FETCH_CHARACTERS";
 export const CLEAN_CHARACTERS = "CLEAN_CHARACTERS";

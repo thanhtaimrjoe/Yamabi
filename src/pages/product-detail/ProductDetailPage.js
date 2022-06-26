@@ -16,6 +16,7 @@ import {
   actUpdateProductRequest,
 } from "../../actions/product";
 import {
+  actAddNewEpisodeRequest,
   actCleanEpisodes,
   actFetchEpisodesRequest,
 } from "../../actions/episode";
@@ -71,6 +72,8 @@ function ProductDetailPage(props) {
   const cleanCharacters = () => dispatch(actCleanCharacters());
   const updateProduct = (product, file) =>
     dispatch(actUpdateProductRequest(product, file));
+  const addNewEpisode = (episode, file) =>
+    dispatch(actAddNewEpisodeRequest(episode, file));
 
   useEffect(() => {
     setLoading(true);
@@ -96,7 +99,7 @@ function ProductDetailPage(props) {
     var result = null;
     if (episodes.length > 0) {
       result = episodes.map((episode, index) => {
-        return <EpisodeItem key={index} episode={episode} />;
+        return <EpisodeItem key={index} episode={episode} onShowEpisodeInfo={onShowEpisodeInfo} />;
       });
     }
     return result;
@@ -131,6 +134,10 @@ function ProductDetailPage(props) {
       fetchProductInfo(params.id);
       setModalLoading(false);
       setIsProductModalVisible(false);
+      notification["success"]({
+        message: "Success",
+        description: `Update ${productInfo.name} successfully`,
+      });
     }, 3000);
   };
 
@@ -168,6 +175,24 @@ function ProductDetailPage(props) {
   const onShowEpisodeDialog = () => {
     setIsEpisodeModalVisible(true);
   };
+
+  //create or update episode
+  const onEpisodeSave = (episodeInfo, file) => {
+    const countedPrefixID = episodes.length.toString().padStart(4, 0);
+    const docID = countedPrefixID + '-' + episodeInfo.episodeID;
+    episodeInfo.docID = docID;
+    addNewEpisode(episodeInfo, file);
+    setIsEpisodeModalVisible(false);
+    notification["success"]({
+      message: "Success",
+      description: `Create ${episodeInfo.name} successfully`,
+    });
+  };
+
+  //show episode information
+  const onShowEpisodeInfo = (episode) => {
+    console.log('episode', episode)
+  }
 
   return (
     <Layout>
@@ -264,6 +289,7 @@ function ProductDetailPage(props) {
             modalLoading={modalLoading}
             isEpisodeModalVisible={isEpisodeModalVisible}
             onCloseDialog={onCloseDialog}
+            onEpisodeSave={onEpisodeSave}
           />
         )}
       </Content>

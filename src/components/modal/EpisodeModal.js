@@ -54,7 +54,7 @@ function EpisodeModal(props) {
   };
 
   //update or add
-  const onSaveEpisode = (event) => {
+  const onEpisodeSave = (event) => {
     event.preventDefault();
     if (episode) {
       //   episode.categoryID = categoryID;
@@ -68,9 +68,7 @@ function EpisodeModal(props) {
         price: price,
         productID: productID,
       };
-      console.log(episodeInfo);
-      console.log(file);
-      //props.onSaveEpisode(product, file);
+      props.onEpisodeSave(episodeInfo, file);
     }
   };
 
@@ -111,7 +109,7 @@ function EpisodeModal(props) {
     <Modal
       title={episode ? "Episode Information" : "Create New Episode"}
       visible={isEpisodeModalVisible}
-      onOk={onSaveEpisode}
+      onOk={onEpisodeSave}
       onCancel={onCloseDialog}
       confirmLoading={modalLoading}
     >

@@ -25,7 +25,7 @@ const { Search } = Input;
 function ProductPage(props) {
   //state
   const [searchParam, setSearchParam] = useState();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isProductModalVisible, setIsProductModalVisible] = useState(false);
 
   //redux - state
   const categories = useSelector((state) => state.categories);
@@ -57,13 +57,13 @@ function ProductPage(props) {
 
   //close dialog
   const onCloseDialog = () => {
-    setIsModalVisible(false);
+    setIsProductModalVisible(false);
   };
 
   //add
-  const onSave = (product, file) => {
+  const onProductSave = (product, file) => {
     addNewProduct(product, file);
-    setIsModalVisible(false);
+    setIsProductModalVisible(false);
     notification["success"]({
       message: "Success",
       description: `Add ${product.name} product successfully`,
@@ -79,7 +79,7 @@ function ProductPage(props) {
 
   //show create dialog
   const onShowCreateDialog = () => {
-    setIsModalVisible(true);
+    setIsProductModalVisible(true);
   };
 
   //menu drop-down
@@ -129,11 +129,11 @@ function ProductPage(props) {
           </Dropdown.Button>
         </Space>
         <ProductTable products={products} />
-        {isModalVisible && (
+        {isProductModalVisible && (
           <ProductModal
-            isModalVisible={isModalVisible}
+            isProductModalVisible={isProductModalVisible}
             onCloseDialog={onCloseDialog}
-            onSave={onSave}
+            onProductSave={onProductSave}
           />
         )}
       </Content>
