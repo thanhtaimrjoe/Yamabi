@@ -9,47 +9,37 @@ import {
   message,
   Button,
   Typography,
-  Select,
+  InputNumber,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 const { Text } = Typography;
-const { Option } = Select;
-const { TextArea } = Input;
-
-function ProductModal(props) {
+function EpisodeModal(props) {
   //state
-  const [productID, setProductID] = useState("");
+  const [episodeID, setEpisodeID] = useState("");
   const [name, setName] = useState("");
-  const [overview, setOverview] = useState("");
-  const [categoryID, setCategoryID] = useState("");
+  const [price, setPrice] = useState(0);
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
 
   //props
-  var { product, isProductModalVisible, modalLoading } = props;
-
-  //redux - state
-  const categories = useSelector((state) => state.categories);
+  var { episode, productID, isEpisodeModalVisible, modalLoading } = props;
 
   useEffect(() => {
-    if (product) {
-      setProductID(product.productID);
-      setName(product.name);
-      setOverview(product.overview);
-      setCategoryID(product.categoryID);
-      var imgFile = {
-        uid: "-1",
-        name: "image.png",
-        status: "done",
-        url: product.image,
-      };
-      setFileList([...fileList, imgFile]);
-    } else {
-      setCategoryID(categories[0].id);
-    }
+    // if (episode) {
+    //   setProductID(episode.productID);
+    //   setName(episode.name);
+    //   setOverview(episode.overview);
+    //   setCategoryID(episode.categoryID);
+    //   var imgFile = {
+    //     uid: "-1",
+    //     name: "image.png",
+    //     status: "done",
+    //     url: episode.image,
+    //   };
+    //   setFileList([...fileList, imgFile]);
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,25 +50,27 @@ function ProductModal(props) {
 
   //generate id
   const onGenerateID = () => {
-    setProductID(uuidv4());
+    setEpisodeID(uuidv4());
   };
 
   //update or add
-  const onProductSave = (event) => {
+  const onSaveEpisode = (event) => {
     event.preventDefault();
-    if (product) {
-      product.categoryID = categoryID;
-      product.name = name;
-      product.overview = overview;
-      props.onProductSave(product, file);
+    if (episode) {
+      //   episode.categoryID = categoryID;
+      //   episode.name = name;
+      //   episode.overview = overview;
+      //   props.onSaveEpisode(episode, file);
     } else {
-      var productInfo = {
-        productID: productID,
+      var episodeInfo = {
+        episodeID: episodeID,
         name: name,
-        overview: overview,
-        categoryID: categoryID,
+        price: price,
+        productID: productID,
       };
-      props.onProductSave(productInfo, file);
+      console.log(episodeInfo);
+      console.log(file);
+      //props.onSaveEpisode(product, file);
     }
   };
 
@@ -100,68 +92,38 @@ function ProductModal(props) {
     setFileList(newFileList.slice(-1));
   };
 
-  //name and overview input
-  const onTextChange = (event) => {
+  //name input
+  const onNameChange = (event) => {
     var target = event.target;
     var name = target.name;
     var value = target.value;
     if (name === "name") {
       setName(value);
     }
-    if (name === "overview") {
-      setOverview(value);
-    }
   };
 
-  //select
-  const onSelectChange = (value) => {
-    setCategoryID(value);
-  };
-
-  //show category options
-  const showCategoryOptions = () => {
-    var result = null;
-    result = categories.map((category) => {
-      return (
-        <Option key={category.id} value={category.id}>
-          {category.name}
-        </Option>
-      );
-    });
-    return result;
+  //price input
+  const onPriceChange = (value) => {
+    setPrice(value);
   };
 
   return (
     <Modal
-      title={product ? "Product Information" : "Create New Product"}
-      visible={isProductModalVisible}
-      onOk={onProductSave}
+      title={episode ? "Episode Information" : "Create New Episode"}
+      visible={isEpisodeModalVisible}
+      onOk={onSaveEpisode}
       onCancel={onCloseDialog}
       confirmLoading={modalLoading}
     >
       <Space direction="vertical" style={{ display: "flex" }}>
         <Row>
           <Col flex="80px">
-            <Text>Category:</Text>
-          </Col>
-          <Col flex="auto">
-            <Select
-              defaultValue={product ? product.categoryID : categories[0].id}
-              onChange={onSelectChange}
-              style={{ width: 120 }}
-            >
-              {showCategoryOptions()}
-            </Select>
-          </Col>
-        </Row>
-        <Row>
-          <Col flex="80px">
             <Text>ID:</Text>
           </Col>
           <Col flex="auto">
-            <Input value={productID} disabled />
+            <Input value={episodeID} disabled />
           </Col>
-          {!product && (
+          {!episode && (
             <Col>
               <Button type="primary" onClick={onGenerateID}>
                 Generate
@@ -174,20 +136,15 @@ function ProductModal(props) {
             <Text>Name:</Text>
           </Col>
           <Col flex="auto">
-            <Input name="name" value={name} onChange={onTextChange} />
+            <Input name="name" value={name} onChange={onNameChange} />
           </Col>
         </Row>
         <Row>
           <Col flex="80px">
-            <Text>Overview:</Text>
+            <Text>Price:</Text>
           </Col>
           <Col flex="auto">
-            <TextArea
-              name="overview"
-              rows={4}
-              value={overview}
-              onChange={onTextChange}
-            />
+            <InputNumber min={1} onChange={onPriceChange} />
           </Col>
         </Row>
         <Row>
@@ -216,4 +173,4 @@ function ProductModal(props) {
   );
 }
 
-export default ProductModal;
+export default EpisodeModal;

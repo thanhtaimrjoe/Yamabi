@@ -7,6 +7,7 @@ import EpisodeItem from "../../components/episode-item/EpisodeItem";
 import CharacterItem from "../../components/character-item/CharacterItem";
 import ProductInfo from "../../components/product-info/ProductInfo";
 import ProductModal from "../../components/modal/ProductModal";
+import EpisodeModal from "../../components/modal/EpisodeModal";
 //actions
 import {
   actCleanProduct,
@@ -43,7 +44,8 @@ const { confirm } = Modal;
 
 function ProductDetailPage(props) {
   //state
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isProductModalVisible, setIsProductModalVisible] = useState(false);
+  const [isEpisodeModalVisible, setIsEpisodeModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
   //router
@@ -110,24 +112,25 @@ function ProductDetailPage(props) {
     return result;
   };
 
-  //show update dialog
-  const onShowUpdateDialog = () => {
-    setIsModalVisible(true);
+  //show product dialog
+  const onShowProductDialog = () => {
+    setIsProductModalVisible(true);
   };
 
   //close dialog
   const onCloseDialog = () => {
-    setIsModalVisible(false);
+    setIsProductModalVisible(false);
+    setIsEpisodeModalVisible(false);
   };
 
   //update product
-  const onSave = (productInfo, file) => {
+  const onProductSave = (productInfo, file) => {
     setModalLoading(true);
     updateProduct(productInfo, file);
     setTimeout(function () {
       fetchProductInfo(params.id);
       setModalLoading(false);
-      setIsModalVisible(false);
+      setIsProductModalVisible(false);
     }, 3000);
   };
 
@@ -161,6 +164,11 @@ function ProductDetailPage(props) {
     }
   };
 
+  //show episode dialog
+  const onShowEpisodeDialog = () => {
+    setIsEpisodeModalVisible(true);
+  };
+
   return (
     <Layout>
       <MenuBar />
@@ -183,7 +191,7 @@ function ProductDetailPage(props) {
             >
               <ProductInfo
                 product={product}
-                onShowUpdateDialog={onShowUpdateDialog}
+                onShowProductDialog={onShowProductDialog}
                 onDeleteProduct={onDeleteProduct}
               />
             </Skeleton>
@@ -199,7 +207,11 @@ function ProductDetailPage(props) {
                   <Title level={3}>List of episode</Title>
                 </Col>
                 <Col>
-                  <Button type="primary" icon={<PlusOutlined />}>
+                  <Button
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={onShowEpisodeDialog}
+                  >
                     Create episode
                   </Button>
                 </Col>
@@ -237,13 +249,21 @@ function ProductDetailPage(props) {
           </Col>
         </Row>
         {/* Modal */}
-        {isModalVisible && (
+        {isProductModalVisible && (
           <ProductModal
-            productInfo={product}
+            product={product}
             modalLoading={modalLoading}
-            isModalVisible={isModalVisible}
+            isProductModalVisible={isProductModalVisible}
             onCloseDialog={onCloseDialog}
-            onSave={onSave}
+            onProductSave={onProductSave}
+          />
+        )}
+        {isEpisodeModalVisible && (
+          <EpisodeModal
+            productID={params.id}
+            modalLoading={modalLoading}
+            isEpisodeModalVisible={isEpisodeModalVisible}
+            onCloseDialog={onCloseDialog}
           />
         )}
       </Content>

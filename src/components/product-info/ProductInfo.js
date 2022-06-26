@@ -8,8 +8,8 @@ function ProductInfo(props) {
   const { product } = props;
 
   //show update dialog
-  const onShowUpdateDialog = () => {
-    props.onShowUpdateDialog();
+  const onShowProductDialog = () => {
+    props.onShowProductDialog();
   };
 
   //delete product
@@ -32,7 +32,7 @@ function ProductInfo(props) {
           <Button
             type="primary"
             icon={<EditFilled />}
-            onClick={onShowUpdateDialog}
+            onClick={onShowProductDialog}
           >
             Edit
           </Button>
