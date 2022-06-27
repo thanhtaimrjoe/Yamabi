@@ -9,33 +9,33 @@ import {
   message,
   Button,
   Typography,
-  InputNumber,
+  Select,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const { Text } = Typography;
-function EpisodeModal(props) {
+const { Option } = Select;
+function CharacterModal(props) {
   //state
-  const [episodeID, setEpisodeID] = useState("");
+  const [characterID, setCharacterID] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [role, setRole] = useState("Main");
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
 
   //props
-  var { episode, productID, isEpisodeModalVisible, modalLoading } = props;
+  var { character, productID, isCharacterModalVisible, modalLoading } = props;
 
   useEffect(() => {
-    if (episode && fileList.length === 0) {
-      setEpisodeID(episode.episodeID);
-      setName(episode.name);
-      setPrice(episode.price);
+    if (character && fileList.length === 0) {
+      setCharacterID(character.characterID);
+      setName(character.name);
       var imgFile = {
         uid: "-1",
         name: "image.png",
         status: "done",
-        url: episode.image,
+        url: character.image,
       };
       setFileList([...fileList, imgFile]);
     }
@@ -49,33 +49,31 @@ function EpisodeModal(props) {
 
   //generate id
   const onGenerateID = () => {
-    setEpisodeID(uuidv4());
+    setCharacterID(uuidv4());
   };
 
   //update or add
-  const onEpisodeSave = (event) => {
+  const onCharacterSave = (event) => {
     event.preventDefault();
-    if (episode) {
-      episode.episodeID = episodeID;
-      episode.name = name;
-      episode.price = price;
-      episode.productID = productID;
-      props.onEpisodeSave(episode, file);
+    if (character) {
+      character.characterID = characterID;
+      character.name = name;
+      character.productID = productID;
+      props.onCharacterSave(character, file);
     } else {
-      var episodeInfo = {
-        episodeID: episodeID,
+      var characterInfo = {
+        characterID: characterID,
         name: name,
-        price: price,
         productID: productID,
       };
-      props.onEpisodeSave(episodeInfo, file);
+      props.onCharacterSave(characterInfo, file);
     }
   };
 
-  //remove episode
-  const onEpisodeRemoveOrCancel = () => {
-    if (episode) {
-      props.onEpisodeRemove();
+  //remove character
+  const onCharacterRemoveOrCancel = () => {
+    if (character) {
+      props.onCharacterRemove();
     } else {
       props.onCloseDialog();
     }
@@ -109,34 +107,34 @@ function EpisodeModal(props) {
     }
   };
 
-  //price input
-  const onPriceChange = (value) => {
-    setPrice(value);
+  //role select
+  const onRoleChange = (value) => {
+    setRole(value);
   };
 
   return (
     <Modal
-      title={episode ? "Episode Information" : "Create New Episode"}
-      visible={isEpisodeModalVisible}
-      onOk={onEpisodeSave}
+      title={character ? "Character Information" : "Create New Character"}
+      visible={isCharacterModalVisible}
+      onOk={onCharacterSave}
       okText="Update"
       onCancel={onCloseDialog}
       confirmLoading={modalLoading}
       footer={[
         <Button
           key="remove"
-          type={episode ? "danger" : "default"}
-          onClick={onEpisodeRemoveOrCancel}
+          type={character ? "danger" : "default"}
+          onClick={onCharacterRemoveOrCancel}
         >
-          {episode ? "Remove" : "Cancel"}
+          {character ? "Remove" : "Cancel"}
         </Button>,
         <Button
           key="submit"
           type="primary"
           loading={modalLoading}
-          onClick={onEpisodeSave}
+          onClick={onCharacterSave}
         >
-          {episode ? "Update" : "Create"}
+          {character ? "Update" : "Create"}
         </Button>,
       ]}
     >
@@ -146,9 +144,9 @@ function EpisodeModal(props) {
             <Text>ID:</Text>
           </Col>
           <Col flex="auto">
-            <Input value={episodeID} disabled />
+            <Input value={characterID} disabled />
           </Col>
-          {!episode && (
+          {!character && (
             <Col>
               <Button type="primary" onClick={onGenerateID}>
                 Generate
@@ -166,15 +164,13 @@ function EpisodeModal(props) {
         </Row>
         <Row>
           <Col flex="80px">
-            <Text>Price:</Text>
+            <Text>Role:</Text>
           </Col>
           <Col flex="auto">
-            <InputNumber
-              min={0}
-              max={10000}
-              onChange={onPriceChange}
-              addonAfter="$"
-            />
+            <Select defaultValue={role} onChange={onRoleChange}>
+              <Option value="Main">Main</Option>
+              <Option value="Supporter">Supporter</Option>
+            </Select>
           </Col>
         </Row>
         <Row>
@@ -203,4 +199,4 @@ function EpisodeModal(props) {
   );
 }
 
-export default EpisodeModal;
+export default CharacterModal;

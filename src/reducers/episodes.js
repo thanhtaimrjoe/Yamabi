@@ -3,6 +3,7 @@ import {
   CLEAN_EPISODES,
   DELETE_EPISODE,
   FETCH_EPISODES,
+  UPDATE_EPISODE,
 } from "../constants/ActionTypes";
 var initialState = [];
 
@@ -33,6 +34,13 @@ const myReducers = (state = initialState, action) => {
       index = findIndex(state, deletedEpisode.episodeID);
       if (index !== -1) {
         state.splice(index, 1);
+      }
+      return [...state];
+    case UPDATE_EPISODE:
+      var { updatedEpisode } = action;
+      index = findIndex(state, updatedEpisode.episodeID);
+      if (index !== -1) {
+        state[index] = updatedEpisode;
       }
       return [...state];
     default:

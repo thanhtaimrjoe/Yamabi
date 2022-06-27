@@ -5,12 +5,24 @@ const { Title } = Typography;
 
 function CharacterItem(props) {
   var { character } = props;
+
+  const onShowCharacterInfo = () => {
+    props.onShowCharacterInfo(character);
+  };
+
   return (
     <Col span={4}>
       <Card
         hoverable
         style={{ width: "auto" }}
-        cover={<img alt="example" src={character.image} />}
+        cover={
+          <img
+            alt="example"
+            height={280}
+            src={character.image}
+            onClick={onShowCharacterInfo}
+          />
+        }
       >
         <Title level={5} ellipsis={true}>
           {character.name}

@@ -5,15 +5,22 @@ const { Title, Text } = Typography;
 
 function EpisodeItem(props) {
   var { episode } = props;
-  const onShowEpisodeInfo = (episode) => {
-    props.onShowEpisodeInfo(episode)
-  }
+  const onShowEpisodeInfo = () => {
+    props.onShowEpisodeInfo(episode);
+  };
   return (
     <Col span={4}>
       <Card
         hoverable
         style={{ width: "auto" }}
-        cover={<img alt="example" src={episode.image} onClick={() => onShowEpisodeInfo(episode)} />}
+        cover={
+          <img
+            alt="example"
+            height={280}
+            src={episode.image}
+            onClick={onShowEpisodeInfo}
+          />
+        }
       >
         <Title level={4}>{episode.name}</Title>
         <Text>Price: {episode.price}$</Text>

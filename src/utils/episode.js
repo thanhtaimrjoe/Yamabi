@@ -7,6 +7,7 @@ import {
   getFirestore,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { deleteImageFromStorage, uploadImageToStorage } from "./storage";
@@ -45,5 +46,19 @@ export async function deleteEpisode(collectionName, episode) {
   //delete doc from firestore
   const ref = doc(db, collectionName, episode.docID);
   await deleteDoc(ref, episode);
+  return episode;
+}
+
+export async function updateEpisode(collectionName, episode, file) {
+  const db = getFirestore(app);
+  if (file) {
+    //delete old image from storage
+    deleteImageFromStorage(episode.image);
+    //upload to storage
+    const imageURL = await uploadImageToStorage(file, "episodes");
+    episode.image = imageURL;
+  }
+  const ref = doc(db, collectionName, episode.docID);
+  await updateDoc(ref, episode);
   return episode;
 }

@@ -8,6 +8,7 @@ import CharacterItem from "../../components/character-item/CharacterItem";
 import ProductInfo from "../../components/product-info/ProductInfo";
 import ProductModal from "../../components/modal/ProductModal";
 import EpisodeModal from "../../components/modal/EpisodeModal";
+import CharacterModal from "../../components/modal/CharacterModal";
 //actions
 import {
   actCleanProduct,
@@ -20,6 +21,7 @@ import {
   actCleanEpisodes,
   actDeleteEpisodeRequest,
   actFetchEpisodesRequest,
+  actUpdateEpisodeRequest,
 } from "../../actions/episode";
 import {
   actCleanCharacters,
@@ -48,9 +50,11 @@ function ProductDetailPage(props) {
   //state
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [isEpisodeModalVisible, setIsEpisodeModalVisible] = useState(false);
+  const [isCharacterModalVisible, setIsCharacterModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
   const [episode, setEpisode] = useState();
+  const [character, setCharacter] = useState();
   //router
   const params = useParams();
   const navigate = useNavigate();
@@ -77,19 +81,20 @@ function ProductDetailPage(props) {
   const addNewEpisode = (episode, file, docID) =>
     dispatch(actAddNewEpisodeRequest(episode, file, docID));
   const deleteEpisode = (episode) => dispatch(actDeleteEpisodeRequest(episode));
+  const updateEpisode = (episode, file) =>
+    dispatch(actUpdateEpisodeRequest(episode, file));
 
   useEffect(() => {
     setLoading(true);
+    if (categories.length === 0) {
+      fetchCategories();
+    }
+    fetchProductInfo(params.id);
+    fetchEpisodes(params.id);
+    fetchCharacters(params.id);
     setTimeout(function () {
-      if (categories.length === 0) {
-        fetchCategories();
-      }
-      fetchProductInfo(params.id);
-      fetchEpisodes(params.id);
-      fetchCharacters(params.id);
       setLoading(false);
     }, 2000);
-
     return function cleanUp() {
       cleanProduct();
       cleanEpisodes();
@@ -118,7 +123,13 @@ function ProductDetailPage(props) {
     var result = null;
     if (characters.length > 0) {
       result = characters.map((character, index) => {
-        return <CharacterItem key={index} character={character} />;
+        return (
+          <CharacterItem
+            key={index}
+            character={character}
+            onShowCharacterInfo={onShowCharacterInfo}
+          />
+        );
       });
     }
     return result;
@@ -133,6 +144,7 @@ function ProductDetailPage(props) {
   const onCloseDialog = () => {
     setIsProductModalVisible(false);
     setIsEpisodeModalVisible(false);
+    setIsCharacterModalVisible(false);
   };
 
   //update product
@@ -188,16 +200,23 @@ function ProductDetailPage(props) {
 
   //create or update episode
   const onEpisodeSave = (episodeInfo, file) => {
+    var msgDescription = "";
     setModalLoading(true);
-    const countedPrefixID = episodes.length.toString().padStart(4, 0);
-    const docID = countedPrefixID + "-" + episodeInfo.episodeID;
-    addNewEpisode(episodeInfo, file, docID);
+    if (episode) {
+      msgDescription = `Update ${episode.name} successfully`;
+      updateEpisode(episodeInfo, file);
+    } else {
+      msgDescription = `Create ${episodeInfo.name} successfully`;
+      const countedPrefixID = episodes.length.toString().padStart(4, 0);
+      const docID = countedPrefixID + "-" + episodeInfo.episodeID;
+      addNewEpisode(episodeInfo, file, docID);
+    }
     setTimeout(function () {
       setModalLoading(false);
       setIsEpisodeModalVisible(false);
       notification["success"]({
         message: "Success",
-        description: `Create ${episodeInfo.name} successfully`,
+        description: msgDescription,
       });
     }, 3000);
   };
@@ -228,11 +247,29 @@ function ProductDetailPage(props) {
     });
   };
 
+  //show episode dialog
+  const onShowCharacterDialog = () => {
+    setIsCharacterModalVisible(true);
+    setCharacter(null);
+  };
+
+  //show character information
+  const onShowCharacterInfo = (character) => {
+    setIsCharacterModalVisible(true);
+    setCharacter(character);
+  };
+
+  //create or update character
+  const onCharacterSave = (characterInfo, file) => {};
+
+  //
+  const onCharacterRemove = () => {};
+
   return (
     <Layout>
       <MenuBar />
-      <Content style={{ minHeight: "87.5vh" }}>
-        <Row justify="center">
+      <Content>
+        <Row justify="center" style={{ minHeight: "87.5vh" }}>
           <Col
             span={15}
             style={{
@@ -242,6 +279,7 @@ function ProductDetailPage(props) {
             }}
           >
             <Skeleton
+              active
               loading={loading}
               style={{
                 padding: "20px",
@@ -255,6 +293,7 @@ function ProductDetailPage(props) {
               />
             </Skeleton>
             <Skeleton
+              active
               loading={loading}
               style={{
                 marginTop: "20px",
@@ -282,6 +321,7 @@ function ProductDetailPage(props) {
               )}
             </Skeleton>
             <Skeleton
+              active
               loading={loading}
               style={{
                 marginTop: "20px",
@@ -294,7 +334,11 @@ function ProductDetailPage(props) {
                   <Title level={3}>List of character</Title>
                 </Col>
                 <Col>
-                  <Button type="primary" icon={<PlusOutlined />}>
+                  <Button
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={onShowCharacterDialog}
+                  >
                     Create character
                   </Button>
                 </Col>
@@ -326,6 +370,17 @@ function ProductDetailPage(props) {
             onCloseDialog={onCloseDialog}
             onEpisodeSave={onEpisodeSave}
             onEpisodeRemove={onEpisodeRemove}
+          />
+        )}
+        {isCharacterModalVisible && (
+          <CharacterModal
+            character={character}
+            productID={params.id}
+            modalLoading={modalLoading}
+            isCharacterModalVisible={isCharacterModalVisible}
+            onCloseDialog={onCloseDialog}
+            onCharacterSave={onCharacterSave}
+            onCharacterRemove={onCharacterRemove}
           />
         )}
       </Content>

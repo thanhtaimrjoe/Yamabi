@@ -3,11 +3,13 @@ import {
   CLEAN_EPISODES,
   DELETE_EPISODE,
   FETCH_EPISODES,
+  UPDATE_EPISODE,
 } from "../constants/ActionTypes";
 import {
   addNewEpisode,
   deleteEpisode,
   fetchEpisodesByID,
+  updateEpisode,
 } from "../utils/episode";
 
 export const actFetchEpisodesRequest = (productID) => {
@@ -55,5 +57,19 @@ export const actDeleteEpisode = (deletedEpisode) => {
   return {
     type: DELETE_EPISODE,
     deletedEpisode,
+  };
+};
+
+export const actUpdateEpisodeRequest = (episode, file) => {
+  return async (dispatch) => {
+    const updatedEpisode = await updateEpisode("episode", episode, file);
+    dispatch(actUpdateEpisode(updatedEpisode));
+  };
+};
+
+export const actUpdateEpisode = (updatedEpisode) => {
+  return {
+    type: UPDATE_EPISODE,
+    updatedEpisode,
   };
 };

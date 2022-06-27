@@ -79,9 +79,6 @@ export async function deleteProduct(collectionName, product) {
 
 export async function updateProduct(collectionName, product, file) {
   const db = getFirestore(app);
-  //get category name
-  // var categoryName = await findCategoryNameByID("category", product.categoryID);
-  // product.categoryName = categoryName;
   if (file) {
     //delete old image from storage
     deleteImageFromStorage(product.image);
