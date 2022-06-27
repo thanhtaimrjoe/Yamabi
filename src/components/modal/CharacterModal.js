@@ -20,7 +20,7 @@ function CharacterModal(props) {
   //state
   const [characterID, setCharacterID] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("Main");
+  const [role, setRole] = useState("");
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
 
@@ -31,6 +31,7 @@ function CharacterModal(props) {
     if (character && fileList.length === 0) {
       setCharacterID(character.characterID);
       setName(character.name);
+      setRole(character.role);
       var imgFile = {
         uid: "-1",
         name: "image.png",
@@ -38,6 +39,8 @@ function CharacterModal(props) {
         url: character.image,
       };
       setFileList([...fileList, imgFile]);
+    } else {
+      setRole("Main");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -59,12 +62,14 @@ function CharacterModal(props) {
       character.characterID = characterID;
       character.name = name;
       character.productID = productID;
+      character.role = role;
       props.onCharacterSave(character, file);
     } else {
       var characterInfo = {
         characterID: characterID,
         name: name,
         productID: productID,
+        role: role,
       };
       props.onCharacterSave(characterInfo, file);
     }
@@ -167,7 +172,11 @@ function CharacterModal(props) {
             <Text>Role:</Text>
           </Col>
           <Col flex="auto">
-            <Select defaultValue={role} onChange={onRoleChange}>
+            <Select
+              defaultValue={character ? character.role : "Main"}
+              onChange={onRoleChange}
+              style={{ width: 110 }}
+            >
               <Option value="Main">Main</Option>
               <Option value="Supporter">Supporter</Option>
             </Select>

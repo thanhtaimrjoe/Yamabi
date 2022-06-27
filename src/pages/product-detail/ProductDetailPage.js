@@ -24,8 +24,11 @@ import {
   actUpdateEpisodeRequest,
 } from "../../actions/episode";
 import {
+  actAddNewCharacterRequest,
   actCleanCharacters,
+  actDeleteCharacterRequest,
   actFetchCharactersRequest,
+  actUpdateCharacterRequest,
 } from "../../actions/character";
 //ant design
 import {
@@ -65,24 +68,34 @@ function ProductDetailPage(props) {
   const characters = useSelector((state) => state.characters);
   //redux - actions
   const dispatch = useDispatch();
+  //action - categories
   const fetchCategories = () => dispatch(actFetchCategoriesRequest());
+  //action - product info
   const fetchProductInfo = (productID) =>
     dispatch(actFetchProductInforByIDRequest(productID));
-  const fetchEpisodes = (productID) =>
-    dispatch(actFetchEpisodesRequest(productID));
-  const fetchCharacters = (productID) =>
-    dispatch(actFetchCharactersRequest(productID));
   const deleteProduct = (product) => dispatch(actDeleteProductRequest(product));
   const cleanProduct = () => dispatch(actCleanProduct());
-  const cleanEpisodes = () => dispatch(actCleanEpisodes());
-  const cleanCharacters = () => dispatch(actCleanCharacters());
   const updateProduct = (product, file) =>
     dispatch(actUpdateProductRequest(product, file));
+  //action - episodes
+  const fetchEpisodes = (productID) =>
+    dispatch(actFetchEpisodesRequest(productID));
+  const cleanEpisodes = () => dispatch(actCleanEpisodes());
   const addNewEpisode = (episode, file, docID) =>
     dispatch(actAddNewEpisodeRequest(episode, file, docID));
   const deleteEpisode = (episode) => dispatch(actDeleteEpisodeRequest(episode));
   const updateEpisode = (episode, file) =>
     dispatch(actUpdateEpisodeRequest(episode, file));
+  //action - characters
+  const fetchCharacters = (productID) =>
+    dispatch(actFetchCharactersRequest(productID));
+  const cleanCharacters = () => dispatch(actCleanCharacters());
+  const addNewCharacter = (character, file, docID) =>
+    dispatch(actAddNewCharacterRequest(character, file, docID));
+  const deleteCharacter = (character) =>
+    dispatch(actDeleteCharacterRequest(character));
+  const updateCharacter = (character, file) =>
+    dispatch(actUpdateCharacterRequest(character, file));
 
   useEffect(() => {
     setLoading(true);
@@ -203,7 +216,7 @@ function ProductDetailPage(props) {
     var msgDescription = "";
     setModalLoading(true);
     if (episode) {
-      msgDescription = `Update ${episode.name} successfully`;
+      msgDescription = `Update ${episodeInfo.name} successfully`;
       updateEpisode(episodeInfo, file);
     } else {
       msgDescription = `Create ${episodeInfo.name} successfully`;
@@ -260,10 +273,47 @@ function ProductDetailPage(props) {
   };
 
   //create or update character
-  const onCharacterSave = (characterInfo, file) => {};
+  const onCharacterSave = (characterInfo, file) => {
+    var msgDescription = "";
+    setModalLoading(true);
+    if (character) {
+      msgDescription = `Update ${characterInfo.name} successfully`;
+      updateCharacter(characterInfo, file);
+    } else {
+      msgDescription = `Create ${characterInfo.name} successfully`;
+      const countedPrefixID = characters.length.toString().padStart(4, 0);
+      const docID = countedPrefixID + "-" + characterInfo.characterID;
+      addNewCharacter(characterInfo, file, docID);
+    }
+    setTimeout(function () {
+      setModalLoading(false);
+      setIsCharacterModalVisible(false);
+      notification["success"]({
+        message: "Success",
+        description: msgDescription,
+      });
+    }, 3000);
+  };
 
   //
-  const onCharacterRemove = () => {};
+  const onCharacterRemove = () => {
+    confirm({
+      title: "Do you want to delete this item?",
+      icon: <ExclamationCircleOutlined />,
+      content: "This action can not undo",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: () => {
+        deleteCharacter(character);
+        setIsCharacterModalVisible(false);
+        notification["success"]({
+          message: "Success",
+          description: `Delete ${character.name} successfully`,
+        });
+      },
+    });
+  };
 
   return (
     <Layout>

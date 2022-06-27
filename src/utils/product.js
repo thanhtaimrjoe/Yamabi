@@ -55,7 +55,7 @@ export async function fetchProductInfoByID(collectionName, productID) {
 export async function addNewProduct(collectionName, product, file) {
   const db = getFirestore(app);
   //upload to storage
-  const imageURL = await uploadImageToStorage(file);
+  const imageURL = await uploadImageToStorage(file, "products");
   product.image = imageURL;
   const ref = collection(db, collectionName);
   const docRef = await addDoc(ref, product);
@@ -71,7 +71,6 @@ export async function deleteProduct(collectionName, product) {
   const db = getFirestore(app);
   //delete old image from storage
   deleteImageFromStorage(product.image);
-
   //delete doc from firestore
   const ref = doc(db, collectionName, product.docID);
   await deleteDoc(ref, product);

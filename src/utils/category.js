@@ -40,7 +40,7 @@ export async function updateCategory(collectionName, category, file) {
 export async function addNewCategory(collectionName, category, file) {
   const db = getFirestore(app);
   //upload to storage
-  const imageURL = await uploadImageToStorage(file);
+  const imageURL = await uploadImageToStorage(file, "categories");
   category.image = imageURL;
   const ref = collection(db, collectionName);
   const docRef = await addDoc(ref, category);
@@ -52,7 +52,6 @@ export async function deleteCategory(collectionName, category) {
   const db = getFirestore(app);
   //delete old image from storage
   deleteImageFromStorage(category.image);
-
   //delete doc from firestore
   const ref = doc(db, collectionName, category.docID);
   await deleteDoc(ref, category);

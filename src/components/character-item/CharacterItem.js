@@ -27,7 +27,9 @@ function CharacterItem(props) {
         <Title level={5} ellipsis={true}>
           {character.name}
         </Title>
-        <Tag color={"magenta"}>Main</Tag>
+        <Tag color={character.role === "Main" ? "magenta" : "blue"}>
+          {character.role}
+        </Tag>
       </Card>
     </Col>
   );
