@@ -16,7 +16,6 @@ function EpisodeItem(props) {
         cover={
           <img
             alt="example"
-            height={280}
             src={episode.image}
             onClick={onShowEpisodeInfo}
           />
