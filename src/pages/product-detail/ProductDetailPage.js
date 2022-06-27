@@ -49,6 +49,7 @@ function ProductDetailPage(props) {
   const [isEpisodeModalVisible, setIsEpisodeModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
+  const [episode, setEpisode] = useState();
   //router
   const params = useParams();
   const navigate = useNavigate();
@@ -99,7 +100,13 @@ function ProductDetailPage(props) {
     var result = null;
     if (episodes.length > 0) {
       result = episodes.map((episode, index) => {
-        return <EpisodeItem key={index} episode={episode} onShowEpisodeInfo={onShowEpisodeInfo} />;
+        return (
+          <EpisodeItem
+            key={index}
+            episode={episode}
+            onShowEpisodeInfo={onShowEpisodeInfo}
+          />
+        );
       });
     }
     return result;
@@ -179,7 +186,7 @@ function ProductDetailPage(props) {
   //create or update episode
   const onEpisodeSave = (episodeInfo, file) => {
     const countedPrefixID = episodes.length.toString().padStart(4, 0);
-    const docID = countedPrefixID + '-' + episodeInfo.episodeID;
+    const docID = countedPrefixID + "-" + episodeInfo.episodeID;
     episodeInfo.docID = docID;
     addNewEpisode(episodeInfo, file);
     setIsEpisodeModalVisible(false);
@@ -191,8 +198,9 @@ function ProductDetailPage(props) {
 
   //show episode information
   const onShowEpisodeInfo = (episode) => {
-    console.log('episode', episode)
-  }
+    setIsEpisodeModalVisible(true);
+    setEpisode(episode);
+  };
 
   return (
     <Layout>
@@ -285,6 +293,7 @@ function ProductDetailPage(props) {
         )}
         {isEpisodeModalVisible && (
           <EpisodeModal
+            episode={episode}
             productID={params.id}
             modalLoading={modalLoading}
             isEpisodeModalVisible={isEpisodeModalVisible}

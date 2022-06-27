@@ -27,19 +27,18 @@ function EpisodeModal(props) {
   var { episode, productID, isEpisodeModalVisible, modalLoading } = props;
 
   useEffect(() => {
-    // if (episode) {
-    //   setProductID(episode.productID);
-    //   setName(episode.name);
-    //   setOverview(episode.overview);
-    //   setCategoryID(episode.categoryID);
-    //   var imgFile = {
-    //     uid: "-1",
-    //     name: "image.png",
-    //     status: "done",
-    //     url: episode.image,
-    //   };
-    //   setFileList([...fileList, imgFile]);
-    // }
+    if (episode) {
+      setEpisodeID(episode.episodeID);
+      setName(episode.name);
+      setPrice(episode.price);
+      var imgFile = {
+        uid: "-1",
+        name: "image.png",
+        status: "done",
+        url: episode.image,
+      };
+      setFileList([...fileList, imgFile]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -110,7 +109,9 @@ function EpisodeModal(props) {
       title={episode ? "Episode Information" : "Create New Episode"}
       visible={isEpisodeModalVisible}
       onOk={onEpisodeSave}
+      okText="Update"
       onCancel={onCloseDialog}
+      cancelText="Remove"
       confirmLoading={modalLoading}
     >
       <Space direction="vertical" style={{ display: "flex" }}>
@@ -142,7 +143,12 @@ function EpisodeModal(props) {
             <Text>Price:</Text>
           </Col>
           <Col flex="auto">
-            <InputNumber min={1} onChange={onPriceChange} />
+            <InputNumber
+              min={0}
+              max={10000}
+              onChange={onPriceChange}
+              addonAfter="$"
+            />
           </Col>
         </Row>
         <Row>
