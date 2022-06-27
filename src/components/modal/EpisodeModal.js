@@ -27,7 +27,7 @@ function EpisodeModal(props) {
   var { episode, productID, isEpisodeModalVisible, modalLoading } = props;
 
   useEffect(() => {
-    if (episode) {
+    if (episode && fileList.length === 0) {
       setEpisodeID(episode.episodeID);
       setName(episode.name);
       setPrice(episode.price);
@@ -56,6 +56,7 @@ function EpisodeModal(props) {
   const onEpisodeSave = (event) => {
     event.preventDefault();
     if (episode) {
+      console.log("update", episode);
       //   episode.categoryID = categoryID;
       //   episode.name = name;
       //   episode.overview = overview;
@@ -68,6 +69,15 @@ function EpisodeModal(props) {
         productID: productID,
       };
       props.onEpisodeSave(episodeInfo, file);
+    }
+  };
+
+  //remove episode
+  const onEpisodeRemoveOrCancel = () => {
+    if (episode) {
+      props.onEpisodeRemove();
+    } else {
+      props.onCloseDialog();
     }
   };
 
@@ -111,8 +121,25 @@ function EpisodeModal(props) {
       onOk={onEpisodeSave}
       okText="Update"
       onCancel={onCloseDialog}
-      cancelText="Remove"
       confirmLoading={modalLoading}
+      footer={[
+        <Button
+          key="remove"
+          type={episode ? "danger" : "default"}
+          loading={modalLoading}
+          onClick={onEpisodeRemoveOrCancel}
+        >
+          {episode ? "Remove" : "Cancel"}
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          loading={modalLoading}
+          onClick={onEpisodeSave}
+        >
+          Update
+        </Button>,
+      ]}
     >
       <Space direction="vertical" style={{ display: "flex" }}>
         <Row>

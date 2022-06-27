@@ -18,6 +18,7 @@ import {
 import {
   actAddNewEpisodeRequest,
   actCleanEpisodes,
+  actDeleteEpisodeRequest,
   actFetchEpisodesRequest,
 } from "../../actions/episode";
 import {
@@ -73,8 +74,9 @@ function ProductDetailPage(props) {
   const cleanCharacters = () => dispatch(actCleanCharacters());
   const updateProduct = (product, file) =>
     dispatch(actUpdateProductRequest(product, file));
-  const addNewEpisode = (episode, file) =>
-    dispatch(actAddNewEpisodeRequest(episode, file));
+  const addNewEpisode = (episode, file, docID) =>
+    dispatch(actAddNewEpisodeRequest(episode, file, docID));
+  const deleteEpisode = (episode) => dispatch(actDeleteEpisodeRequest(episode));
 
   useEffect(() => {
     setLoading(true);
@@ -181,25 +183,49 @@ function ProductDetailPage(props) {
   //show episode dialog
   const onShowEpisodeDialog = () => {
     setIsEpisodeModalVisible(true);
+    setEpisode(null);
   };
 
   //create or update episode
   const onEpisodeSave = (episodeInfo, file) => {
+    setModalLoading(true);
     const countedPrefixID = episodes.length.toString().padStart(4, 0);
     const docID = countedPrefixID + "-" + episodeInfo.episodeID;
-    episodeInfo.docID = docID;
-    addNewEpisode(episodeInfo, file);
-    setIsEpisodeModalVisible(false);
-    notification["success"]({
-      message: "Success",
-      description: `Create ${episodeInfo.name} successfully`,
-    });
+    addNewEpisode(episodeInfo, file, docID);
+    setTimeout(function () {
+      setModalLoading(false);
+      setIsEpisodeModalVisible(false);
+      notification["success"]({
+        message: "Success",
+        description: `Create ${episodeInfo.name} successfully`,
+      });
+    }, 3000);
   };
 
   //show episode information
   const onShowEpisodeInfo = (episode) => {
     setIsEpisodeModalVisible(true);
     setEpisode(episode);
+  };
+
+  //remove episode
+  const onEpisodeRemove = () => {
+    confirm({
+      title: "Do you want to delete this item?",
+      icon: <ExclamationCircleOutlined />,
+      content: "This action can not undo",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: () => {
+        deleteEpisode(episode);
+        setIsEpisodeModalVisible(false);
+        notification["success"]({
+          message: "Success",
+          description: `Delete ${episode.name} successfully`,
+        });
+      },
+    });
   };
 
   return (
@@ -299,6 +325,7 @@ function ProductDetailPage(props) {
             isEpisodeModalVisible={isEpisodeModalVisible}
             onCloseDialog={onCloseDialog}
             onEpisodeSave={onEpisodeSave}
+            onEpisodeRemove={onEpisodeRemove}
           />
         )}
       </Content>
