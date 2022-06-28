@@ -5,6 +5,7 @@ import {
   FETCH_EPISODES,
   UPDATE_EPISODE,
 } from "../constants/ActionTypes";
+
 var initialState = [];
 
 const findIndex = (episodes, episodeID) => {

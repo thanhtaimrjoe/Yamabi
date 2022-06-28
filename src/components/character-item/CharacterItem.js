@@ -4,8 +4,10 @@ import React from "react";
 const { Title } = Typography;
 
 function CharacterItem(props) {
+  //props
   var { character } = props;
 
+  //show info
   const onShowCharacterInfo = () => {
     props.onShowCharacterInfo(character);
   };
@@ -18,7 +20,6 @@ function CharacterItem(props) {
         cover={
           <img
             alt="example"
-            height={280}
             src={character.image}
             onClick={onShowCharacterInfo}
           />

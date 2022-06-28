@@ -12,6 +12,12 @@ import {
   updateEpisode,
 } from "../utils/episode";
 
+export const actCleanEpisodes = () => {
+  return {
+    type: CLEAN_EPISODES,
+  };
+};
+
 export const actFetchEpisodesRequest = (productID) => {
   return async (dispatch) => {
     const result = await fetchEpisodesByID("episode", productID);
@@ -23,12 +29,6 @@ export const actFetchEpisodes = (episodes) => {
   return {
     type: FETCH_EPISODES,
     episodes,
-  };
-};
-
-export const actCleanEpisodes = () => {
-  return {
-    type: CLEAN_EPISODES,
   };
 };
 

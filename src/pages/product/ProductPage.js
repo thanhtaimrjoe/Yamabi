@@ -1,4 +1,7 @@
-import { PlusOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+//ant design
+import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Dropdown,
@@ -8,13 +11,13 @@ import {
   Space,
   notification,
 } from "antd";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   actAddNewProductRequest,
   actFetchProductsRequest,
 } from "../../actions/product";
+//actions
 import { actFetchCategoriesRequest } from "../../actions/category";
+//components
 import MenuBar from "../../components/menu-bar/MenuBar";
 import ProductModal from "../../components/modal/ProductModal";
 import ProductTable from "../../components/product-table/ProductTable";
@@ -25,15 +28,19 @@ const { Search } = Input;
 function ProductPage(props) {
   //state
   const [searchParam, setSearchParam] = useState();
+  const [categoryFilter, setCategoryFilter] = useState();
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
 
   //redux - state
   const categories = useSelector((state) => state.categories);
   var products = useSelector((state) => state.products);
-  //redux - actions
+  //dispatch
   const dispatch = useDispatch();
+  //redux - fetch categories
   const fetchCategories = () => dispatch(actFetchCategoriesRequest());
+  //redux - fetch products
   const fetchProducts = () => dispatch(actFetchProductsRequest());
+  //redux - add new product
   const addNewProduct = (product, file) =>
     dispatch(actAddNewProductRequest(product, file));
 
@@ -51,8 +58,8 @@ function ProductPage(props) {
   };
 
   //menu click
-  const onMenuClick = (event) => {
-    console.log("click", event);
+  const onMenuClick = (value) => {
+    setCategoryFilter(value.key);
   };
 
   //close dialog
@@ -60,7 +67,7 @@ function ProductPage(props) {
     setIsProductModalVisible(false);
   };
 
-  //add
+  //add new product
   const onProductSave = (product, file) => {
     addNewProduct(product, file);
     setIsProductModalVisible(false);
@@ -70,36 +77,36 @@ function ProductPage(props) {
     });
   };
 
-  //filter array
+  //filter by search
   if (searchParam) {
     products = products.filter((product) => {
       return product.name.indexOf(searchParam) !== -1;
     });
   }
 
-  //show create dialog
+  //filter by category
+  if (categoryFilter) {
+    products = products.filter((product) => {
+      return product.categoryID.indexOf(categoryFilter) !== -1;
+    });
+  }
+
+  //show create product dialog
   const onShowCreateDialog = () => {
     setIsProductModalVisible(true);
   };
 
-  //menu drop-down
+  //menu array
   const menu = (
     <Menu
+      selectable
       onClick={onMenuClick}
-      items={[
-        {
-          key: "1",
-          label: "1st item",
-        },
-        {
-          key: "2",
-          label: "2nd item",
-        },
-        {
-          key: "3",
-          label: "3rd  item",
-        },
-      ]}
+      items={categories.map((category) => {
+        return {
+          key: category.id,
+          label: category.name,
+        };
+      })}
     />
   );
 
@@ -124,9 +131,11 @@ function ProductPage(props) {
           >
             Create
           </Button>
-          <Dropdown.Button size="large" overlay={menu}>
-            Sort
-          </Dropdown.Button>
+          <Dropdown overlay={menu} placement="bottomLeft">
+            <Button size="large" icon={<FilterOutlined />}>
+              Filter
+            </Button>
+          </Dropdown>
         </Space>
         <ProductTable products={products} />
         {isProductModalVisible && (

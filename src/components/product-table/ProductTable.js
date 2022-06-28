@@ -1,6 +1,7 @@
-import { Button, Space, Table } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+//ant design
+import { Button, Space, Table } from "antd";
 
 function ProductTable(props) {
   //props
@@ -14,6 +15,7 @@ function ProductTable(props) {
     navigate(`/product/${product.productID}`);
   };
 
+  //data
   const dataSource = products.map((product, index) => {
     return {
       no: index + 1,
@@ -25,6 +27,7 @@ function ProductTable(props) {
     };
   });
 
+  //column
   const columns = [
     {
       title: "No",

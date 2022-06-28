@@ -66,34 +66,45 @@ function ProductDetailPage(props) {
   const product = useSelector((state) => state.product);
   const episodes = useSelector((state) => state.episodes);
   const characters = useSelector((state) => state.characters);
-  //redux - actions
+  //dispatch
   const dispatch = useDispatch();
-  //action - categories
+  //redux - fetch categories
   const fetchCategories = () => dispatch(actFetchCategoriesRequest());
-  //action - product info
+  //redux - fetch product info
   const fetchProductInfo = (productID) =>
     dispatch(actFetchProductInforByIDRequest(productID));
+  //redux - delete product
   const deleteProduct = (product) => dispatch(actDeleteProductRequest(product));
+  //redux - clean product
   const cleanProduct = () => dispatch(actCleanProduct());
+  //redux - update product
   const updateProduct = (product, file) =>
     dispatch(actUpdateProductRequest(product, file));
-  //action - episodes
+  //action - fetch episodes
   const fetchEpisodes = (productID) =>
     dispatch(actFetchEpisodesRequest(productID));
+  //redux - clean episodes
   const cleanEpisodes = () => dispatch(actCleanEpisodes());
+  //redux - add new episode
   const addNewEpisode = (episode, file, docID) =>
     dispatch(actAddNewEpisodeRequest(episode, file, docID));
+  //redux - delete episode
   const deleteEpisode = (episode) => dispatch(actDeleteEpisodeRequest(episode));
+  //update episode
   const updateEpisode = (episode, file) =>
     dispatch(actUpdateEpisodeRequest(episode, file));
-  //action - characters
+  //redux - fetch characters
   const fetchCharacters = (productID) =>
     dispatch(actFetchCharactersRequest(productID));
+  //redux - clean characters
   const cleanCharacters = () => dispatch(actCleanCharacters());
+  //redux - add new character
   const addNewCharacter = (character, file, docID) =>
     dispatch(actAddNewCharacterRequest(character, file, docID));
+  //redux - delete character
   const deleteCharacter = (character) =>
     dispatch(actDeleteCharacterRequest(character));
+  //redux - update character
   const updateCharacter = (character, file) =>
     dispatch(actUpdateCharacterRequest(character, file));
 
@@ -116,6 +127,7 @@ function ProductDetailPage(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //show episodes
   const showEpisodes = () => {
     var result = null;
     if (episodes.length > 0) {
@@ -132,6 +144,7 @@ function ProductDetailPage(props) {
     return result;
   };
 
+  //show characters
   const showCharacters = () => {
     var result = null;
     if (characters.length > 0) {
@@ -260,7 +273,7 @@ function ProductDetailPage(props) {
     });
   };
 
-  //show episode dialog
+  //show character dialog
   const onShowCharacterDialog = () => {
     setIsCharacterModalVisible(true);
     setCharacter(null);
@@ -295,7 +308,7 @@ function ProductDetailPage(props) {
     }, 3000);
   };
 
-  //
+  //remove character
   const onCharacterRemove = () => {
     confirm({
       title: "Do you want to delete this item?",
@@ -350,7 +363,10 @@ function ProductDetailPage(props) {
                 padding: "20px",
               }}
             >
-              <Row justify="space-between" style={{ marginTop: "40px" }}>
+              <Row
+                justify="space-between"
+                style={{ marginTop: "40px", marginBottom: "10px" }}
+              >
                 <Col>
                   <Title level={3}>List of episode</Title>
                 </Col>
@@ -379,7 +395,10 @@ function ProductDetailPage(props) {
                 backgroundColor: "white",
               }}
             >
-              <Row justify="space-between" style={{ marginTop: "40px" }}>
+              <Row
+                justify="space-between"
+                style={{ marginTop: "40px", marginBottom: "10px" }}
+              >
                 <Col>
                   <Title level={3}>List of character</Title>
                 </Col>

@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+//ant design
+import { Layout, Modal, Button, Space, Input } from "antd";
+import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
+//actions
 import {
   actAddNewCategoryRequest,
   actDeleteCategoryRequest,
   actFetchCategoriesRequest,
   actUpdateCategoryRequest,
 } from "../../actions/category";
-import { useDispatch, useSelector } from "react-redux";
-import CategoryModal from "../../components/modal/CategoryModal";
-import { Layout, Modal, Button, Space, Input } from "antd";
-import CategoryTable from "../../components/category-table/CategoryTable";
-import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
+//components
 import MenuBar from "../../components/menu-bar/MenuBar";
+import CategoryModal from "../../components/modal/CategoryModal";
+import CategoryTable from "../../components/category-table/CategoryTable";
 
 const { Content } = Layout;
 const { confirm } = Modal;
@@ -24,16 +27,17 @@ function CategoryPage(props) {
 
   //redux - state
   var categories = useSelector((state) => state.categories);
+  //dispatch
   const dispatch = useDispatch();
-  //redux - fetch
+  //redux - fetch category
   const fetchCategories = () => dispatch(actFetchCategoriesRequest());
-  //redux - update
+  //redux - update category
   const updateCategory = (category, file) =>
     dispatch(actUpdateCategoryRequest(category, file));
-  //redux - add
+  //redux - add category
   const addNewCategory = (category, file) =>
     dispatch(actAddNewCategoryRequest(category, file));
-  //redux - delete
+  //redux - delete category
   const deleteCategory = (category) =>
     dispatch(actDeleteCategoryRequest(category));
 
@@ -42,13 +46,13 @@ function CategoryPage(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //update dialog
+  //show category info
   const onShowCategoryInfo = (category) => {
     setCategoryInfo(category);
     setIsModalVisible(true);
   };
 
-  //create dialog
+  //create category dialog
   const onShowCategoryDialog = () => {
     setCategoryInfo(null);
     setIsModalVisible(true);
@@ -89,6 +93,7 @@ function CategoryPage(props) {
     });
   };
 
+  //filter
   if (searchParam) {
     categories = categories.filter((category) => {
       return category.name.indexOf(searchParam) !== -1;

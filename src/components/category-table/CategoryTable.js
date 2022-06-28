@@ -6,7 +6,7 @@ function CategoryTable(props) {
   //props
   const { categories } = props;
 
-  //show dialog
+  //show info
   const onShowCategoryInfo = (category) => {
     props.onShowCategoryInfo(category);
   };
@@ -16,6 +16,7 @@ function CategoryTable(props) {
     props.onDeleteCategory(category);
   };
 
+  //data
   const dataSource = categories.map((category, index) => {
     return {
       no: index + 1,
@@ -26,6 +27,7 @@ function CategoryTable(props) {
     };
   });
 
+  //column
   const columns = [
     {
       title: "No",

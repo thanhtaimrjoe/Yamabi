@@ -4,6 +4,7 @@ import {
   FETCH_CATEGORIES,
   UPDATE_CATEGORY,
 } from "../constants/ActionTypes";
+
 var initialState = [];
 
 const findIndex = (categories, categoryID) => {

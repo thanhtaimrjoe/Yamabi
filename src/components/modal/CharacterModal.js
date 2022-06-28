@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+//ant design
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Modal,
@@ -11,21 +13,22 @@ import {
   Typography,
   Select,
 } from "antd";
-import React, { useEffect, useState } from "react";
+//uuid
 import { v4 as uuidv4 } from "uuid";
 
 const { Text } = Typography;
 const { Option } = Select;
+
 function CharacterModal(props) {
+  //props
+  var { character, productID, isCharacterModalVisible, modalLoading } = props;
+
   //state
   const [characterID, setCharacterID] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
-
-  //props
-  var { character, productID, isCharacterModalVisible, modalLoading } = props;
 
   useEffect(() => {
     if (character && fileList.length === 0) {
@@ -75,7 +78,7 @@ function CharacterModal(props) {
     }
   };
 
-  //remove character
+  //remove or cancel
   const onCharacterRemoveOrCancel = () => {
     if (character) {
       props.onCharacterRemove();
@@ -84,7 +87,7 @@ function CharacterModal(props) {
     }
   };
 
-  //upload props
+  //upload image
   const beforeUpload = (file) => {
     const isPNG = file.type === "image/png";
     if (!isPNG) {
@@ -95,7 +98,7 @@ function CharacterModal(props) {
     }
   };
 
-  //upload props
+  //image select
   const onChange = (info) => {
     let newFileList = [...info.fileList];
     setFile(info.file);

@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+//ant design
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Modal,
@@ -10,20 +12,20 @@ import {
   message,
   Button,
 } from "antd";
-import React, { useEffect, useState } from "react";
+//uuid
 import { v4 as uuidv4 } from "uuid";
 
 const { Text } = Typography;
 
 function CategoryModal(props) {
+  //props
+  var { categoryInfo, isModalVisible } = props;
+
   //state
   const [id, setID] = useState("");
   const [name, setName] = useState("");
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
-
-  //props
-  var { categoryInfo, isModalVisible } = props;
 
   useEffect(() => {
     if (categoryInfo) {
@@ -65,7 +67,7 @@ function CategoryModal(props) {
     }
   };
 
-  //upload props
+  //upload image
   const beforeUpload = (file) => {
     const isPNG = file.type === "image/png";
     if (!isPNG) {
@@ -76,7 +78,7 @@ function CategoryModal(props) {
     }
   };
 
-  //upload props
+  //image select
   const onChange = (info) => {
     let newFileList = [...info.fileList];
     setFile(info.file);

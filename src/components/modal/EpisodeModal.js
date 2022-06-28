@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+//ant design
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Modal,
@@ -11,20 +13,21 @@ import {
   Typography,
   InputNumber,
 } from "antd";
-import React, { useEffect, useState } from "react";
+//uuid
 import { v4 as uuidv4 } from "uuid";
 
 const { Text } = Typography;
+
 function EpisodeModal(props) {
+  //props
+  var { episode, productID, isEpisodeModalVisible, modalLoading } = props;
+
   //state
   const [episodeID, setEpisodeID] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
-
-  //props
-  var { episode, productID, isEpisodeModalVisible, modalLoading } = props;
 
   useEffect(() => {
     if (episode && fileList.length === 0) {
@@ -72,7 +75,7 @@ function EpisodeModal(props) {
     }
   };
 
-  //remove episode
+  //remove or cancel
   const onEpisodeRemoveOrCancel = () => {
     if (episode) {
       props.onEpisodeRemove();
@@ -81,7 +84,7 @@ function EpisodeModal(props) {
     }
   };
 
-  //upload props
+  //upload image
   const beforeUpload = (file) => {
     const isPNG = file.type === "image/png";
     if (!isPNG) {
@@ -92,7 +95,7 @@ function EpisodeModal(props) {
     }
   };
 
-  //upload props
+  //image select
   const onChange = (info) => {
     let newFileList = [...info.fileList];
     setFile(info.file);
@@ -172,8 +175,9 @@ function EpisodeModal(props) {
             <InputNumber
               min={0}
               max={10000}
-              onChange={onPriceChange}
               addonAfter="$"
+              value={episode && episode.price}
+              onChange={onPriceChange}
             />
           </Col>
         </Row>

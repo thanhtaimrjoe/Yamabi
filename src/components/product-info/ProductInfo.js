@@ -1,18 +1,20 @@
 import React from "react";
+//ant design
 import { Button, Image, Space, Typography } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 
 const { Title, Paragraph, Text } = Typography;
 
 function ProductInfo(props) {
+  //props
   const { product } = props;
 
-  //show update dialog
+  //show dialog
   const onShowProductDialog = () => {
     props.onShowProductDialog();
   };
 
-  //delete product
+  //delete
   const onDeleteProduct = () => {
     props.onDeleteProduct();
   };

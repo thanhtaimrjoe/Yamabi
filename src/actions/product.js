@@ -14,6 +14,12 @@ import {
   updateProduct,
 } from "../utils/product";
 
+export const actCleanProduct = () => {
+  return {
+    type: CLEAN_PRODUCT,
+  };
+};
+
 export const actFetchProductsRequest = () => {
   return async (dispatch) => {
     const result = await fetchAllProduct("product");
@@ -31,11 +37,11 @@ export const actFetchProducts = (products) => {
 export const actFetchProductInforByIDRequest = (productID) => {
   return async (dispatch) => {
     const result = await fetchProductInfoByID("product", productID);
-    dispatch(actFetchProduct(result));
+    dispatch(actFetchProductInfo(result));
   };
 };
 
-export const actFetchProduct = (product) => {
+export const actFetchProductInfo = (product) => {
   return {
     type: FETCH_PRODUCT_INFO,
     product,
@@ -66,12 +72,6 @@ export const actDeleteProductRequest = (product) => {
 export const actDeleteProduct = () => {
   return {
     type: DELETE_PRODUCT,
-  };
-};
-
-export const actCleanProduct = () => {
-  return {
-    type: CLEAN_PRODUCT,
   };
 };
 

@@ -1,4 +1,5 @@
 import { ADD_NEW_PRODUCT, FETCH_PRODUCTS } from "../constants/ActionTypes";
+
 var initialState = [];
 
 const myReducers = (state = initialState, action) => {

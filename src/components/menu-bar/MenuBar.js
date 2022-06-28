@@ -1,9 +1,12 @@
 import React from "react";
-import { Layout, Typography, Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
+//ant design
+import { Layout, Typography, Menu } from "antd";
 
 const { Header } = Layout;
 const { Title } = Typography;
+
+//array
 const menus = [
   {
     name: "Category",
@@ -19,7 +22,7 @@ function MenuBar(props) {
   //location
   var location = useLocation();
 
-  //menu items
+  //show items
   const showMenus = () => {
     var result = null;
     if (menus.length > 0) {

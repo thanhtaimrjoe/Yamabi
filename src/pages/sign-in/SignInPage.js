@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+//actions
 import { actCheckUserRequest, actClearUser } from "../../actions/user";
+//ant design
 import {
   Button,
   Checkbox,
@@ -17,15 +19,19 @@ import { blue } from "@ant-design/colors";
 const { Title } = Typography;
 
 function SignInPage(props) {
+  //state
   const [isRemember, setIsRemember] = useState(false);
 
   //navigate
   const navigate = useNavigate();
 
-  //redux
+  //redux - state
   const user = useSelector((state) => state.user);
+  //dispatch
   const dispatch = useDispatch();
+  //redux - check user
   const checkUser = (user) => dispatch(actCheckUserRequest(user));
+  //redux - clear user
   const clearUser = () => dispatch(actClearUser());
 
   useEffect(() => {
@@ -42,7 +48,7 @@ function SignInPage(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  //ant-design
+  //form submit
   const onFinish = (value) => {
     setIsRemember(value.remember);
     var user = {

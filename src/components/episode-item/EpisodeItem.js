@@ -4,21 +4,21 @@ import React from "react";
 const { Title, Text } = Typography;
 
 function EpisodeItem(props) {
+  //props
   var { episode } = props;
+
+  //show info
   const onShowEpisodeInfo = () => {
     props.onShowEpisodeInfo(episode);
   };
+
   return (
     <Col span={4}>
       <Card
         hoverable
         style={{ width: "auto" }}
         cover={
-          <img
-            alt="example"
-            src={episode.image}
-            onClick={onShowEpisodeInfo}
-          />
+          <img alt="example" src={episode.image} onClick={onShowEpisodeInfo} />
         }
       >
         <Title level={4}>{episode.name}</Title>

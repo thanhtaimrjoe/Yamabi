@@ -4,6 +4,7 @@ import {
   FETCH_PRODUCT_INFO,
   UPDATE_PRODUCT,
 } from "../constants/ActionTypes";
+
 var initialState = {};
 
 const myReducers = (state = initialState, action) => {
