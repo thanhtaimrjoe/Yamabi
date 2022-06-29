@@ -22,7 +22,7 @@ const { Search } = Input;
 function CategoryPage(props) {
   //state
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [categoryInfo, setCategoryInfo] = useState();
+  const [category, setCategory] = useState();
   const [searchParam, setSearchParam] = useState();
 
   //redux - state
@@ -47,14 +47,14 @@ function CategoryPage(props) {
   }, []);
 
   //show category info
-  const onShowCategoryInfo = (category) => {
-    setCategoryInfo(category);
+  const onShowCategoryInfo = (categoryInfo) => {
+    setCategory(categoryInfo);
     setIsModalVisible(true);
   };
 
   //create category dialog
   const onShowCategoryDialog = () => {
-    setCategoryInfo(null);
+    setCategory(null);
     setIsModalVisible(true);
   };
 
@@ -69,11 +69,11 @@ function CategoryPage(props) {
   };
 
   //update or add
-  const onSave = (category, file) => {
-    if (categoryInfo) {
-      updateCategory(category, file);
+  const onSave = (categoryInfo, file) => {
+    if (category) {
+      updateCategory(categoryInfo, file);
     } else {
-      addNewCategory(category, file);
+      addNewCategory(categoryInfo, file);
     }
     setIsModalVisible(false);
   };
@@ -129,7 +129,7 @@ function CategoryPage(props) {
         />
         {isModalVisible && (
           <CategoryModal
-            categoryInfo={categoryInfo}
+            category={category}
             isModalVisible={isModalVisible}
             onCloseDialog={onCloseDialog}
             onSave={onSave}

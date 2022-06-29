@@ -167,7 +167,7 @@ function ProductModal(props) {
       title={product ? "Product Information" : "Create New Product"}
       visible={isProductModalVisible}
       onOk={onProductSave}
-      okText="Update"
+      okText={product ? "Update" : "Create"}
       onCancel={onCloseDialog}
       confirmLoading={modalLoading}
     >

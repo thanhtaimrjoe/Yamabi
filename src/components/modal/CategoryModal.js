@@ -27,7 +27,7 @@ const getBase64 = (file) =>
 
 function CategoryModal(props) {
   //props
-  var { categoryInfo, isModalVisible } = props;
+  var { category, isModalVisible } = props;
 
   //state
   const [id, setID] = useState("");
@@ -41,14 +41,14 @@ function CategoryModal(props) {
   const [previewVisible, setPreviewVisible] = useState(false);
 
   useEffect(() => {
-    if (categoryInfo) {
-      setID(categoryInfo.id);
-      setName(categoryInfo.name);
+    if (category) {
+      setID(category.id);
+      setName(category.name);
       var imgFile = {
         uid: "-1",
         name: "image.png",
         status: "done",
-        url: categoryInfo.image,
+        url: category.image,
       };
       setFileList([...fileList, imgFile]);
     }
@@ -68,15 +68,15 @@ function CategoryModal(props) {
   //update or add
   const onSave = (event) => {
     event.preventDefault();
-    if (categoryInfo) {
-      categoryInfo.name = name;
-      props.onSave(categoryInfo, file);
+    if (category) {
+      category.name = name;
+      props.onSave(category, file);
     } else {
-      var category = {
+      var categoryInfo = {
         id: id,
         name: name,
       };
-      props.onSave(category, file);
+      props.onSave(categoryInfo, file);
     }
   };
 
@@ -126,6 +126,7 @@ function CategoryModal(props) {
       title="Category Information"
       visible={isModalVisible}
       onOk={onSave}
+      okText={category ? "Update" : "Create"}
       onCancel={onCloseDialog}
     >
       <Space direction="vertical" style={{ display: "flex" }}>
@@ -136,7 +137,7 @@ function CategoryModal(props) {
           <Col flex="auto">
             <Input value={id} disabled />
           </Col>
-          {!categoryInfo && (
+          {!category && (
             <Col>
               <Button type="primary" onClick={onGenerateID}>
                 Generate
