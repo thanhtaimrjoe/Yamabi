@@ -17,6 +17,14 @@ import { v4 as uuidv4 } from "uuid";
 
 const { Text } = Typography;
 
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
 function CategoryModal(props) {
   //props
   var { categoryInfo, isModalVisible } = props;
@@ -26,6 +34,11 @@ function CategoryModal(props) {
   const [name, setName] = useState("");
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
+  const [previewImage, setPreviewImage] = useState({
+    previewURL: "",
+    previewTitle: "",
+  });
+  const [previewVisible, setPreviewVisible] = useState(false);
 
   useEffect(() => {
     if (categoryInfo) {
@@ -77,6 +90,22 @@ function CategoryModal(props) {
       return false;
     }
   };
+
+  //preview image
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage({
+      previewURL: file.url || file.preview,
+      previewTitle:
+        file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+    });
+    setPreviewVisible(true);
+  };
+
+  //cancel preview image
+  const handleCancel = () => setPreviewVisible(false);
 
   //image select
   const onChange = (info) => {
@@ -135,6 +164,7 @@ function CategoryModal(props) {
                 accept=".png,.jpeg"
                 beforeUpload={beforeUpload}
                 onChange={onChange}
+                onPreview={handlePreview}
               >
                 <Space direction="vertical">
                   <PlusOutlined />
@@ -145,6 +175,18 @@ function CategoryModal(props) {
           </Col>
         </Row>
       </Space>
+      <Modal
+        visible={previewVisible}
+        title={previewImage.previewTitle}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <img
+          alt="example"
+          style={{ width: "100%" }}
+          src={previewImage.previewURL}
+        />
+      </Modal>
     </Modal>
   );
 }
