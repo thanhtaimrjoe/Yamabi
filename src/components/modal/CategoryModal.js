@@ -41,7 +41,7 @@ function CategoryModal(props) {
   const [previewVisible, setPreviewVisible] = useState(false);
 
   useEffect(() => {
-    if (category) {
+    if (category && fileList.length === 0) {
       setID(category.id);
       setName(category.name);
       var imgFile = {
@@ -65,26 +65,54 @@ function CategoryModal(props) {
     setID(uuidv4());
   };
 
+  const validate = () => {
+    var result = false;
+    if (!id) {
+      message.error("Please generate ID");
+      result = true;
+    }
+    if (!name) {
+      message.error("Please input name");
+      result = true;
+    }
+    if (fileList.length === 0) {
+      message.error("Please choose an image");
+      result = true;
+    }
+    return result;
+  };
+
   //update or add
   const onSave = (event) => {
     event.preventDefault();
-    if (category) {
-      category.name = name;
-      props.onSave(category, file);
-    } else {
-      var categoryInfo = {
-        id: id,
-        name: name,
-      };
-      props.onSave(categoryInfo, file);
+    const isValid = validate();
+    if (!isValid) {
+      if (category) {
+        category.name = name;
+        props.onSave(category, file);
+      } else {
+        var categoryInfo = {
+          id: id,
+          name: name,
+        };
+        props.onSave(categoryInfo, file);
+      }
     }
   };
 
   //upload image
   const beforeUpload = (file) => {
-    const isPNG = file.type === "image/png";
+    var isPNG = false;
+    if (file.type === "image/png") {
+      isPNG = true;
+    }
+    if (file.type === "image/jpeg") {
+      isPNG = true;
+    }
     if (!isPNG) {
-      message.error(`${file.name} is not a png file`);
+      message.error(
+        `${file.name} can not be uploaded. Only accept jpg and png files`
+      );
       return Upload.LIST_IGNORE;
     } else {
       return false;
@@ -110,8 +138,13 @@ function CategoryModal(props) {
   //image select
   const onChange = (info) => {
     let newFileList = [...info.fileList];
-    setFile(info.file);
-    setFileList(newFileList.slice(-1));
+    var result = newFileList.slice(-1);
+    setFileList(result);
+    if (result.length > 0) {
+      setFile(info.file);
+    } else {
+      setFile(null);
+    }
   };
 
   //name input
@@ -162,7 +195,7 @@ function CategoryModal(props) {
                 multiple={true}
                 action="http://localhost:3000/"
                 listType="picture-card"
-                accept=".png,.jpeg"
+                accept=".png,.jpg"
                 beforeUpload={beforeUpload}
                 onChange={onChange}
                 onPreview={handlePreview}

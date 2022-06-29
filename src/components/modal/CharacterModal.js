@@ -71,23 +71,47 @@ function CharacterModal(props) {
     setCharacterID(uuidv4());
   };
 
+  const validate = () => {
+    var result = false;
+    if (!characterID) {
+      message.error("Please generate ID");
+      result = true;
+    }
+    if (!name) {
+      message.error("Please input name");
+      result = true;
+    }
+    if (!role) {
+      message.error("Please select role");
+      result = true;
+    }
+    if (fileList.length === 0) {
+      message.error("Please choose an image");
+      result = true;
+    }
+    return result;
+  };
+
   //update or add
   const onCharacterSave = (event) => {
     event.preventDefault();
-    if (character) {
-      character.characterID = characterID;
-      character.name = name;
-      character.productID = productID;
-      character.role = role;
-      props.onCharacterSave(character, file);
-    } else {
-      var characterInfo = {
-        characterID: characterID,
-        name: name,
-        productID: productID,
-        role: role,
-      };
-      props.onCharacterSave(characterInfo, file);
+    const valid = validate();
+    if (!valid) {
+      if (character) {
+        character.characterID = characterID;
+        character.name = name;
+        character.productID = productID;
+        character.role = role;
+        props.onCharacterSave(character, file);
+      } else {
+        var characterInfo = {
+          characterID: characterID,
+          name: name,
+          productID: productID,
+          role: role,
+        };
+        props.onCharacterSave(characterInfo, file);
+      }
     }
   };
 
@@ -102,9 +126,17 @@ function CharacterModal(props) {
 
   //upload image
   const beforeUpload = (file) => {
-    const isPNG = file.type === "image/png";
+    var isPNG = false;
+    if (file.type === "image/png") {
+      isPNG = true;
+    }
+    if (file.type === "image/jpeg") {
+      isPNG = true;
+    }
     if (!isPNG) {
-      message.error(`${file.name} is not a png file`);
+      message.error(
+        `${file.name} can not be uploaded. Only accept jpg and png files`
+      );
       return Upload.LIST_IGNORE;
     } else {
       return false;
@@ -130,8 +162,13 @@ function CharacterModal(props) {
   //image select
   const onChange = (info) => {
     let newFileList = [...info.fileList];
-    setFile(info.file);
-    setFileList(newFileList.slice(-1));
+    var result = newFileList.slice(-1);
+    setFileList(result);
+    if (result.length > 0) {
+      setFile(info.file);
+    } else {
+      setFile(null);
+    }
   };
 
   //name input
@@ -223,7 +260,7 @@ function CharacterModal(props) {
                 multiple={true}
                 action="http://localhost:3000/"
                 listType="picture-card"
-                accept=".png,.jpeg"
+                accept=".png,.jpg"
                 beforeUpload={beforeUpload}
                 onChange={onChange}
                 onPreview={handlePreview}

@@ -78,30 +78,62 @@ function ProductModal(props) {
     setProductID(uuidv4());
   };
 
+  const validate = () => {
+    var result = false;
+    if (!productID) {
+      message.error("Please generate ID");
+      result = true;
+    }
+    if (!name) {
+      message.error("Please input name");
+      result = true;
+    }
+    if (!overview) {
+      message.error("Please input overview");
+      result = true;
+    }
+    if (fileList.length === 0) {
+      message.error("Please choose an image");
+      result = true;
+    }
+    return result;
+  };
+
   //update or add
   const onProductSave = (event) => {
     event.preventDefault();
-    if (product) {
-      product.categoryID = categoryID;
-      product.name = name;
-      product.overview = overview;
-      props.onProductSave(product, file);
-    } else {
-      var productInfo = {
-        productID: productID,
-        name: name,
-        overview: overview,
-        categoryID: categoryID,
-      };
-      props.onProductSave(productInfo, file);
+    const valid = validate();
+    if (!valid) {
+      if (product) {
+        product.categoryID = categoryID;
+        product.name = name;
+        product.overview = overview;
+        props.onProductSave(product, file);
+      } else {
+        var productInfo = {
+          productID: productID,
+          name: name,
+          overview: overview,
+          categoryID: categoryID,
+        };
+        props.onProductSave(productInfo, file);
+      }
     }
   };
 
   //upload image
   const beforeUpload = (file) => {
-    const isPNG = file.type === "image/png";
+    var isPNG = false;
+    if (file.type === "image/png") {
+      isPNG = true;
+    }
+    if (file.type === "image/jpeg") {
+      isPNG = true;
+    }
     if (!isPNG) {
-      message.error(`${file.name} is not a png file`);
+      message.error(
+        `${file.name} can not be uploaded. Only accept jpg and png files`
+      );
       return Upload.LIST_IGNORE;
     } else {
       return false;
@@ -127,8 +159,13 @@ function ProductModal(props) {
   //image select
   const onChange = (info) => {
     let newFileList = [...info.fileList];
-    setFile(info.file);
-    setFileList(newFileList.slice(-1));
+    var result = newFileList.slice(-1);
+    setFileList(result);
+    if (result.length > 0) {
+      setFile(info.file);
+    } else {
+      setFile(null);
+    }
   };
 
   //name and overview input
@@ -232,7 +269,7 @@ function ProductModal(props) {
                 multiple={true}
                 action="http://localhost:3000/"
                 listType="picture-card"
-                accept=".png,.jpeg"
+                accept=".png,.jpg"
                 beforeUpload={beforeUpload}
                 onChange={onChange}
                 onPreview={handlePreview}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //ant design
-import { Layout, Modal, Button, Space, Input } from "antd";
+import { Layout, Modal, Button, Space, Input, notification } from "antd";
 import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 //actions
 import {
@@ -76,6 +76,10 @@ function CategoryPage(props) {
       addNewCategory(categoryInfo, file);
     }
     setIsModalVisible(false);
+    notification["success"]({
+      message: "Success",
+      description: `Add ${categoryInfo.name} category successfully`,
+    });
   };
 
   //delete

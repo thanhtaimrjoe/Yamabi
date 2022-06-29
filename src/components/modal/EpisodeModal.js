@@ -33,7 +33,7 @@ function EpisodeModal(props) {
   //state
   const [episodeID, setEpisodeID] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [file, setFile] = useState();
   const [fileList, setFileList] = useState([]);
   const [previewImage, setPreviewImage] = useState({
@@ -68,23 +68,47 @@ function EpisodeModal(props) {
     setEpisodeID(uuidv4());
   };
 
+  const validate = () => {
+    var result = false;
+    if (!episodeID) {
+      message.error("Please generate ID");
+      result = true;
+    }
+    if (!name) {
+      message.error("Please input name");
+      result = true;
+    }
+    if (!price) {
+      message.error("Please input price");
+      result = true;
+    }
+    if (fileList.length === 0) {
+      message.error("Please choose an image");
+      result = true;
+    }
+    return result;
+  };
+
   //update or add
   const onEpisodeSave = (event) => {
     event.preventDefault();
-    if (episode) {
-      episode.episodeID = episodeID;
-      episode.name = name;
-      episode.price = price;
-      episode.productID = productID;
-      props.onEpisodeSave(episode, file);
-    } else {
-      var episodeInfo = {
-        episodeID: episodeID,
-        name: name,
-        price: price,
-        productID: productID,
-      };
-      props.onEpisodeSave(episodeInfo, file);
+    const valid = validate();
+    if (!valid) {
+      if (episode) {
+        episode.episodeID = episodeID;
+        episode.name = name;
+        episode.price = price;
+        episode.productID = productID;
+        props.onEpisodeSave(episode, file);
+      } else {
+        var episodeInfo = {
+          episodeID: episodeID,
+          name: name,
+          price: price,
+          productID: productID,
+        };
+        props.onEpisodeSave(episodeInfo, file);
+      }
     }
   };
 
@@ -99,9 +123,17 @@ function EpisodeModal(props) {
 
   //upload image
   const beforeUpload = (file) => {
-    const isPNG = file.type === "image/png";
+    var isPNG = false;
+    if (file.type === "image/png") {
+      isPNG = true;
+    }
+    if (file.type === "image/jpeg") {
+      isPNG = true;
+    }
     if (!isPNG) {
-      message.error(`${file.name} is not a png file`);
+      message.error(
+        `${file.name} can not be uploaded. Only accept jpg and png files`
+      );
       return Upload.LIST_IGNORE;
     } else {
       return false;
@@ -111,8 +143,13 @@ function EpisodeModal(props) {
   //image select
   const onChange = (info) => {
     let newFileList = [...info.fileList];
-    setFile(info.file);
-    setFileList(newFileList.slice(-1));
+    var result = newFileList.slice(-1);
+    setFileList(result);
+    if (result.length > 0) {
+      setFile(info.file);
+    } else {
+      setFile(null);
+    }
   };
 
   //preview image
@@ -205,7 +242,7 @@ function EpisodeModal(props) {
               min={0}
               max={10000}
               addonAfter="$"
-              value={episode && episode.price}
+              value={price}
               onChange={onPriceChange}
             />
           </Col>
@@ -219,7 +256,7 @@ function EpisodeModal(props) {
                 multiple={true}
                 action="http://localhost:3000/"
                 listType="picture-card"
-                accept=".png,.jpeg"
+                accept=".png,.jpg"
                 beforeUpload={beforeUpload}
                 onChange={onChange}
                 onPreview={handlePreview}
