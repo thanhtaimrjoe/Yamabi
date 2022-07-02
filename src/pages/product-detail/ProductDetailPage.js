@@ -334,7 +334,8 @@ function ProductDetailPage(props) {
       <Content>
         <Row justify="center" style={{ minHeight: "87.5vh" }}>
           <Col
-            span={15}
+            lg={20}
+            md={30}
             style={{
               marginTop: "20px",
               padding: "20px",
