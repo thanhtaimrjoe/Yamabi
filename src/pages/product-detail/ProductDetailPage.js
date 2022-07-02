@@ -44,6 +44,7 @@ import {
 } from "antd";
 import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { actFetchCategoriesRequest } from "../../actions/category";
+import ProductOverview from "../../components/product-overview/ProductOverview";
 
 const { Content, Footer } = Layout;
 const { Title } = Typography;
@@ -334,8 +335,8 @@ function ProductDetailPage(props) {
       <Content>
         <Row justify="center" style={{ minHeight: "87.5vh" }}>
           <Col
+            xl={15}
             lg={20}
-            md={30}
             style={{
               marginTop: "20px",
               padding: "20px",
@@ -355,6 +356,9 @@ function ProductDetailPage(props) {
                 onShowProductDialog={onShowProductDialog}
                 onDeleteProduct={onDeleteProduct}
               />
+              <Row style={{ marginTop: "40px", marginBottom: "10px" }}>
+                <ProductOverview product={product} />
+              </Row>
             </Skeleton>
             <Skeleton
               active

@@ -1,9 +1,9 @@
 import React from "react";
 //ant design
-import { Button, Image, Space, Typography } from "antd";
+import { Button, Col, Image, Row, Space, Typography } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 function ProductInfo(props) {
   //props
@@ -20,35 +20,45 @@ function ProductInfo(props) {
   };
 
   return (
-    <Space style={{ display: "flex" }}>
-      <Image src={product.image} width={200} />
-      <Space direction="vertical" style={{ padding: "12px" }}>
-        <Title>{product.name}</Title>
-        <Text>
-          <Text strong>Genres:</Text> {product.categoryName}
-        </Text>
-        <Paragraph>
-          <Text strong>Overview:</Text> {product.overview}
-        </Paragraph>
-        <Space>
-          <Button
-            type="primary"
-            icon={<EditFilled />}
-            onClick={onShowProductDialog}
-          >
-            Edit
-          </Button>
-          <Button
-            type="primary"
-            danger
-            icon={<DeleteFilled />}
-            onClick={onDeleteProduct}
-          >
-            Remove
-          </Button>
+    <Row align="middle" justify="space-between">
+      <Col xxl={5} xl={6} lg={5} md={6} xs={24}>
+        <Image src={product.image} />
+      </Col>
+      <Col xxl={18} xl={17} lg={18} md={17} xs={24}>
+        <Space direction="vertical">
+          <Title>{product.name}</Title>
+          <Text>
+            <Text strong>Genres:</Text> {product.categoryName}
+          </Text>
+          <Text>
+            <Text strong>Author:</Text> Eichiro Oda
+          </Text>
+          <Text>
+            <Text strong>Episodes:</Text> 13/13
+          </Text>
+          <Text>
+            <Text strong>Status:</Text> Complete
+          </Text>
+          <Space style={{ marginTop: 15 }}>
+            <Button
+              type="primary"
+              icon={<EditFilled />}
+              onClick={onShowProductDialog}
+            >
+              Edit
+            </Button>
+            <Button
+              type="primary"
+              danger
+              icon={<DeleteFilled />}
+              onClick={onDeleteProduct}
+            >
+              Remove
+            </Button>
+          </Space>
         </Space>
-      </Space>
-    </Space>
+      </Col>
+    </Row>
   );
 }
 

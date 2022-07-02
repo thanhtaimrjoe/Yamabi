@@ -13,7 +13,7 @@ function EpisodeItem(props) {
   };
 
   return (
-    <Col span={4}>
+    <Col lg={4} md={6} sm={8} xs={12}>
       <Card
         hoverable
         style={{ width: "auto" }}
