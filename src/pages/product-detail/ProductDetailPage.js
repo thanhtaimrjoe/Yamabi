@@ -335,8 +335,10 @@ function ProductDetailPage(props) {
       <Content>
         <Row justify="center" style={{ minHeight: "87.5vh" }}>
           <Col
-            xl={15}
+          xxl={15}
+            xl={18}
             lg={20}
+            xs={24}
             style={{
               marginTop: "20px",
               padding: "20px",
@@ -370,7 +372,7 @@ function ProductDetailPage(props) {
             >
               <Row
                 justify="space-between"
-                style={{ marginTop: "40px", marginBottom: "10px" }}
+                style={{ marginTop: "20px", marginBottom: "10px" }}
               >
                 <Col>
                   <Title level={3}>List of episode</Title>
@@ -458,7 +460,6 @@ function ProductDetailPage(props) {
           />
         )}
       </Content>
-      <Footer></Footer>
     </Layout>
   );
 }

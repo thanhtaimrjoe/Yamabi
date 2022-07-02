@@ -255,7 +255,6 @@ function ProductModal(props) {
               name="overview"
               rows={4}
               value={overview}
-              maxLength={360}
               onChange={onTextChange}
             />
           </Col>

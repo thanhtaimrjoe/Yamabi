@@ -9,7 +9,7 @@ function ProductOverview(props) {
   const { product } = props;
   return (
     <Typography>
-      <Title level={3}>Overview:</Title>
+      <Title level={3}>Overview</Title>
       <Paragraph>{product.overview}</Paragraph>
     </Typography>
   );

@@ -15,12 +15,15 @@ import {
   Typography,
 } from "antd";
 import { blue } from "@ant-design/colors";
+import useWindowDimensions from '../../components/dimension/Dimension'
 
 const { Title } = Typography;
 
 function SignInPage(props) {
   //state
   const [isRemember, setIsRemember] = useState(false);
+
+  const { height, width } = useWindowDimensions();
 
   //navigate
   const navigate = useNavigate();
@@ -61,20 +64,21 @@ function SignInPage(props) {
   const onFinishFailed = (errorInfo) => {};
 
   return (
-    <>
       <Row
-        justify="center"
+      justify="center"
         align="middle"
-        style={{ height: "100vh", backgroundColor: blue[1] }}
+        style={{ height: "100vh", width: '100%', backgroundColor: blue[1] }}
       >
         <Col
-          span={10}
+          xl={10}
+          lg={12}
+          md={14}
+          sm={20}
+          xs={15}
           style={{ backgroundColor: "white", padding: "20px 20px 0px 20px" }}
         >
           <Form
             name="basic"
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -86,6 +90,7 @@ function SignInPage(props) {
             <Form.Item
               label="Username"
               name="username"
+              style={width <= 480 && {width: '85%'}}
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
@@ -95,6 +100,7 @@ function SignInPage(props) {
             <Form.Item
               label="Password"
               name="password"
+              style={width <= 480 && {width: '85%'}}
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
@@ -104,11 +110,11 @@ function SignInPage(props) {
             <Form.Item
               name="remember"
               valuePropName="checked"
-              wrapperCol={{ offset: 5 }}
+              wrapperCol={width > 480 && { offset: 5 }}
             >
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 5 }}>
+            <Form.Item wrapperCol={width > 480 ? { offset: 5 } : { offset: 9 }}>
               <Button type="primary" htmlType="submit">
                 Sign In
               </Button>
@@ -116,7 +122,6 @@ function SignInPage(props) {
           </Form>
         </Col>
       </Row>
-    </>
   );
 }
 
