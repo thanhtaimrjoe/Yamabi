@@ -13,17 +13,19 @@ import {
   message,
   Row,
   Typography,
+  Layout,
 } from "antd";
 import { blue } from "@ant-design/colors";
-import useWindowDimensions from '../../components/dimension/Dimension'
+import useWindowDimensions from "../../components/dimension/Dimension";
 
 const { Title } = Typography;
+const { Content } = Layout;
 
 function SignInPage(props) {
   //state
   const [isRemember, setIsRemember] = useState(false);
 
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   //navigate
   const navigate = useNavigate();
@@ -64,18 +66,30 @@ function SignInPage(props) {
   const onFinishFailed = (errorInfo) => {};
 
   return (
+    <Content>
       <Row
-      justify="center"
+        justify="center"
         align="middle"
-        style={{ height: "100vh", width: '100%', backgroundColor: blue[1] }}
+        style={{ height: "100vh", backgroundColor: blue[1] }}
       >
         <Col
+          xxl={10}
           xl={10}
           lg={12}
           md={14}
           sm={20}
-          xs={15}
-          style={{ backgroundColor: "white", padding: "20px 20px 0px 20px" }}
+          style={
+            width >= 1884
+              ? {
+                  backgroundColor: "white",
+                  padding: "30px 50px 0px 50px",
+                  maxWidth: "30%",
+                }
+              : {
+                  backgroundColor: "white",
+                  padding: "30px 50px 0px 50px",
+                }
+          }
         >
           <Form
             name="basic"
@@ -90,7 +104,6 @@ function SignInPage(props) {
             <Form.Item
               label="Username"
               name="username"
-              style={width <= 480 && {width: '85%'}}
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
@@ -100,7 +113,6 @@ function SignInPage(props) {
             <Form.Item
               label="Password"
               name="password"
-              style={width <= 480 && {width: '85%'}}
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
@@ -122,6 +134,7 @@ function SignInPage(props) {
           </Form>
         </Col>
       </Row>
+    </Content>
   );
 }
 

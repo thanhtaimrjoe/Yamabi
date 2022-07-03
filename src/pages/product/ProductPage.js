@@ -10,6 +10,8 @@ import {
   Menu,
   Space,
   notification,
+  Row,
+  Col,
 } from "antd";
 import {
   actAddNewProductRequest,
@@ -21,6 +23,7 @@ import { actFetchCategoriesRequest } from "../../actions/category";
 import MenuBar from "../../components/menu-bar/MenuBar";
 import ProductModal from "../../components/modal/ProductModal";
 import ProductTable from "../../components/product-table/ProductTable";
+import useWindowDimensions from "../../components/dimension/Dimension";
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -30,6 +33,8 @@ function ProductPage(props) {
   const [searchParam, setSearchParam] = useState();
   const [categoryFilter, setCategoryFilter] = useState();
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
+
+  const { width } = useWindowDimensions();
 
   //redux - state
   const categories = useSelector((state) => state.categories);
@@ -113,38 +118,42 @@ function ProductPage(props) {
   return (
     <Layout>
       <MenuBar />
-      <Content style={{ padding: "0 150px", minHeight: "93vh" }}>
-        <Space style={{ margin: "25px 0 25px 0" }}>
-          <Search
-            placeholder="Search category..."
-            enterButton="Search"
-            size="large"
-            style={{ width: 500 }}
-            onSearch={onSearch}
-          />
-          <Button
-            type="primary"
-            danger
-            size="large"
-            icon={<PlusOutlined />}
-            onClick={onShowCreateDialog}
-          >
-            Create
-          </Button>
-          <Dropdown overlay={menu} placement="bottomLeft">
-            <Button size="large" icon={<FilterOutlined />}>
-              Filter
-            </Button>
-          </Dropdown>
-        </Space>
-        <ProductTable products={products} />
-        {isProductModalVisible && (
-          <ProductModal
-            isProductModalVisible={isProductModalVisible}
-            onCloseDialog={onCloseDialog}
-            onProductSave={onProductSave}
-          />
-        )}
+      <Content style={{ minHeight: "93vh" }}>
+        <Row justify="center">
+          <Col md={20}>
+            <Space style={{ margin: "25px 0 25px 0" }}>
+              <Search
+                placeholder="Search category..."
+                enterButton="Search"
+                size="large"
+                onSearch={onSearch}
+                style={width > 768 ? { width: 500 } : null}
+              />
+              <Button
+                type="primary"
+                danger
+                size="large"
+                icon={<PlusOutlined />}
+                onClick={onShowCreateDialog}
+              >
+                Create
+              </Button>
+              <Dropdown overlay={menu} placement="bottomLeft">
+                <Button size="large" icon={<FilterOutlined />}>
+                  Filter
+                </Button>
+              </Dropdown>
+            </Space>
+            <ProductTable products={products} />
+            {isProductModalVisible && (
+              <ProductModal
+                isProductModalVisible={isProductModalVisible}
+                onCloseDialog={onCloseDialog}
+                onProductSave={onProductSave}
+              />
+            )}
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );

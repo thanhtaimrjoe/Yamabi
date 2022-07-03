@@ -46,7 +46,7 @@ import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { actFetchCategoriesRequest } from "../../actions/category";
 import ProductOverview from "../../components/product-overview/ProductOverview";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 const { confirm } = Modal;
 
@@ -335,7 +335,7 @@ function ProductDetailPage(props) {
       <Content>
         <Row justify="center" style={{ minHeight: "87.5vh" }}>
           <Col
-          xxl={15}
+            xxl={15}
             xl={18}
             lg={20}
             xs={24}

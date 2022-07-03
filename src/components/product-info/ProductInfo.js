@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 //ant design
 import { Button, Col, Image, Row, Space, Typography } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
@@ -10,7 +10,7 @@ function ProductInfo(props) {
   //props
   const { product } = props;
 
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   //show dialog
   const onShowProductDialog = () => {
@@ -28,7 +28,11 @@ function ProductInfo(props) {
         <Image src={product.image} />
       </Col>
       <Col xxl={18} xl={17} lg={18} md={17} xs={24}>
-        <Space direction="vertical" style={{display: 'flex', marginTop: '20px'}} align={width <= 576 && 'center'}>
+        <Space
+          direction="vertical"
+          style={{ display: "flex", marginTop: "20px" }}
+          align={width <= 576 && "center"}
+        >
           <Title level={3}>{product.name}</Title>
           <Text>
             <Text strong>Genres:</Text> {product.categoryName}
