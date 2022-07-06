@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 //style
 import "../../styles/SignUp.css";
@@ -16,9 +16,12 @@ import {
 } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 
+const { Content } = Layout;
+const { Title } = Typography;
+
 function SignUpPage(props) {
-  const { Content } = Layout;
-  const { Title } = Typography;
+  //state
+  const [gender, setGender] = useState("male");
 
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -37,14 +40,17 @@ function SignUpPage(props) {
           </Title>
           <Form
             name="normal_login"
-            initialValues={{ remember: true }}
+            initialValues={{ remember: true, gender: "male" }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <Form.Item
               name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[
+                { type: "email", message: "Please input valid email" },
+                { required: true, message: "Please input your email!" },
+              ]}
             >
               <Input
                 size="large"
@@ -99,10 +105,10 @@ function SignUpPage(props) {
               <DatePicker size="large" placeholder="Select birthday" />
             </Form.Item>
 
-            <Form.Item name="radio-group">
+            <Form.Item name="gender">
               <Radio.Group>
-                <Radio value="a">Male</Radio>
-                <Radio value="b">Female</Radio>
+                <Radio value="male">Male</Radio>
+                <Radio value="female">Female</Radio>
               </Radio.Group>
             </Form.Item>
 
