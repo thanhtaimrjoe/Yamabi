@@ -1,4 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
+//style
+import "../../styles/SignUp.css";
+//ant design
 import {
   Layout,
   Form,
@@ -10,8 +14,6 @@ import {
   DatePicker,
   Radio,
 } from "antd";
-import { Link } from "react-router-dom";
-import BackgroundImage from "../../assets/backgroundImg.jpg";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 
 function SignUpPage(props) {
@@ -28,16 +30,9 @@ function SignUpPage(props) {
 
   return (
     <Content>
-      <Row
-        justify="center"
-        align="middle"
-        style={{ height: "100vh", backgroundImage: `url(${BackgroundImage})` }}
-      >
-        <Col
-          span={7}
-          style={{ padding: "20px 40px 20px 40px", backgroundColor: "white" }}
-        >
-          <Title level={2} style={{ textAlign: "center" }}>
+      <Row justify="center" align="middle" className="sign-up-background">
+        <Col span={7} className="sign-up-form">
+          <Title level={2} className="sign-up-form-title">
             YAMABI
           </Title>
           <Form
@@ -116,13 +111,13 @@ function SignUpPage(props) {
                 type="primary"
                 size="large"
                 htmlType="submit"
-                style={{ width: "100%" }}
+                className="sign-up-form-button"
               >
                 Create new account
               </Button>
             </Form.Item>
           </Form>
-          <Title level={5} style={{ textAlign: "center" }}>
+          <Title level={5} className="sign-up-form-sign-in">
             Already have an account? <Link to={"/"}>Sign In</Link>
           </Title>
         </Col>

@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+//style
+import "../../styles/SignIn.css";
+//ant design
 import {
   Layout,
   Form,
@@ -8,17 +12,53 @@ import {
   Button,
   Checkbox,
   Typography,
+  Alert,
 } from "antd";
-import BackgroundImage from "../../assets/backgroundImg.jpg";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+//actions
+import { actClearUser, actSignInRequest } from "../../redux/actions/user";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 function SignInPage(props) {
+  //state
+  const [isRemember, setIsRemember] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
+  //redux - state
+  const user = useSelector((state) => state.user);
+  //redux - dispatch
+  const dispatch = useDispatch();
+  //redux - sign in
+  const signIn = (user) => dispatch(actSignInRequest(user));
+  //redux - clear user
+  const clearUser = () => dispatch(actClearUser());
+  //navigate
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.username && user.password) {
+      if (isRemember) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      navigate("/home", { replace: true });
+    }
+    if (user === "Not Found") {
+      setErrorMsg(true);
+      clearUser();
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    setErrorMsg(false);
+    setIsRemember(values.remember);
+    const user = {
+      username: values.username,
+      password: values.password,
+    };
+    signIn(user);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -27,16 +67,9 @@ function SignInPage(props) {
 
   return (
     <Content>
-      <Row
-        justify="center"
-        align="middle"
-        style={{ height: "100vh", backgroundImage: `url(${BackgroundImage})` }}
-      >
-        <Col
-          span={7}
-          style={{ padding: "20px 40px 20px 40px", backgroundColor: "white" }}
-        >
-          <Title level={2} style={{ textAlign: "center" }}>
+      <Row justify="center" align="middle" className="sign-in-background">
+        <Col span={7} className="sign-in-form">
+          <Title level={2} className="sign-in-form-title">
             YAMABI
           </Title>
           <Form
@@ -72,12 +105,21 @@ function SignInPage(props) {
               />
             </Form.Item>
 
+            {errorMsg && (
+              <Alert
+                message="The Username or Password is incorrect"
+                type="error"
+                showIcon
+                style={{ marginBottom: "10px" }}
+              />
+            )}
+
             <Form.Item>
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
 
-              <Link to="/#" style={{ float: "right" }}>
+              <Link to="/#" className="sign-in-form-forgot">
                 Forgot password
               </Link>
             </Form.Item>
@@ -85,14 +127,15 @@ function SignInPage(props) {
             <Form.Item>
               <Button
                 type="primary"
+                size="large"
                 htmlType="submit"
-                style={{ width: "100%" }}
+                className="sign-in-form-button"
               >
                 Sign In
               </Button>
             </Form.Item>
           </Form>
-          <Title level={5} style={{ textAlign: "center" }}>
+          <Title level={5} className="sign-in-form-sign-up">
             Don't have account?{" "}
             <Link to={"/sign-up"}>Create a new account</Link>
           </Title>

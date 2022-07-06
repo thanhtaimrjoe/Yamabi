@@ -1,0 +1,33 @@
+.sign-in-background {
+    height: 100vh;
+    background-image: url("C:/Users/thanh/OneDrive/Documents/GitHub/Yamabi/src/assets/backgroundImg.jpg");
+}
+
+.sign-in-form {
+    padding: 20px 40px 20px 40px;
+    background-color: white;
+}
+
+.sign-in-form-title {
+    text-align: center;
+}
+
+.sign-in-form-forgot {
+    float: right;
+}
+
+.sign-in-error-msg {
+    margin-bottom: 2em;
+}
+
+.sign-in-form-button {
+    width: 100%;
+}
+
+.sign-in-form-sign-up {
+    text-align: center;
+}
+
+.d-flex {
+    display: flex;
+}

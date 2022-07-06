@@ -1,7 +1,7 @@
-import SignInPage from "./pages/sign-in/SignInPage";
-import HomePage from "./pages/home/HomePage";
-import SignUpPage from "./pages/sign-up/SignUpPage";
-import NotFoundPage from "./pages/not-found/NotFoundPage";
+import SignInPage from "./screens/sign-in/SignInPage";
+import HomePage from "./screens/home/HomePage";
+import SignUpPage from "./screens/sign-up/SignUpPage";
+import NotFoundPage from "./screens/not-found/NotFoundPage";
 
 const routes = [
   {
