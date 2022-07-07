@@ -25,7 +25,8 @@
 }
 
 .sign-in-form-sign-up {
-    text-align: center;
+    width: 100%;
+    justify-content: center;
 }
 
 .d-flex {

@@ -14,16 +14,18 @@ import {
   Typography,
   DatePicker,
   Radio,
+  Space,
 } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { actSignUpRequest } from "../../redux/actions/user";
 
 const { Content } = Layout;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function SignUpPage(props) {
   //state
   const [isMatch, setIsMatch] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   //redux - state
   const user = useSelector((state) => state.user);
@@ -36,7 +38,7 @@ function SignUpPage(props) {
 
   useEffect(() => {
     if (user.username && user.password) {
-      localStorage.setItem("user", JSON.stringify(user));
+      setLoading(false);
       navigate("/home", { replace: true });
     }
     // eslint-disable-next-line
@@ -46,6 +48,7 @@ function SignUpPage(props) {
     if (values.password !== values.confirmPassword) {
       setIsMatch(false);
     } else {
+      setLoading(true);
       setIsMatch(true);
       const newUser = {
         email: values.email,
@@ -147,6 +150,7 @@ function SignUpPage(props) {
               <Button
                 type="primary"
                 size="large"
+                loading={loading}
                 htmlType="submit"
                 className="sign-up-form-button"
               >
@@ -154,9 +158,11 @@ function SignUpPage(props) {
               </Button>
             </Form.Item>
           </Form>
-          <Title level={5} className="sign-up-form-sign-in">
-            Already have an account? <Link to={"/"}>Sign In</Link>
-          </Title>
+          <Space className="sign-up-form-sign-in">
+            <Text>
+              Already have an account? <Link to={"/"}>Sign In</Link>
+            </Text>
+          </Space>
         </Col>
       </Row>
     </Content>

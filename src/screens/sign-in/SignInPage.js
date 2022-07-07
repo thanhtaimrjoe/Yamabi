@@ -13,6 +13,7 @@ import {
   Checkbox,
   Typography,
   Alert,
+  Space,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,12 +21,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { actClearUser, actSignInRequest } from "../../redux/actions/user";
 
 const { Content } = Layout;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function SignInPage(props) {
   //state
   const [isRemember, setIsRemember] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
+  const [loading, setLoading] = useState(false);
   //redux - state
   const user = useSelector((state) => state.user);
   //redux - dispatch
@@ -42,9 +44,11 @@ function SignInPage(props) {
       if (isRemember) {
         localStorage.setItem("user", JSON.stringify(user));
       }
+      setLoading(false);
       navigate("/home", { replace: true });
     }
     if (user === "Not Found") {
+      setLoading(false);
       setErrorMsg(true);
       clearUser();
     }
@@ -52,6 +56,7 @@ function SignInPage(props) {
   }, [user]);
 
   const onFinish = (values) => {
+    setLoading(true);
     setErrorMsg(false);
     setIsRemember(values.remember);
     const user = {
@@ -128,6 +133,7 @@ function SignInPage(props) {
               <Button
                 type="primary"
                 size="large"
+                loading={loading}
                 htmlType="submit"
                 className="sign-in-form-button"
               >
@@ -135,10 +141,12 @@ function SignInPage(props) {
               </Button>
             </Form.Item>
           </Form>
-          <Title level={5} className="sign-in-form-sign-up">
-            Don't have account?{" "}
-            <Link to={"/sign-up"}>Create a new account</Link>
-          </Title>
+          <Space className="sign-in-form-sign-up">
+            <Text>
+              Don't have account?{" "}
+              <Link to={"/sign-up"}>Create a new account</Link>
+            </Text>
+          </Space>
         </Col>
       </Row>
     </Content>

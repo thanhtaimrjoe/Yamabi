@@ -17,5 +17,6 @@
 }
 
 .sign-up-form-sign-in {
-    text-align: center;
+    width: 100%;
+    justify-content: center;
 }
