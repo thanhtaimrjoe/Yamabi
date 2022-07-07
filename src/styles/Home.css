@@ -1,18 +1,12 @@
-.header {
-    padding: 0%;
-    height: 150px;
-}
-
 .row-menu-title {
     height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: aquamarine;
 }
 
 .space-menu-title {
-    display: flex;
+    width: 100%;
     justify-content: space-between;
 }
 
@@ -23,8 +17,12 @@
 
 .logo {
     height: 80px;
-    
 }
 
 .menu {
+    justify-content: center;
+}
+
+.content-row {
+    background-color: aquamarine;
 }

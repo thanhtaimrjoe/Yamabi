@@ -2,20 +2,29 @@ import React from "react";
 //style
 import "../../styles/Home.css";
 //ant design
-import { Layout, Menu, Input, Space, Row, Col, Button } from "antd";
+import { Layout, Menu, Input, Space, Row, Col, Button, Card } from "antd";
 
 const { Header, Content, Footer } = Layout;
 const { Search } = Input;
+const { Meta } = Card;
 
 function HomePage(props) {
   const menus = [
     {
-      label: "Category",
+      label: "Sport",
       key: "item1",
     },
     {
-      label: "item2",
+      label: "Romance",
       key: "item2",
+    },
+    {
+      label: "Action",
+      key: "item3",
+    },
+    {
+      label: "Honor",
+      key: "item4",
     },
   ];
 
@@ -25,7 +34,9 @@ function HomePage(props) {
 
   return (
     <Layout>
-      <Header className="header">
+      <Header
+        style={{ padding: "0px", height: "auto", backgroundColor: "white" }}
+      >
         <Row className="row-menu-title">
           <Col span={18}>
             <Space className="space-menu-title">
@@ -39,6 +50,7 @@ function HomePage(props) {
                 onSearch={onSearch}
                 className="search"
                 size="large"
+                style={{ width: "500px" }}
               />
               <Space>
                 <Button>Sign In</Button>
@@ -55,7 +67,25 @@ function HomePage(props) {
         />
       </Header>
       <Content>
-        <p>Hello world</p>
+        <Row className="content-row">
+          <Col span={20}>
+            <Card
+              hoverable
+              style={{ width: 240 }}
+              cover={
+                <img
+                  alt="example"
+                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                />
+              }
+            >
+              <Meta
+                title="Europe Street beat"
+                description="www.instagram.com"
+              />
+            </Card>
+          </Col>
+        </Row>
       </Content>
       <Footer>
         <p>Sponsor by Google</p>
