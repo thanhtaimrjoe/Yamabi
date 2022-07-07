@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 //style
 import "../../styles/SignUp.css";
 //ant design
@@ -15,16 +16,46 @@ import {
   Radio,
 } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { actSignUpRequest } from "../../redux/actions/user";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 function SignUpPage(props) {
   //state
-  const [gender, setGender] = useState("male");
+  const [isMatch, setIsMatch] = useState(true);
+
+  //redux - state
+  const user = useSelector((state) => state.user);
+  //redux - dispatch
+  const dispatch = useDispatch();
+  //redux - sign in
+  const signUp = (user) => dispatch(actSignUpRequest(user));
+  //navigate
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.username && user.password) {
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/home", { replace: true });
+    }
+    // eslint-disable-next-line
+  }, [user]);
 
   const onFinish = (values) => {
-    console.log("Success:", values);
+    if (values.password !== values.confirmPassword) {
+      setIsMatch(false);
+    } else {
+      setIsMatch(true);
+      const newUser = {
+        email: values.email,
+        username: values.username,
+        password: values.password,
+        birthday: values.birthday.format("YYYY-MM-DD"),
+        gender: values.gender,
+      };
+      signUp(newUser);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -86,8 +117,8 @@ function SignUpPage(props) {
 
             <Form.Item
               name="confirmPassword"
-              validateStatus="error"
-              help="Password doesn't match!"
+              validateStatus={!isMatch && "error"}
+              help={!isMatch && "Password doesn't match!"}
             >
               <Input.Password
                 size="large"

@@ -1,5 +1,6 @@
 import { app } from "../config/firebase";
 import {
+  addDoc,
   collection,
   getDocs,
   getFirestore,
@@ -24,4 +25,11 @@ export async function signIn(collectionName, user) {
   } else {
     return "Not Found";
   }
+}
+
+export async function signUp(collectionName, newUser) {
+  const db = getFirestore(app);
+  const ref = collection(db, collectionName);
+  await addDoc(ref, newUser);
+  return newUser;
 }
