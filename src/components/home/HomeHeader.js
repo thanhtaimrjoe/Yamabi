@@ -11,6 +11,10 @@ function HomeHeader(props) {
   //list menu items
   const menus = [
     {
+      label: "Home",
+      key: "home",
+    },
+    {
       label: "Sport",
       key: "item1",
     },
