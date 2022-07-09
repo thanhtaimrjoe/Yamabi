@@ -24,20 +24,12 @@ function HomePage(props) {
     // eslint-disable-next-line
   }, []);
 
-  const showListCategory = () => {
-    var result = "";
-    result = categories.map((category, index) => {
-      return <ProductList key={index} category={category} />;
-    });
-    return result;
-  };
-
   return (
     <Layout>
-      <HomeHeader />
+      <HomeHeader categories={categories} />
       <Content>
         <Row className="content-row" justify="center">
-          {showListCategory()}
+          <ProductList categoryID="e05c14d0-e307-11ec-8a7c-57956d2a10bd" />
         </Row>
       </Content>
       <Footer>

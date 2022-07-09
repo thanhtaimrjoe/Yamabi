@@ -8,29 +8,16 @@ const { Header } = Layout;
 const { Search } = Input;
 
 function HomeHeader(props) {
-  //list menu items
-  const menus = [
-    {
-      label: "Home",
-      key: "home",
-    },
-    {
-      label: "Sport",
-      key: "item1",
-    },
-    {
-      label: "Romance",
-      key: "item2",
-    },
-    {
-      label: "Action",
-      key: "item3",
-    },
-    {
-      label: "Honor",
-      key: "item4",
-    },
-  ];
+  //props
+  const { categories } = props;
+
+  //menu list
+  const menuList = categories.map((category, index) => {
+    return {
+      label: category.name,
+      key: category.id,
+    };
+  });
 
   const onSearch = (value) => {
     console.log("Search", value);
@@ -66,7 +53,7 @@ function HomeHeader(props) {
         className="menu"
         mode="horizontal"
         defaultChecked={["item1"]}
-        items={menus}
+        items={menuList}
       />
     </Header>
   );
