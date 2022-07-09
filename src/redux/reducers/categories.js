@@ -1,11 +1,11 @@
-import { FETCH_ALL_PRODUCT_BY_CATEGORY_ID } from "../../constants/product";
+import { FETCH_ALL_CATEGORY } from "../../constants/category";
 
 var initialState = [];
 
 const myReducers = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_ALL_PRODUCT_BY_CATEGORY_ID:
-      return action.products;
+    case FETCH_ALL_CATEGORY:
+      return action.categories;
     default:
       return state;
   }

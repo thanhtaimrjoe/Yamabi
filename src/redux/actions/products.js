@@ -1,16 +1,16 @@
-import { FETCH_ALL_PRODUCT } from "../../constants/product";
-import { fetchAllProduct } from "../../services/product";
+import { FETCH_ALL_PRODUCT_BY_CATEGORY_ID } from "../../constants/product";
+import { fetchAllProductByCategoryID } from "../../services/product";
 
-export const actFetchAllProductRequest = () => {
+export const actFetchAllProductByCategoryIDRequest = (categoryID) => {
   return async (dispatch) => {
-    const products = await fetchAllProduct("product");
-    dispatch(actFetchAllProduct(products));
+    const products = await fetchAllProductByCategoryID("product", categoryID);
+    dispatch(actFetchAllProductByCategoryID(products));
   };
 };
 
-const actFetchAllProduct = (products) => {
+const actFetchAllProductByCategoryID = (products) => {
   return {
-    type: FETCH_ALL_PRODUCT,
+    type: FETCH_ALL_PRODUCT_BY_CATEGORY_ID,
     products,
   };
 };
