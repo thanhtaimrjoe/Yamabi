@@ -1,32 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 //ant design
 import { Row, Col, Card, Typography } from "antd";
-//actions
-import { actFetchAllProductByCategoryIDRequest } from "../../redux/actions/products";
-import { useDispatch, useSelector } from "react-redux";
 
 const { Title, Text } = Typography;
 
 function ProductList(props) {
   //props
-  const { categoryID, categoryName } = props;
-  //redux - state
-  const products = useSelector((state) => state.products);
-  //redux - dispatch
-  const dispatch = useDispatch();
-  //action - fetch all product
-  const fetchAllProductByCategoryID = (categoryID) =>
-    dispatch(actFetchAllProductByCategoryIDRequest(categoryID));
-
-  useEffect(() => {
-    if (categoryID === '/') {
-      fetchAllProductByCategoryID('f93b6be0-e307-11ec-8a7c-57956d2a10bd');
-    } else {
-      fetchAllProductByCategoryID(categoryID);
-    }
-    // eslint-disable-next-line
-  }, [categoryID]);
-
+  const { categoryName, products } = props;
   const showListProduct = () => {
     var result = "";
     result = products.map((product, index) => {

@@ -19,23 +19,23 @@ function HomeHeader(props) {
   //menu list
   var menuList = [];
   menuList.push({
-    label: 'Home',
-      key: '/',
-  })
-  categories.map((category) => {
+    label: "Home",
+    key: "/",
+  });
+  categories.map((category) =>
     menuList.push({
       label: category.name,
       key: `/category/${category.id}`,
     })
-  });
+  );
 
   const onSearch = (value) => {
     console.log("Search", value);
   };
 
   const onMenuClick = (event) => {
-    navigate(event.key)
-  }
+    navigate(event.key);
+  };
 
   return (
     <Header
