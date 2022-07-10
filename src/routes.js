@@ -5,7 +5,7 @@ import NotFoundPage from "./screens/not-found/NotFoundPage";
 
 const routes = [
   {
-    path: "/",
+    path: "sign-in",
     element: () => <SignInPage />,
   },
   {
@@ -13,7 +13,11 @@ const routes = [
     element: () => <SignUpPage />,
   },
   {
-    path: "home",
+    path: "/",
+    element: () => <HomePage />,
+  },
+  {
+    path: "category/:id",
     element: () => <HomePage />,
   },
   {

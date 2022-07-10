@@ -1,4 +1,4 @@
-import { FETCH_ALL_PRODUCT_BY_CATEGORY_ID } from "../../constants/product";
+import { CLEAR_PRODUCTS, FETCH_ALL_PRODUCT_BY_CATEGORY_ID } from "../../constants/product";
 import { fetchAllProductByCategoryID } from "../../services/product";
 
 export const actFetchAllProductByCategoryIDRequest = (categoryID) => {
@@ -12,5 +12,11 @@ const actFetchAllProductByCategoryID = (products) => {
   return {
     type: FETCH_ALL_PRODUCT_BY_CATEGORY_ID,
     products,
+  };
+};
+
+export const actClearProduct = () => {
+  return {
+    type: CLEAR_PRODUCTS,
   };
 };

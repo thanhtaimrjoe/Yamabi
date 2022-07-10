@@ -39,7 +39,7 @@ function SignUpPage(props) {
   useEffect(() => {
     if (user.username && user.password) {
       setLoading(false);
-      navigate("/home", { replace: true });
+      navigate("/", { replace: true });
     }
     // eslint-disable-next-line
   }, [user]);

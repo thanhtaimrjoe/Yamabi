@@ -9,7 +9,7 @@ const { Title, Text } = Typography;
 
 function ProductList(props) {
   //props
-  const { categoryID } = props;
+  const { categoryID, categoryName } = props;
   //redux - state
   const products = useSelector((state) => state.products);
   //redux - dispatch
@@ -19,9 +19,13 @@ function ProductList(props) {
     dispatch(actFetchAllProductByCategoryIDRequest(categoryID));
 
   useEffect(() => {
-    fetchAllProductByCategoryID(categoryID);
+    if (categoryID === '/') {
+      fetchAllProductByCategoryID('f93b6be0-e307-11ec-8a7c-57956d2a10bd');
+    } else {
+      fetchAllProductByCategoryID(categoryID);
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [categoryID]);
 
   const showListProduct = () => {
     var result = "";
@@ -44,7 +48,7 @@ function ProductList(props) {
 
   return (
     <Col span={17} style={{ backgroundColor: "yellow" }}>
-      <Title level={3}>Hello</Title>
+      {categoryName && <Title level={4}>Genere: {categoryName}</Title>}
       <Row gutter={[16, 16]} style={{ padding: "15px" }}>
         {showListProduct()}
       </Row>

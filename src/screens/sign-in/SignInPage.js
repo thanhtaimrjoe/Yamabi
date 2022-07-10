@@ -45,7 +45,7 @@ function SignInPage(props) {
         localStorage.setItem("user", JSON.stringify(user));
       }
       setLoading(false);
-      navigate("/home", { replace: true });
+      navigate("/", { replace: true });
     }
     if (user === "Not Found") {
       setLoading(false);

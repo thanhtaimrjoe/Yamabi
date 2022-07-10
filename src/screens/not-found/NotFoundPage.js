@@ -10,7 +10,7 @@ function NotFoundPage(props) {
 
   //navigate to home page
   const onBackHome = () => {
-    navigate("/home");
+    navigate("/");
   };
 
   return (

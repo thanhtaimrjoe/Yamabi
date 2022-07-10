@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 //style
 import "../../styles/Home.css";
 //ant design
@@ -10,18 +11,31 @@ const { Search } = Input;
 function HomeHeader(props) {
   //props
   const { categories } = props;
+  //navigate
+  const navigate = useNavigate();
+  //location
+  const location = useLocation();
 
   //menu list
-  const menuList = categories.map((category, index) => {
-    return {
+  var menuList = [];
+  menuList.push({
+    label: 'Home',
+      key: '/',
+  })
+  categories.map((category) => {
+    menuList.push({
       label: category.name,
-      key: category.id,
-    };
+      key: `/category/${category.id}`,
+    })
   });
 
   const onSearch = (value) => {
     console.log("Search", value);
   };
+
+  const onMenuClick = (event) => {
+    navigate(event.key)
+  }
 
   return (
     <Header
@@ -52,8 +66,9 @@ function HomeHeader(props) {
       <Menu
         className="menu"
         mode="horizontal"
-        defaultChecked={["item1"]}
+        defaultSelectedKeys={[`${location.pathname}`]}
         items={menuList}
+        onClick={onMenuClick}
       />
     </Header>
   );
