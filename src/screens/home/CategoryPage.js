@@ -20,6 +20,8 @@ const { Title } = Typography;
 function CategoryPage(props) {
   //location
   const location = useLocation();
+  //state
+  const [popular, setPopular] = useState([]);
   //redux - state
   const categories = useSelector((state) => state.categories);
   const products = useSelector((state) => state.products);
@@ -32,7 +34,6 @@ function CategoryPage(props) {
   //action - fetch all product
   const fetchAllProductByCategoryID = (categoryID) =>
     dispatch(actFetchAllProductByCategoryIDRequest(categoryID));
-  const [popular, setPopular] = useState([]);
 
   useEffect(() => {
     clearProduct();
@@ -44,6 +45,7 @@ function CategoryPage(props) {
   }, [location]);
 
   useEffect(() => {
+    setPopular([]);
     if (products.length > 0) {
       var result = [];
       for (let index = 0; index < 2; index++) {

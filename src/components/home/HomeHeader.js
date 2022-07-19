@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 //style
-import "../../styles/Home.css";
+import "../../styles/Menu.css";
 //ant design
 import { Button, Col, Input, Layout, Menu, Row, Space } from "antd";
 

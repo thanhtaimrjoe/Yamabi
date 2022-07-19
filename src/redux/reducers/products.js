@@ -1,4 +1,8 @@
-import { CLEAR_PRODUCTS, FETCH_ALL_PRODUCT_BY_CATEGORY_ID } from "../../constants/product";
+import {
+  CLEAR_PRODUCTS,
+  FETCH_ALL_PRODUCT,
+  FETCH_ALL_PRODUCT_BY_CATEGORY_ID,
+} from "../../constants/product";
 
 var initialState = [];
 
@@ -8,6 +12,8 @@ const myReducers = (state = initialState, action) => {
       return action.products;
     case CLEAR_PRODUCTS:
       return initialState;
+    case FETCH_ALL_PRODUCT:
+      return action.products;
     default:
       return state;
   }

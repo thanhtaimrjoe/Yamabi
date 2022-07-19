@@ -1,28 +1,8 @@
-.row-menu-title {
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.content-background {
+    background-color: white;
 }
 
-.space-menu-title {
-    width: 100%;
-    justify-content: space-between;
-}
-
-.search {
-    width: 500px;
-    margin-top: 10px;
-}
-
-.logo {
-    height: 80px;
-}
-
-.menu {
-    justify-content: center;
-}
-
-.content-row {
-    background-color: aquamarine;
+.title-padding {
+    padding-left: 10px;
+    padding-top: 10px;
 }
