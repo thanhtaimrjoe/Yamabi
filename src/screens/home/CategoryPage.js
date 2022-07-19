@@ -61,11 +61,11 @@ function CategoryPage(props) {
     <Layout>
       <HomeHeader categories={categories} />
       <Content>
-        <Row className="content-row" justify="center">
-          <Col span={17} style={{ backgroundColor: "yellow" }}>
-            <Title level={4}>Popular</Title>
+        <Row justify="center" className="content-background">
+          <Col span={17}>
+            <Title level={4} className="title-padding">Popular</Title>
             <ProductList products={popular} />
-            <Title level={4}>New arrival</Title>
+            <Title level={4} className="title-padding">New arrival</Title>
             <ProductList products={products} />
           </Col>
         </Row>

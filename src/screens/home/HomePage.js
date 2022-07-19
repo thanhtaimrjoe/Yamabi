@@ -42,12 +42,7 @@ function HomePage(props) {
   useEffect(() => {
     setPopular([]);
     if (products.length > 0) {
-      var result = [];
-      for (let index = 0; index < 12; index++) {
-        var item = products[Math.floor(Math.random() * products.length)];
-        result.push(item);
-      }
-      setPopular(result);
+      setPopular(products.slice(0, 12));
     }
     //eslint-disable-next-line
   }, [products]);
