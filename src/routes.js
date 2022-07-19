@@ -2,6 +2,7 @@ import SignInPage from "./screens/sign-in/SignInPage";
 import HomePage from "./screens/home/HomePage";
 import SignUpPage from "./screens/sign-up/SignUpPage";
 import NotFoundPage from "./screens/not-found/NotFoundPage";
+import CategoryPage from "./screens/home/CategoryPage";
 
 const routes = [
   {
@@ -18,7 +19,7 @@ const routes = [
   },
   {
     path: "category/:id",
-    element: () => <HomePage />,
+    element: () => <CategoryPage />,
   },
   {
     path: "*",

@@ -2,11 +2,12 @@ import React from "react";
 //ant design
 import { Row, Col, Card, Typography } from "antd";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 function ProductList(props) {
   //props
-  const { categoryName, products } = props;
+  const { products } = props;
+
   const showListProduct = () => {
     var result = "";
     result = products.map((product, index) => {
@@ -27,12 +28,9 @@ function ProductList(props) {
   };
 
   return (
-    <Col span={17} style={{ backgroundColor: "yellow" }}>
-      {categoryName && <Title level={4}>Genere: {categoryName}</Title>}
-      <Row gutter={[16, 16]} style={{ padding: "15px" }}>
-        {showListProduct()}
-      </Row>
-    </Col>
+    <Row gutter={[16, 16]} style={{ padding: "15px" }}>
+      {showListProduct()}
+    </Row>
   );
 }
 
