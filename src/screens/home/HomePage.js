@@ -12,6 +12,7 @@ import {
   actFetchAllProductRequest,
 } from "../../redux/actions/products";
 import ProductList from "../../components/home/ProductList";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -19,6 +20,8 @@ const { Title } = Typography;
 function HomePage(props) {
   //state
   const [popular, setPopular] = useState([]);
+  //navigate
+  const navigate = useNavigate();
   //redux - state
   const categories = useSelector((state) => state.categories);
   //redux - product
@@ -47,6 +50,10 @@ function HomePage(props) {
     //eslint-disable-next-line
   }, [products]);
 
+  const onShowProductDetail = (productID) => {
+    navigate(`/product/${productID}`);
+  };
+
   return (
     <Layout>
       <HomeHeader categories={categories} />
@@ -56,11 +63,17 @@ function HomePage(props) {
             <Title level={4} className="title-padding">
               Popular
             </Title>
-            <ProductList products={popular} />
+            <ProductList
+              products={popular}
+              onShowProductDetail={onShowProductDetail}
+            />
             <Title level={4} className="title-padding">
               New arrival
             </Title>
-            <ProductList products={products} />
+            <ProductList
+              products={products}
+              onShowProductDetail={onShowProductDetail}
+            />
           </Col>
         </Row>
       </Content>

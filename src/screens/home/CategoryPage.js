@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProductList from "../../components/home/ProductList";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 //style
 import "../../styles/Home.css";
 //ant design
@@ -20,6 +20,8 @@ const { Title } = Typography;
 function CategoryPage(props) {
   //location
   const location = useLocation();
+  //navigate
+  const navigate = useNavigate();
   //state
   const [popular, setPopular] = useState([]);
   //redux - state
@@ -57,16 +59,30 @@ function CategoryPage(props) {
     //eslint-disable-next-line
   }, [products]);
 
+  const onShowProductDetail = (productID) => {
+    navigate(`/product/${productID}`);
+  };
+
   return (
     <Layout>
       <HomeHeader categories={categories} />
       <Content>
         <Row justify="center" className="content-background">
           <Col span={17}>
-            <Title level={4} className="title-padding">Popular</Title>
-            <ProductList products={popular} />
-            <Title level={4} className="title-padding">New arrival</Title>
-            <ProductList products={products} />
+            <Title level={4} className="title-padding">
+              Popular
+            </Title>
+            <ProductList
+              products={popular}
+              onShowProductDetail={onShowProductDetail}
+            />
+            <Title level={4} className="title-padding">
+              New arrival
+            </Title>
+            <ProductList
+              products={products}
+              onShowProductDetail={onShowProductDetail}
+            />
           </Col>
         </Row>
       </Content>

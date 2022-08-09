@@ -3,6 +3,7 @@ import HomePage from "./screens/home/HomePage";
 import SignUpPage from "./screens/sign-up/SignUpPage";
 import NotFoundPage from "./screens/not-found/NotFoundPage";
 import CategoryPage from "./screens/home/CategoryPage";
+import ProductPage from "./screens/product/ProductPage";
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: "category/:id",
     element: () => <CategoryPage />,
+  },
+  {
+    path: "product/:id",
+    element: () => <ProductPage />,
   },
   {
     path: "*",
