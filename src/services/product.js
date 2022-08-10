@@ -31,3 +31,28 @@ export async function fetchAllProduct(collectionName) {
   });
   return result;
 }
+
+async function findCategoryNameByID(collectionName, categoryID) {
+  const db = getFirestore(app);
+
+  const col = collection(db, collectionName);
+  const queryCol = query(col, where("id", "==", categoryID));
+  const snapshot = await getDocs(queryCol);
+
+  var data = snapshot.docs[0].data();
+  return data.name;
+}
+
+export async function fetchProductInfoByID(collectionName, productID) {
+  const db = getFirestore(app);
+
+  const col = collection(db, collectionName);
+  const queryCol = query(col, where("productID", "==", productID));
+  const snapshot = await getDocs(queryCol);
+
+  var data = snapshot.docs[0].data();
+  data.docID = snapshot.docs[0].id;
+  var categoryName = await findCategoryNameByID("category", data.categoryID);
+  data.categoryName = categoryName;
+  return data;
+}

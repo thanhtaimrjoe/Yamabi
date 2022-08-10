@@ -17,17 +17,19 @@ function HomeHeader(props) {
   const location = useLocation();
 
   //menu list
-  var menuList = [];
-  menuList.push({
-    label: "Home",
-    key: "/",
-  });
-  categories.map((category) =>
+  if (categories) {
+    var menuList = [];
     menuList.push({
-      label: category.name,
-      key: `/category/${category.id}`,
-    })
-  );
+      label: "Home",
+      key: "/",
+    });
+    categories.map((category) =>
+      menuList.push({
+        label: category.name,
+        key: `/category/${category.id}`,
+      })
+    );
+  }
 
   const onSearch = (value) => {
     console.log("Search", value);
@@ -63,13 +65,15 @@ function HomeHeader(props) {
           </Space>
         </Col>
       </Row>
-      <Menu
-        className="menu"
-        mode="horizontal"
-        defaultSelectedKeys={[`${location.pathname}`]}
-        items={menuList}
-        onClick={onMenuClick}
-      />
+      {categories && (
+        <Menu
+          className="menu"
+          mode="horizontal"
+          defaultSelectedKeys={[`${location.pathname}`]}
+          items={menuList}
+          onClick={onMenuClick}
+        />
+      )}
     </Header>
   );
 }
