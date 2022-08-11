@@ -13,13 +13,16 @@ function ProductInfo(props) {
 
   return (
     <Row align="middle" justify={width <= 576 ? "center" : "space-between"}>
-      <Col xxl={5} xl={6} lg={5} md={6} xs={18}>
+      <Col xxl={4} xl={6} lg={5} md={6} xs={18}>
         <Image src={product.image} />
       </Col>
-      <Col xxl={18} xl={17} lg={18} md={17} xs={24}>
+      <Col xxl={19} xl={17} lg={18} md={17} xs={24}>
         <Space
           direction="vertical"
-          style={{ display: "flex", marginTop: "20px" }}
+          style={{
+            display: "flex",
+            marginTop: "20px",
+          }}
           align={width <= 576 && "center"}
         >
           <Title level={3}>{product.name}</Title>
