@@ -39,6 +39,10 @@ function HomeHeader(props) {
     navigate(event.key);
   };
 
+  const onNavigateToHomePage = () => {
+    navigate("/");
+  };
+
   return (
     <Header
       style={{ padding: "0px", height: "auto", backgroundColor: "white" }}
@@ -50,6 +54,7 @@ function HomeHeader(props) {
               src="https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/materials%2Frestaurant.png?alt=media&token=c67e5e83-a039-4846-9fc2-73143558e270"
               className="logo"
               alt="haha"
+              onClick={onNavigateToHomePage}
             />
             <Search
               placeholder="Search anime..."
