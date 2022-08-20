@@ -160,7 +160,7 @@ function SignUpPage(props) {
           </Form>
           <Space className="sign-up-form-sign-in">
             <Text>
-              Already have an account? <Link to={"/"}>Sign In</Link>
+              Already have an account? <Link to={"/sign-in"}>Sign In</Link>
             </Text>
           </Space>
         </Col>

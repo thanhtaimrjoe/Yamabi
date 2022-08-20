@@ -3,7 +3,19 @@ import { useNavigate, useLocation } from "react-router-dom";
 //style
 import "../../styles/Menu.css";
 //ant design
-import { Button, Col, Input, Layout, Menu, Row, Space } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  Input,
+  Layout,
+  Menu,
+  Popover,
+  Row,
+  Space,
+} from "antd";
+import { useSelector } from "react-redux";
+import { CaretDownOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 const { Search } = Input;
@@ -15,6 +27,16 @@ function HomeHeader(props) {
   const navigate = useNavigate();
   //location
   const location = useLocation();
+  //redux - state
+  const user = useSelector((state) => state.user);
+  //test
+  const text = <span>Sign in as {user.fullname}</span>;
+  const content = (
+    <div>
+      <p>Your Profile</p>
+      <p>Sign Out</p>
+    </div>
+  );
 
   //menu list
   if (categories) {
@@ -43,6 +65,16 @@ function HomeHeader(props) {
     navigate("/");
   };
 
+  const onNavigateToSignIn = () => {
+    navigate("sign-in");
+  };
+
+  const onNavigateToSignUp = () => {
+    navigate("sign-up");
+  };
+
+  const onShowPopUp = () => {};
+
   return (
     <Header
       style={{ padding: "0px", height: "auto", backgroundColor: "white" }}
@@ -63,10 +95,24 @@ function HomeHeader(props) {
               size="large"
               style={{ width: "500px" }}
             />
-            <Space>
-              <Button>Sign In</Button>
-              <Button>Create new account</Button>
-            </Space>
+            {user.username ? (
+              <Popover
+                placement="bottomRight"
+                title={text}
+                content={content}
+                trigger="click"
+              >
+                <Space className="avatar" onClick={onShowPopUp}>
+                  <Avatar size={38} src={user.avatar} />
+                  <CaretDownOutlined />
+                </Space>
+              </Popover>
+            ) : (
+              <Space>
+                <Button onClick={onNavigateToSignIn}>Sign In</Button>
+                <Button onClick={onNavigateToSignUp}>Create new account</Button>
+              </Space>
+            )}
           </Space>
         </Col>
       </Row>
