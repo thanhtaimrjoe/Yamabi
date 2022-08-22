@@ -14,8 +14,9 @@ import {
   Row,
   Space,
 } from "antd";
-import { useSelector } from "react-redux";
-import { CaretDownOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+//actions
+import { actClearUser } from "../../redux/actions/user";
 
 const { Header } = Layout;
 const { Search } = Input;
@@ -29,14 +30,10 @@ function HomeHeader(props) {
   const location = useLocation();
   //redux - state
   const user = useSelector((state) => state.user);
-  //test
-  const text = <span>Sign in as {user.fullname}</span>;
-  const content = (
-    <div>
-      <p>Your Profile</p>
-      <p>Sign Out</p>
-    </div>
-  );
+  //dispatch
+  const dispatch = useDispatch();
+  //redux - clear user
+  const clearUser = () => dispatch(actClearUser());
 
   //menu list
   if (categories) {
@@ -73,7 +70,22 @@ function HomeHeader(props) {
     navigate("sign-up");
   };
 
-  const onShowPopUp = () => {};
+  const onSignOut = () => {
+    localStorage.removeItem("user");
+    clearUser();
+    navigate("sign-in", { replace: true });
+  };
+
+  //avatar pop-up
+  const text = <span>Sign in as {user.fullname}</span>;
+  const content = (
+    <div>
+      <p className="profile-item">Your Profile</p>
+      <p className="profile-item" onClick={onSignOut}>
+        Sign Out
+      </p>
+    </div>
+  );
 
   return (
     <Header
@@ -102,10 +114,11 @@ function HomeHeader(props) {
                 content={content}
                 trigger="click"
               >
-                <Space className="avatar" onClick={onShowPopUp}>
-                  <Avatar size={38} src={user.avatar} />
-                  <CaretDownOutlined />
-                </Space>
+                <Avatar
+                  size={38}
+                  className="avatar"
+                  src="https://firebasestorage.googleapis.com/v0/b/yama-98f64.appspot.com/o/materials%2Fonepiece_character5.jpg?alt=media&token=bfd72eef-41af-4566-a7b3-4359aa56f3ad"
+                />
               </Popover>
             ) : (
               <Space>

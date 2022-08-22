@@ -23,3 +23,15 @@
 .menu {
     justify-content: center;
 }
+
+.avatar {
+    cursor: pointer;
+}
+
+.profile-item {
+    cursor: pointer;
+}
+
+.profile-item:hover {
+    color: #40a9ff;
+}
