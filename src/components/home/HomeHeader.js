@@ -77,7 +77,7 @@ function HomeHeader(props) {
   };
 
   //avatar pop-up
-  const text = <span>Sign in as {user.fullname}</span>;
+  const text = <span>Sign in as {user.fullName}</span>;
   const content = (
     <div>
       <p className="profile-item">Your Profile</p>

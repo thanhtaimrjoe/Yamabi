@@ -50,8 +50,10 @@ function SignUpPage(props) {
     } else {
       setLoading(true);
       setIsMatch(true);
+      const fullName = values.firstName.trim() + " " + values.lastName.trim();
       const newUser = {
         email: values.email,
+        fullName: fullName,
         username: values.username,
         password: values.password,
         birthday: values.birthday.format("YYYY-MM-DD"),
@@ -79,6 +81,34 @@ function SignUpPage(props) {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
+            <Form.Item
+              name="firstName"
+              className="form-item-inline"
+              rules={[
+                { required: true, message: "Please input your username!" },
+              ]}
+              style={{ display: "inline-block", marginRight: "22px" }}
+            >
+              <Input
+                size="large"
+                prefix={<UserOutlined />}
+                placeholder="First Name"
+              />
+            </Form.Item>
+            <Form.Item
+              name="lastName"
+              className="form-item-inline"
+              rules={[
+                { required: true, message: "Please input your username!" },
+              ]}
+              style={{ display: "inline-block" }}
+            >
+              <Input
+                size="large"
+                prefix={<UserOutlined />}
+                placeholder="Last Name"
+              />
+            </Form.Item>
             <Form.Item
               name="email"
               rules={[
