@@ -4,6 +4,7 @@ import SignUpPage from "./screens/sign-up/SignUpPage";
 import NotFoundPage from "./screens/not-found/NotFoundPage";
 import CategoryPage from "./screens/home/CategoryPage";
 import ProductPage from "./screens/product/ProductPage";
+import SearchPage from './screens/search/SearchPage';
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "product/:id",
     element: () => <ProductPage />,
+  },
+  {
+    path: "search/:searchValue",
+    element: () => <SearchPage />,
   },
   {
     path: "*",

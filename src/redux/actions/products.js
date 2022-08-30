@@ -2,11 +2,13 @@ import {
   CLEAR_PRODUCTS,
   FETCH_ALL_PRODUCT,
   FETCH_ALL_PRODUCT_BY_CATEGORY_ID,
+  FETCH_ALL_PRODUCT_BY_PRODUCT_NAME,
   FETCH_PRODUCT_INFO,
 } from "../../constants/product";
 import {
   fetchAllProduct,
   fetchAllProductByCategoryID,
+  fetchAllProductByProductName,
   fetchProductInfoByID,
 } from "../../services/product";
 
@@ -55,5 +57,19 @@ const actFetchProductInfo = (product) => {
   return {
     type: FETCH_PRODUCT_INFO,
     product,
+  };
+};
+
+export const actFetchAllProductByProductNameRequest = (searchValue) => {
+  return async (dispatch) => {
+    const result = await fetchAllProductByProductName("product", searchValue);
+    dispatch(actFetchAllProductByProductName(result));
+  };
+};
+
+const actFetchAllProductByProductName = (products) => {
+  return {
+    type: FETCH_ALL_PRODUCT_BY_PRODUCT_NAME,
+    products,
   };
 };

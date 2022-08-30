@@ -1,9 +1,12 @@
 import { app } from "../config/firebase";
 import {
   collection,
+  endAt,
   getDocs,
   getFirestore,
+  orderBy,
   query,
+  startAt,
   where,
 } from "firebase/firestore";
 
@@ -55,4 +58,17 @@ export async function fetchProductInfoByID(collectionName, productID) {
   var categoryName = await findCategoryNameByID("category", data.categoryID);
   data.categoryName = categoryName;
   return data;
+}
+
+export async function fetchAllProductByProductName(collectionName, searchValue) {
+  const db = getFirestore(app);
+
+  var col = collection(db, collectionName);
+  const queryCol = query(col, orderBy('name'), startAt(searchValue), endAt(searchValue + "\uf8ff"));
+  const snapshot = await getDocs(queryCol);
+
+  const result = snapshot.docs.map((doc) => {
+    return doc.data();
+  });
+  return result;
 }

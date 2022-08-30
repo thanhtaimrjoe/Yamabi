@@ -51,7 +51,7 @@ function HomeHeader(props) {
   }
 
   const onSearch = (value) => {
-    console.log("Search", value);
+    navigate(`/search/${value}`);
   };
 
   const onMenuClick = (event) => {
